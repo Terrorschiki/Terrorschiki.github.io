@@ -164,7 +164,8 @@
     const htmlEl = document.documentElement;
     if (!toggleBtn) return;
 
-    const savedTheme = localStorage.getItem('theme') || htmlEl.getAttribute('data-theme') || 'light';
+    // 默认黑夜模式，与 index.html 头部脚本保持一致
+    const savedTheme = localStorage.getItem('theme') || htmlEl.getAttribute('data-theme') || 'dark';
     htmlEl.setAttribute('data-theme', savedTheme);
 
     toggleBtn.addEventListener('click', () => {
