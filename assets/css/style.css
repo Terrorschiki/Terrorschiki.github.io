@@ -1233,345 +1233,24 @@ h2:hover::after {
 
 
 /* ===========================================================================
-   15. 站点主题定稿（方案 A：终端编辑器 / Terminal）
-   ---------------------------------------------------------------------------
-   以下规则来自改版方案 preview/vA.css，已改写为整站默认样式。
-   本分支为单主题设计：data-theme 固定为 dark，主题切换按钮已移除。
-   =========================================================================== */
-
-/* ---------- 1. 设计令牌 ---------- */
-html {
-  --font-main: "JetBrains Mono", "Cascadia Code", "Fira Code", "SF Mono", Consolas,
-    "PingFang SC", "Microsoft YaHei", monospace;
-  --font-display: var(--font-main);
-
-  --bg-body: #0b0e14;
-  --bg-editor: #0b0e14;
-  --bg-card: #11151c;
-  --bg-panel: #0f1319;
-  --bg-sidebar: #0d1117;
-  --bg-toolbar: #0d1117;
-  --bg-glass: rgba(11, 14, 20, 0.85);
-  --bg-hover: #1b2230;
-  --bg-active: #16324f;
-
-  --text-main: #e6edf3;
-  --text-muted: #8b949e;
-  --text-subtle: #6a737d;
-  --text-invert: #0b0e14;
-
-  --primary: #58a6ff;
-  --primary-hover: #79b8ff;
-  --primary-glow: rgba(88, 166, 255, 0.24);
-  --selection: #264f78;
-  --terminal-user: #3fb950;
-  --terminal-path: #d29922;
-
-  --border-light: #1f2630;
-  --border-strong: #30363d;
-  --radius-md: 4px;
-  --radius-full: 4px;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.5);
-  --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.6);
-
-  --gradient-title: linear-gradient(135deg, #e6edf3 0%, #58a6ff 100%);
-}
-
-/* 方案 A 期间强制深色：切到浅色会破坏编辑器观感 */
-html {
-  background: var(--bg-body);
-}
-
-/* 方案 A 为固定深色，主题按钮在此方案下无意义，做禁用提示 */
-html 
-html 
-/* ---------- 2. 导航：编辑器标题栏 ---------- */
-html nav {
-  border-bottom: 1px solid var(--border-light);
-}
-
-html .logo-terminal {
-  background: #0d1117;
-  border: 1px solid var(--border-strong);
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-html .nav-links a {
-  font-size: 0.82rem;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
-  padding: 4px 2px;
-}
-
-html .nav-links a:hover,
-html .nav-links a.active {
-  color: var(--primary);
-}
-
-html .nav-links a::after {
-  height: 2px;
-  border-radius: 0;
-}
-
-html .control-btn {
-  border-radius: 4px;
-  font-family: var(--font-main);
-  font-size: 0.75rem;
-}
-
-/* ---------- 3. 首屏：编辑器窗口感 ---------- */
-html .intro .bg-decoration {
-  display: block;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: linear-gradient(rgba(88, 166, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(88, 166, 255, 0.045) 1px, transparent 1px);
-  background-size: 44px 44px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 10%, transparent 75%);
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 10%, transparent 75%);
-}
-
-/* 关掉基础样式里的光斑与旋转光环，改为代码感装饰 */
-html .intro .bg-decoration::before,
-html .intro .bg-decoration::after {
-  content: none;
-  animation: none;
-}
-
-html .avatar-container::before {
-  content: none;
-  animation: none;
-}
-
-html .avatar {
-  border-radius: 6px;
-  border: 1px solid var(--border-strong);
-  box-shadow: 0 0 0 6px rgba(88, 166, 255, 0.07);
-}
-
-html .avatar-glow {
-  display: none;
-}
-
-html .gradient-text {
-  font-family: var(--font-main);
-  font-weight: 700;
-  font-size: 2.1rem;
-  letter-spacing: -0.01em;
-  background: none;
-  -webkit-text-fill-color: currentColor;
-  color: var(--text-main);
-}
-
-/* 标题前加一行等宽注释，强化终端气质 */
-html .gradient-text::before {
-  content: "// ";
-  color: var(--terminal-user);
-  font-weight: 400;
-}
-
-html .subtitle {
-  font-size: 0.92rem;
-  line-height: 1.85;
-  color: var(--text-muted);
-}
-
-html .intro-contact-link {
-  border-radius: 4px;
-  font-family: var(--font-main);
-  font-size: 0.78rem;
-  border: 1px solid var(--border-strong);
-  background: var(--bg-card);
-}
-
-html .intro-contact-link:hover {
-  border-color: var(--primary);
-  background: var(--bg-active);
-}
-
-/* ---------- 4. 栏目标题：文件路径风格 ---------- */
-html h2 {
-  font-family: var(--font-main);
-  font-size: 1.16rem;
-  font-weight: 600;
-  text-align: left;
-  letter-spacing: 0;
-  margin-bottom: 22px;
-}
-
-html h2::before {
-  content: "~/";
-  color: var(--text-subtle);
-  font-weight: 400;
-}
-
-html h2::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 1px;
-  margin: 14px 0 0;
-  border-radius: 0;
-  background: linear-gradient(90deg, var(--border-strong), transparent);
-  transition: none;
-}
-
-html h2:hover::after {
-  width: 100%;
-}
-
-html .section-hint {
-  text-align: left;
-  margin: -14px 0 26px;
-  font-family: var(--font-main);
-  font-size: 0.8rem;
-}
-
-html .section-hint::before {
-  content: "# ";
-  color: var(--terminal-path);
-}
-
-/* ---------- 5. 卡片：编辑器面板 ---------- */
-html .card,
-html .project-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-}
-
-html .project-card:hover {
-  border-color: rgba(88, 166, 255, 0.45);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(88, 166, 255, 0.12);
-  transform: translateY(-2px);
-}
-
-html .project-info h3 {
-  font-family: var(--font-main);
-  font-size: 1.02rem;
-  font-weight: 600;
-}
-
-html .project-info p {
-  font-size: 0.9rem;
-  line-height: 1.8;
-}
-
-/* 标签做成代码关键字胶囊 */
-html .project-tag {
-  border-radius: 3px;
-  font-family: var(--font-main);
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  background: rgba(88, 166, 255, 0.1);
-  border: 1px solid rgba(88, 166, 255, 0.25);
-  color: var(--primary);
-}
-
-html .project-tag:hover {
-  background: var(--primary);
-  color: var(--text-invert);
-}
-
-/* 空状态提示：做成注释块 */
-html .empty-state {
-  text-align: left;
-  font-family: var(--font-main);
-  font-size: 0.84rem;
-  padding: 18px 18px 18px 20px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border-light);
-  border-left: 3px solid var(--terminal-user);
-  border-radius: 4px;
-  color: var(--text-muted);
-}
-
-html .empty-state::before {
-  content: "// ";
-  color: var(--terminal-user);
-}
-
-/* 视频卡片的左侧主色竖条改为虚线，像未暂存的文件标记 */
-html .video-card {
-  border-left: 3px solid var(--primary);
-}
-
-/* ---------- 6. 时间轴：Git 提交历史 ---------- */
-html .timeline-container::before {
-  background: var(--border-strong);
-  width: 2px;
-}
-
-html .timeline-dot {
-  width: 11px;
-  height: 11px;
-  left: -34px;
-  background: var(--bg-body);
-  border: 2px solid var(--primary);
-}
-
-html .timeline-dot::after {
-  border-color: var(--primary);
-}
-
-html .timeline-date {
-  font-family: var(--font-main);
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--terminal-path);
-}
-
-html .timeline-content h3 {
-  font-family: var(--font-main);
-  font-size: 1rem;
-}
-
-html .timeline-content p {
-  font-size: 0.88rem;
-  line-height: 1.8;
-}
-
-/* ---------- 7. 技术栈：徽章等宽化 ---------- */
-html .skill-category h3 {
-  font-family: var(--font-main);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-subtle);
-}
-
-html .skill-badge {
-  border-radius: 4px;
-  font-family: var(--font-main);
-  font-size: 0.78rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-}
-
-html .skill-badge:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-/* ---------- 8. 页脚 ---------- */
-html footer {
-  font-family: var(--font-main);
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
-}
-
-
-/* ===========================================================================
    15. 站点主题定稿（方案 B：温润刊物 / Editorial）
    ---------------------------------------------------------------------------
    以下规则来自改版方案 preview/vB.css，已改写为整站默认样式。
-   本分支通过样式表锁定观感（面向 light 主题），
-   index.html 与 main 分支保持逐字一致，因此内容可以整文件同步。
+   本方案提供「亮 / 暗」两套完整令牌：
+     html:not([data-theme="dark"])  → 亮色
+     html[data-theme="dark"]        → 暗色
+   默认观感偏向 light 主题；index.html 与 main 分支保持逐字一致。
+   =========================================================================== */
+
+﻿/* ===========================================================================
+   改版方案 B —— 「温润刊物」 （Editorial / Paper）
+   ---------------------------------------------------------------------------
+   设计取向：把个人主页当成一本纸质刊物来排版。衬线标题、暖白纸张底色、
+             居中对称的版式、细发丝分隔线，强调「可阅读、耐看、有质感」。
+   适用人群：偏内容型的博客、写长文、希望给访问者沉稳专业印象的人。
+   取舍：视觉冲击力弱于 C，动效克制；但最不容易看腻，也最适合长文阅读。
+   ---------------------------------------------------------------------------
+   实现约定：加载在 style.css 之后，只覆盖样式，不改动 HTML 结构。
    =========================================================================== */
 
 /* ---------- 1. 设计令牌（亮色） ---------- */
@@ -1614,8 +1293,40 @@ html:not([data-theme="dark"]) {
 }
 
 /* 暗色下切换为暖黑，保持纸质气质 */
+html[data-theme="dark"] {
+  --font-display: Georgia, "Times New Roman", "Songti SC", "Noto Serif SC", serif;
+
+  --bg-body: #1a1714;
+  --bg-editor: #1a1714;
+  --bg-card: #221e1a;
+  --bg-panel: #1e1a16;
+  --bg-sidebar: #171412;
+  --bg-toolbar: #171412;
+  --bg-glass: rgba(26, 23, 20, 0.9);
+  --bg-hover: #2c2722;
+  --bg-active: #3a2e22;
+
+  --text-main: #ece5da;
+  --text-muted: #b3a99c;
+  --text-subtle: #8b8175;
+  --text-invert: #1a1714;
+
+  --primary: #d39a67;
+  --primary-hover: #e3b183;
+  --primary-glow: rgba(211, 154, 103, 0.22);
+  --selection: #4a3826;
+
+  --border-light: #332c25;
+  --border-strong: #4a4038;
+  --radius-md: 2px;
+  --radius-full: 2px;
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.5);
+  --gradient-title: linear-gradient(135deg, #ece5da 0%, #d39a67 100%);
+}
+
 /* ---------- 2. 纸张质感 ---------- */
-html:not([data-theme="dark"]) .intro .bg-decoration {
+html .intro .bg-decoration {
   display: block;
   position: absolute;
   inset: 0;
@@ -1629,25 +1340,25 @@ html:not([data-theme="dark"]) .intro .bg-decoration {
   );
 }
 
-html:not([data-theme="dark"]) .intro .bg-decoration::before,
-html:not([data-theme="dark"]) .intro .bg-decoration::after {
+html .intro .bg-decoration::before,
+html .intro .bg-decoration::after {
   content: none;
   animation: none;
 }
 
 /* ---------- 3. 导航：刊物页眉 ---------- */
-html:not([data-theme="dark"]) nav {
+html nav {
   border-bottom: 1px solid var(--border-strong);
   background: var(--bg-body);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
-html:not([data-theme="dark"]) .nav-container {
+html .nav-container {
   height: 72px;
 }
 
-html:not([data-theme="dark"]) .logo {
+html .logo {
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 600;
@@ -1656,11 +1367,11 @@ html:not([data-theme="dark"]) .logo {
 
 /* 终端 Logo 在刊物风里显得突兀：隐藏终端文本，改用站点名做纯文字签名。
    站点名来自 index.html 中 .logo 的 data-site 属性，改名字只需改一处。 */
-html:not([data-theme="dark"]) .logo-terminal {
+html .logo-terminal {
   display: none;
 }
 
-html:not([data-theme="dark"]) .logo::before {
+html .logo::before {
   content: attr(data-site);
   font-family: var(--font-display);
   font-size: 1.34rem;
@@ -1669,11 +1380,11 @@ html:not([data-theme="dark"]) .logo::before {
   color: var(--text-main);
 }
 
-html:not([data-theme="dark"]) .nav-links {
+html .nav-links {
   gap: 22px;
 }
 
-html:not([data-theme="dark"]) .nav-links a {
+html .nav-links a {
   font-family: var(--font-display);
   font-size: 0.9rem;
   letter-spacing: 0.06em;
@@ -1681,35 +1392,35 @@ html:not([data-theme="dark"]) .nav-links a {
   color: var(--text-muted);
 }
 
-html:not([data-theme="dark"]) .nav-links a::after {
+html .nav-links a::after {
   height: 1px;
   background: var(--primary);
 }
 
-html:not([data-theme="dark"]) .control-btn {
+html .control-btn {
   border-radius: 2px;
   font-family: var(--font-display);
   letter-spacing: 0.04em;
 }
 
 /* ---------- 4. 首屏：刊物封面 ---------- */
-html:not([data-theme="dark"]) .avatar-container::before {
+html .avatar-container::before {
   content: none;
   animation: none;
 }
 
-html:not([data-theme="dark"]) .avatar-glow {
+html .avatar-glow {
   display: none;
 }
 
-html:not([data-theme="dark"]) .avatar {
+html .avatar {
   border-radius: 2px;
   border: 1px solid var(--border-strong);
   box-shadow: 0 10px 24px rgba(80, 62, 42, 0.16), 0 0 0 8px var(--bg-card),
     0 0 0 9px var(--border-light);
 }
 
-html:not([data-theme="dark"]) .gradient-text {
+html .gradient-text {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 2.6rem;
@@ -1718,8 +1429,8 @@ html:not([data-theme="dark"]) .gradient-text {
 }
 
 /* 标题上下的刊物式双线 */
-html:not([data-theme="dark"]) .gradient-text::before,
-html:not([data-theme="dark"]) .gradient-text::after {
+html .gradient-text::before,
+html .gradient-text::after {
   content: "";
   display: block;
   width: 54px;
@@ -1728,22 +1439,22 @@ html:not([data-theme="dark"]) .gradient-text::after {
   background: var(--border-strong);
 }
 
-html:not([data-theme="dark"]) .gradient-text::before {
+html .gradient-text::before {
   margin-bottom: 22px;
 }
 
-html:not([data-theme="dark"]) .gradient-text::after {
+html .gradient-text::after {
   margin-top: 20px;
 }
 
-html:not([data-theme="dark"]) .subtitle {
+html .subtitle {
   font-family: var(--font-display);
   font-size: 1.05rem;
   line-height: 1.95;
   color: var(--text-muted);
 }
 
-html:not([data-theme="dark"]) .intro-contact-link {
+html .intro-contact-link {
   border-radius: 2px;
   font-family: var(--font-display);
   font-size: 0.86rem;
@@ -1752,14 +1463,14 @@ html:not([data-theme="dark"]) .intro-contact-link {
   border: 1px solid var(--border-strong);
 }
 
-html:not([data-theme="dark"]) .intro-contact-link:hover {
+html .intro-contact-link:hover {
   background: var(--primary);
   border-color: var(--primary);
   color: var(--text-invert);
 }
 
 /* ---------- 5. 栏目标题：章节标题 ---------- */
-html:not([data-theme="dark"]) h2 {
+html h2 {
   font-family: var(--font-display);
   font-size: 1.62rem;
   font-weight: 600;
@@ -1768,7 +1479,7 @@ html:not([data-theme="dark"]) h2 {
 }
 
 /* 原来的主色短横线改为发丝线 */
-html:not([data-theme="dark"]) h2::after {
+html h2::after {
   width: 66px;
   height: 1px;
   border-radius: 0;
@@ -1777,16 +1488,16 @@ html:not([data-theme="dark"]) h2::after {
   transition: width 0.4s ease;
 }
 
-html:not([data-theme="dark"]) h2:hover::after {
+html h2:hover::after {
   width: 120px;
 }
 
 /* 标题下再加一条贯穿全宽的细线，形成刊物章节感 */
-html:not([data-theme="dark"]) .section-padding .container > h2 {
+html .section-padding .container > h2 {
   padding-bottom: 0;
 }
 
-html:not([data-theme="dark"]) .section-hint {
+html .section-hint {
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-style: italic;
@@ -1794,34 +1505,34 @@ html:not([data-theme="dark"]) .section-hint {
 }
 
 /* ---------- 6. 卡片：刊物内框 ---------- */
-html:not([data-theme="dark"]) .card,
-html:not([data-theme="dark"]) .project-card {
+html .card,
+html .project-card {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: 2px;
   box-shadow: var(--shadow-card);
 }
 
-html:not([data-theme="dark"]) .project-card:hover {
+html .project-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
   border-color: var(--border-strong);
 }
 
-html:not([data-theme="dark"]) .project-info h3 {
+html .project-info h3 {
   font-family: var(--font-display);
   font-size: 1.22rem;
   font-weight: 600;
 }
 
-html:not([data-theme="dark"]) .project-info p {
+html .project-info p {
   font-family: var(--font-display);
   font-size: 0.96rem;
   line-height: 1.95;
   color: var(--text-muted);
 }
 
-html:not([data-theme="dark"]) .project-tag {
+html .project-tag {
   border-radius: 2px;
   font-family: var(--font-display);
   font-size: 0.74rem;
@@ -1832,19 +1543,19 @@ html:not([data-theme="dark"]) .project-tag {
   color: var(--text-muted);
 }
 
-html:not([data-theme="dark"]) .project-tag:hover {
+html .project-tag:hover {
   background: var(--primary);
   border-color: var(--primary);
   color: var(--text-invert);
 }
 
-html:not([data-theme="dark"]) .project-action {
+html .project-action {
   border-radius: 2px;
   font-family: var(--font-display);
   letter-spacing: 0.03em;
 }
 
-html:not([data-theme="dark"]) .empty-state {
+html .empty-state {
   font-family: var(--font-display);
   font-style: italic;
   font-size: 0.98rem;
@@ -1857,11 +1568,11 @@ html:not([data-theme="dark"]) .empty-state {
   color: var(--text-subtle);
 }
 
-html:not([data-theme="dark"]) .video-card {
+html .video-card {
   border-left: 1px solid var(--border-light);
 }
 
-html:not([data-theme="dark"]) .video-platform {
+html .video-platform {
   border-radius: 2px;
   font-family: var(--font-display);
   letter-spacing: 0.05em;
@@ -1870,16 +1581,16 @@ html:not([data-theme="dark"]) .video-platform {
 }
 
 /* ---------- 7. 时间轴：年表 ---------- */
-html:not([data-theme="dark"]) .timeline-container {
+html .timeline-container {
   max-width: 720px;
 }
 
-html:not([data-theme="dark"]) .timeline-container::before {
+html .timeline-container::before {
   width: 1px;
   background: var(--border-strong);
 }
 
-html:not([data-theme="dark"]) .timeline-dot {
+html .timeline-dot {
   width: 9px;
   height: 9px;
   left: -34px;
@@ -1887,11 +1598,11 @@ html:not([data-theme="dark"]) .timeline-dot {
   border: 1px solid var(--primary);
 }
 
-html:not([data-theme="dark"]) .timeline-dot::after {
+html .timeline-dot::after {
   border-color: var(--primary);
 }
 
-html:not([data-theme="dark"]) .timeline-date {
+html .timeline-date {
   font-family: var(--font-display);
   font-size: 0.82rem;
   font-weight: 600;
@@ -1900,20 +1611,20 @@ html:not([data-theme="dark"]) .timeline-date {
   color: var(--primary);
 }
 
-html:not([data-theme="dark"]) .timeline-content h3 {
+html .timeline-content h3 {
   font-family: var(--font-display);
   font-size: 1.16rem;
   font-weight: 600;
 }
 
-html:not([data-theme="dark"]) .timeline-content p {
+html .timeline-content p {
   font-family: var(--font-display);
   font-size: 0.95rem;
   line-height: 1.9;
 }
 
 /* ---------- 8. 技术栈 ---------- */
-html:not([data-theme="dark"]) .skill-category h3 {
+html .skill-category h3 {
   font-family: var(--font-display);
   font-size: 0.84rem;
   letter-spacing: 0.12em;
@@ -1921,7 +1632,7 @@ html:not([data-theme="dark"]) .skill-category h3 {
   color: var(--text-subtle);
 }
 
-html:not([data-theme="dark"]) .skill-badge {
+html .skill-badge {
   border-radius: 2px;
   font-family: var(--font-display);
   background: transparent;
@@ -1929,23 +1640,17 @@ html:not([data-theme="dark"]) .skill-badge {
   color: var(--text-muted);
 }
 
-html:not([data-theme="dark"]) .skill-badge:hover {
+html .skill-badge:hover {
   border-color: var(--border-strong);
   color: var(--text-main);
   background: var(--bg-panel);
 }
 
 /* ---------- 9. 页脚：版权页 ---------- */
-html:not([data-theme="dark"]) footer {
+html footer {
   font-family: var(--font-display);
   font-size: 0.86rem;
   letter-spacing: 0.06em;
   border-top: 1px solid var(--border-strong);
   padding: 38px 20px;
-}
-
-/* 本方案锁定单一主题，隐藏主题切换按钮
-   （按钮保留在 HTML 中，以便 index.html 与 main 分支保持逐字一致）*/
-.theme-toggle {
-  display: none !important;
 }
