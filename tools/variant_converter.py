@@ -123,11 +123,16 @@ def apply_js() -> None:
 
 
 def drop_preview_lab() -> None:
+    """移除预览实验室。
+
+    不删除本脚本自身 —— 它留在 tools/ 下，方便日后把站点切到别的方案：
+        git checkout -b variant-x
+        python tools/variant_converter.py <a|b|c>
+    """
     shutil.rmtree(SITE / "preview", ignore_errors=True)
-    for extra in ("tools/build_preview.py", "tools/apply_variant.py"):
-        f = SITE / extra
-        if f.is_file():
-            f.unlink()
+    f = SITE / "tools" / "build_preview.py"
+    if f.is_file():
+        f.unlink()
 
 
 def prune_readme() -> None:
