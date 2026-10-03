@@ -8,8 +8,8 @@
     "documents": "文章"
   },
   "intro": {
-    "avatarAlt": "头像",
-    "title": "你好，我是 XXX",
+    "avatarAlt": "Terrorschiki 的头像",
+    "title": "你好，我是 Terrorschiki",
     "desc": "一句话介绍你自己，例如：专注方向 / 当前在做的事情<br>擅长的技能<br>正在学习或钻研的内容"
   },
   "projects": {
@@ -54,6 +54,6 @@
     "email": "邮箱"
   },
   "footer": {
-    "copyright": "© 2026 XXX | 个人主页"
+    "copyright": "© 2026 Terrorschiki | 个人博客"
   }
 }

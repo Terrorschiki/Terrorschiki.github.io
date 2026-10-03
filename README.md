@@ -1,4 +1,4 @@
-# 我的个人博客
+# Terrorschiki 个人博客
 
 一个纯静态的个人主页 / 博客模板：只有 HTML、CSS 和原生 JavaScript，**不需要 Node.js、不需要构建、不需要后端**，推送到 GitHub Pages 就能直接访问。
 

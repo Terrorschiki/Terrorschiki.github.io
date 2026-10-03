@@ -1,4 +1,4 @@
-# 我的个人博客
+# Terrorschiki 个人博客
 
 [English](README.md) | [中文](README_zh.md)
 

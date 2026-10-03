@@ -70,8 +70,8 @@
 
   // ---------- 5. 联系方式（Hero 区域下方的入口）----------
   const CONTACT_LINKS = [
-    { icon: 'fas fa-envelope', key: 'contact.email', link: 'mailto:your-email@example.com' },
-    { icon: 'fab fa-github', key: 'contact.github', link: 'https://github.com/your-name' },
+    { icon: 'fas fa-envelope', key: 'contact.email', link: 'mailto:your-email@example.com' },  // ← 改成你的邮箱
+    { icon: 'fab fa-github', key: 'contact.github', link: 'https://github.com/Terrorschiki' },
     // { icon: 'fab fa-bilibili', key: 'contact.bilibili', link: 'https://space.bilibili.com/xxxxx' },
     // { icon: 'fab fa-zhihu', key: 'contact.zhihu', link: 'https://www.zhihu.com/people/xxxxx' },
     // { icon: 'fab fa-twitter', key: 'contact.twitter', link: 'https://x.com/xxxxx' },

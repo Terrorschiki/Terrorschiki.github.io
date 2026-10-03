@@ -8,8 +8,8 @@
     "documents": "Articles"
   },
   "intro": {
-    "avatarAlt": "Avatar",
-    "title": "Hi, I'm XXX",
+    "avatarAlt": "Terrorschiki's avatar",
+    "title": "Hi, I'm Terrorschiki",
     "desc": "A one-line introduction about yourself, e.g. your focus / what you are working on<br>Your core skills<br>What you are learning right now"
   },
   "projects": {
@@ -54,6 +54,6 @@
     "email": "Email"
   },
   "footer": {
-    "copyright": "© 2026 XXX | Personal Homepage"
+    "copyright": "© 2026 Terrorschiki | Personal Blog"
   }
 }
