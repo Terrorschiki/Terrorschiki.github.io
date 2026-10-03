@@ -17,11 +17,11 @@ from pathlib import Path
 
 SITE = Path(__file__).resolve().parent.parent
 
-# 每个方案固定的主题；suffix 是令牌块选择器里 :not(...) 部分
+# 每个方案对应的主题（决定令牌块是否用 :not([data-theme="dark"]) 限定）
 PLAN = {
-    "a": {"theme": "dark", "suffix": ""},
-    "b": {"theme": "light", "suffix": ':not([data-theme="dark"])'},
-    "c": {"theme": "light", "suffix": ""},
+    "a": {"theme": "dark"},
+    "b": {"theme": "light"},
+    "c": {"theme": "light"},
 }
 
 NAMES = {
@@ -35,7 +35,8 @@ BANNER = """
    15. 站点主题定稿（方案 {X}：{NAME}）
    ---------------------------------------------------------------------------
    以下规则来自改版方案 preview/v{X}.css，已改写为整站默认样式。
-   本分支为单主题设计：data-theme 固定为 {THEME}，主题切换按钮已移除。
+   本分支通过样式表锁定观感（面向 {THEME} 主题），
+   index.html 与 main 分支保持逐字一致，因此内容可以整文件同步。
    =========================================================================== */
 """
 
@@ -47,40 +48,35 @@ def convert_css(variant: str) -> str:
 
     css = src.read_text(encoding="utf-8")
     theme = PLAN[variant]["theme"]
-    suffix = PLAN[variant]["suffix"]
 
     # 1. 去掉文件头的方案说明注释，避免和下面的定稿横幅重复
     css = re.sub(r"^/\* =+\n[\s\S]*?\n   =+ \*/\n", "", css, count=1)
 
-    # 2. 选择器改写：方案前缀 -> 整站默认
-    if suffix:
-        css = css.replace(f'html[data-variant="{variant}"]{suffix}', "html")
-        # 另一主题的令牌块已不成立，整块移除
-        css = re.sub(
-            rf'html\[data-variant="{variant}"\]\[data-theme="dark"\]\s*\{{[\s\S]*?\n\}}\n',
-            "",
-            css,
-            count=1,
-        )
-    else:
-        # 必须把「带尾随空格」的形式放在前面替换，否则会先命中不含空格的形式，
-        # 留下一个孤立的 " nav {...}" 而丢掉 html 选择器
-        css = css.replace(f'html[data-variant="{variant}"] ', "html ")
-        css = css.replace(f'html[data-variant="{variant}"]', "html")
+    # 2. 丢弃「另一主题」的令牌块（按花括号配对精确定位，避免正则配错吞掉后续规则）
+    css = drop_rule_block(css, f'html[data-variant="{variant}"][data-theme="dark"]')
 
-    # 3. 主题按钮已移除，本块内它的两条规则（固定主题提示）整块删除。
-    #    注意：基础 style.css 里也有含「主题按钮」字样的注释，
-    #    因此这里按「注释 + 紧随其后的 .theme-toggle 规则块」精确匹配，不做跨段吞并。
-    css = re.sub(
-        r"/\* [^\n]*主题按钮[^\n]*\*/\n(?=\.theme-toggle)",
-        "",
-        css,
-        count=1,
-    )
+    # 3. 选择器改写：方案前缀 -> 整站默认。
+    #    亮色方案改用 :not([data-theme="dark"]) 限定，
+    #    这样即使访客切到暗色，也会落回基础样式的暗色令牌，不会出现半亮半暗。
+    scoped = f'html:not([data-theme="dark"])' if theme == "light" else "html"
+
+    css = css.replace(f'html[data-variant="{variant}"]:not([data-theme="dark"])', scoped)
+    css = css.replace(f'html[data-variant="{variant}"][data-theme="dark"]', scoped)
+    # 「带尾随空格」的形式必须放在裸形式前面替换，否则会先命中裸形式而丢掉选择器
+    css = css.replace(f'html[data-variant="{variant}"] ', f"{scoped} ")
+    css = css.replace(f'html[data-variant="{variant}"]', scoped)
+
+    # 4. 移除方案自带的主题按钮样式（各分支的主题按钮显隐统一由下面统一注入的规则控制）
+    css = re.sub(r"/\* [^\n]*主题按钮[^\n]*\*/\n(?=\.theme-toggle)", "", css, count=1)
     css = re.sub(r"\.theme-toggle(::after)? \{[^}]*\}\n?", "", css)
 
-    if "theme-toggle" in css:
-        raise SystemExit("主题按钮样式未能完全移除，请检查 apply_variant.py 的正则")
+    # 5. 统一注入：本方案锁定单一主题，隐藏主题按钮，保证 index.html 可与 main 完全一致
+    css += (
+        "\n/* 本方案锁定单一主题，隐藏主题切换按钮\n"
+        "   （按钮保留在 HTML 中，以便 index.html 与 main 分支保持逐字一致）*/\n"
+        ".theme-toggle {\n  display: none !important;\n}\n"
+    )
+
     if "data-variant" in css:
         raise SystemExit("CSS 中仍残留 data-variant，请检查选择器改写逻辑")
 
@@ -89,37 +85,22 @@ def convert_css(variant: str) -> str:
 
 
 def apply_html(variant: str) -> None:
+    """index.html 不做任何改动。
+
+    主题由各分支的样式表决定，因此各分支的 index.html 与 main 逐字一致，
+    内容同步时只需整文件覆盖，不会产生任何冲突。
+    """
     p = SITE / "index.html"
     html = p.read_text(encoding="utf-8")
+
+    if "theme-toggle" not in html:
+        raise SystemExit("index.html 缺少主题按钮，结构可能与预期不符")
+    if "savedTheme" not in html:
+        raise SystemExit("index.html 缺少主题初始化脚本，结构可能与预期不符")
+
     theme = PLAN[variant]["theme"]
-
-    html = html.replace(
-        '<html lang="en" data-theme="light">',
-        f'<html lang="en" data-theme="{theme}">',
-        1,
-    )
-    html = re.sub(r"\n  <script>\n    const savedTheme[\s\S]*?\n  </script>\n", "\n", html, count=1)
-    html = re.sub(
-        r'\s*<button class="control-btn theme-toggle"[\s\S]*?</button>', "", html, count=1
-    )
-
-    if "theme-toggle" in html or "savedTheme" in html:
-        raise SystemExit("index.html 中的主题切换相关内容未清理干净")
-
-    p.write_text(html, encoding="utf-8", newline="\n")
-
-
-def apply_js() -> None:
-    p = SITE / "assets" / "js" / "main.js"
-    js = p.read_text(encoding="utf-8")
-
-    js = js.replace("    initThemeToggle();\n", "", 1)
-    js = re.sub(r"  function initThemeToggle\(\) \{[\s\S]*?\n  \}\n\n", "", js, count=1)
-
-    if "initThemeToggle" in js:
-        raise SystemExit("main.js 中仍残留 initThemeToggle")
-
-    p.write_text(js, encoding="utf-8", newline="\n")
+    # 主题按钮仍保留在 DOM 中（只是被样式表隐藏），index.html 因此可以逐字同步
+    print(f"  index.html 保持与 main 一致（主题由样式表决定：{theme}）")
 
 
 def drop_preview_lab() -> None:
@@ -163,14 +144,13 @@ def main() -> None:
     target.write_text(base.rstrip() + "\n\n" + converted, encoding="utf-8", newline="\n")
 
     apply_html(variant)
-    apply_js()
     drop_preview_lab()
     prune_readme()
 
-    print(f"已应用方案 {variant.upper()}（主题固定为 {PLAN[variant]['theme']}）")
+    print(f"已应用方案 {variant.upper()}（主题由样式表决定：{PLAN[variant]['theme']}）")
     print(f"  style.css 追加 {len(converted)} 字符")
-    print("  index.html / main.js 已固定主题并移除主题按钮")
-    print("  preview/ 预览实验室与转换脚本自身已移除")
+    print("  index.html / main.js 未做改动 —— 与 main 分支保持一致")
+    print("  preview/ 预览实验室已移除")
 
 
 if __name__ == "__main__":
