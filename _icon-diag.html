@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<title>图标字体诊断</title>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body { font: 13px/1.75 Consolas, monospace; margin: 0; padding: 14px; background: #fff; color: #111; }
+  #o { white-space: pre; }
+  .probe { font-size: 34px; margin-bottom: 10px; }
+  .probe i { margin-right: 14px; }
+</style>
+</head>
+<body>
+<div class="probe">
+  <i class="fas fa-envelope" id="ps"></i>
+  <i class="fab fa-github" id="pb"></i>
+  <i class="fas fa-cube" id="pc"></i>
+</div>
+<div id="o">检测中…</div>
+<script>
+  const lines = [];
+  const cs = (el, p) => getComputedStyle(el)[p];
+
+  function run() {
+    lines.length = 0;
+    const s = document.getElementById('ps');
+    const b = document.getElementById('pb');
+
+    lines.push('=== 字体加载状态 ===');
+    lines.push('  fonts.status = ' + document.fonts.status);
+    lines.push('  "Font Awesome 6 Free"   = ' + document.fonts.check('34px "Font Awesome 6 Free"'));
+    lines.push('  "Font Awesome 6 Solid"  = ' + document.fonts.check('34px "Font Awesome 6 Solid"'));
+    lines.push('  "Font Awesome 6 Brands" = ' + document.fonts.check('34px "Font Awesome 6 Brands"'));
+
+    lines.push('');
+    lines.push('=== 已注册字体 ===');
+    let n = 0;
+    document.fonts.forEach((f) => {
+      n += 1;
+      lines.push('  [' + n + '] ' + f.family + ' | w' + f.weight + ' | ' + f.status);
+    });
+    if (!n) lines.push('  （无）');
+
+    lines.push('');
+    lines.push('=== 样式表 ===');
+    let m = 0;
+    for (const sh of document.styleSheets) {
+      m += 1;
+      lines.push('  [' + m + '] ' + (sh.href || 'inline'));
+    }
+
+    lines.push('');
+    lines.push('=== 探针计算样式 ===');
+    lines.push('  fa-envelope family = ' + cs(s, 'fontFamily'));
+    lines.push('  fa-github   family = ' + cs(b, 'fontFamily'));
+    lines.push('  fa-github   weight = ' + cs(b, 'fontWeight'));
+    lines.push('  fa-github ::before = ' + getComputedStyle(b, '::before').content);
+    lines.push('  fa-github 宽度     = ' + Math.round(b.getBoundingClientRect().width) + 'px');
+
+    document.getElementById('o').textContent = lines.join('\n');
+  }
+
+  document.fonts.ready.then(() => setTimeout(run, 2000));
+  setTimeout(run, 400);
+</script>
+</body>
+</html>
