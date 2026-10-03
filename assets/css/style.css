@@ -1236,15 +1236,55 @@ h2:hover::after {
    15. 站点主题定稿（方案 A：终端编辑器 / Terminal）
    ---------------------------------------------------------------------------
    以下规则来自改版方案 preview/vA.css，已改写为整站默认样式。
-   本分支为单主题设计：data-theme 固定为 dark，主题切换按钮已移除。
+   本方案提供「亮 / 暗」两套完整令牌：
+     html:not([data-theme="dark"])  → 亮色
+     html[data-theme="dark"]        → 暗色
+   默认观感偏向 dark 主题；index.html 与 main 分支保持逐字一致。
    =========================================================================== */
 
-/* ---------- 1. 设计令牌 ---------- */
-html {
+/* ---------- 1. 设计令牌（亮色：浅色代码编辑器） ---------- */
+html:not([data-theme="dark"]) {
   --font-main: "JetBrains Mono", "Cascadia Code", "Fira Code", "SF Mono", Consolas,
     "PingFang SC", "Microsoft YaHei", monospace;
   --font-display: var(--font-main);
 
+  --bg-body: #f6f8fa;
+  --bg-editor: #ffffff;
+  --bg-card: #ffffff;
+  --bg-panel: #f6f8fa;
+  --bg-sidebar: #f6f8fa;
+  --bg-toolbar: #f6f8fa;
+  --bg-glass: rgba(246, 248, 250, 0.85);
+  --bg-hover: #eaeef2;
+  --bg-active: #ddf4ff;
+
+  --text-main: #1f2328;
+  --text-muted: #59636e;
+  --text-subtle: #818b98;
+  --text-invert: #ffffff;
+
+  --primary: #0969da;
+  --primary-hover: #0550ae;
+  --primary-glow: rgba(9, 105, 218, 0.18);
+  --selection: #b6e3ff;
+  --terminal-user: #1a7f37;
+  --terminal-path: #953800;
+
+  --border-light: #d1d9e0;
+  --border-strong: #b7c0c9;
+  --radius-md: 4px;
+  --radius-full: 4px;
+
+  --shadow-sm: 0 1px 2px rgba(31, 35, 40, 0.08);
+  --shadow-card: 0 3px 10px rgba(31, 35, 40, 0.1);
+  --shadow-hover: 0 8px 24px rgba(31, 35, 40, 0.15);
+  --shadow-hard: 0 10px 26px rgba(31, 35, 40, 0.16);
+
+  --gradient-title: linear-gradient(135deg, #1f2328 0%, #0969da 100%);
+}
+
+/* ---------- 1b. 设计令牌（暗色：深夜代码编辑器） ---------- */
+html[data-theme="dark"] {
   --bg-body: #0b0e14;
   --bg-editor: #0b0e14;
   --bg-card: #11151c;
@@ -1269,31 +1309,28 @@ html {
 
   --border-light: #1f2630;
   --border-strong: #30363d;
-  --radius-md: 4px;
-  --radius-full: 4px;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.5);
   --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.6);
+  --shadow-hard: 0 10px 26px rgba(0, 0, 0, 0.55);
 
   --gradient-title: linear-gradient(135deg, #e6edf3 0%, #58a6ff 100%);
 }
 
-/* 方案 A 期间强制深色：切到浅色会破坏编辑器观感 */
+/* 页面底色跟随令牌（亮/暗两套均可） */
 html {
   background: var(--bg-body);
 }
 
-/* 方案 A 为固定深色，主题按钮在此方案下无意义，做禁用提示 */
-html 
-html 
 /* ---------- 2. 导航：编辑器标题栏 ---------- */
 html nav {
   border-bottom: 1px solid var(--border-light);
 }
 
+/* Logo 胶囊在亮色下用浅灰底，暗色下沿用编辑器深色底 */
 html .logo-terminal {
-  background: #0d1117;
+  background: var(--bg-panel);
   border: 1px solid var(--border-strong);
   border-radius: 4px;
   font-weight: 600;
@@ -1328,8 +1365,8 @@ html .intro .bg-decoration {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(rgba(88, 166, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(88, 166, 255, 0.045) 1px, transparent 1px);
+  background-image: linear-gradient(color-mix(in srgb, var(--primary) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--primary) 5%, transparent) 1px, transparent 1px);
   background-size: 44px 44px;
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 10%, transparent 75%);
   mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 10%, transparent 75%);
@@ -1350,7 +1387,7 @@ html .avatar-container::before {
 html .avatar {
   border-radius: 6px;
   border: 1px solid var(--border-strong);
-  box-shadow: 0 0 0 6px rgba(88, 166, 255, 0.07);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 8%, transparent);
 }
 
 html .avatar-glow {
@@ -1445,8 +1482,8 @@ html .project-card {
 }
 
 html .project-card:hover {
-  border-color: rgba(88, 166, 255, 0.45);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(88, 166, 255, 0.12);
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow: var(--shadow-hard), 0 0 0 1px color-mix(in srgb, var(--primary) 12%, transparent);
   transform: translateY(-2px);
 }
 
@@ -1467,8 +1504,8 @@ html .project-tag {
   font-family: var(--font-main);
   font-size: 0.7rem;
   padding: 2px 8px;
-  background: rgba(88, 166, 255, 0.1);
-  border: 1px solid rgba(88, 166, 255, 0.25);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 26%, transparent);
   color: var(--primary);
 }
 

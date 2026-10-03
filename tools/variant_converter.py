@@ -17,6 +17,9 @@ from pathlib import Path
 
 SITE = Path(__file__).resolve().parent.parent
 
+# 定稿块的标记：用于重复运行时定位并剥离旧块（保证幂等）
+MARKER = "   15. 站点主题定稿"
+
 # 每个方案对应的主题（决定令牌块是否用 :not([data-theme="dark"]) 限定）
 PLAN = {
     "a": {"theme": "dark"},
@@ -35,8 +38,10 @@ BANNER = """
    15. 站点主题定稿（方案 {X}：{NAME}）
    ---------------------------------------------------------------------------
    以下规则来自改版方案 preview/v{X}.css，已改写为整站默认样式。
-   本分支通过样式表锁定观感（面向 {THEME} 主题），
-   index.html 与 main 分支保持逐字一致，因此内容可以整文件同步。
+   本方案提供「亮 / 暗」两套完整令牌：
+     html:not([data-theme="dark"])  → 亮色
+     html[data-theme="dark"]        → 暗色
+   默认观感偏向 {THEME} 主题；index.html 与 main 分支保持逐字一致。
    =========================================================================== */
 """
 
@@ -84,33 +89,34 @@ def convert_css(variant: str) -> str:
     # 1. 去掉文件头的方案说明注释，避免和下面的定稿横幅重复
     css = re.sub(r"^/\* =+\n[\s\S]*?\n   =+ \*/\n", "", css, count=1)
 
-    # 2. 丢弃「另一主题」的令牌块（按花括号配对精确定位，避免正则配错吞掉后续规则）
-    css = drop_rule_block(css, f'html[data-variant="{variant}"][data-theme="dark"]')
+    # 2. 选择器改写：方案前缀 -> 整站默认，同时保留「亮 / 暗」两套令牌。
+    #    亮色令牌用 :not([data-theme="dark"]) 限定，暗色令牌用 [data-theme="dark"]，
+    #    这样切换主题时两套令牌各归其位，不会出现半亮半暗。
+    v = f'html[data-variant="{variant}"]'
+    replacements = [
+        # 暗色令牌必须排在前面，否则会被「裸前缀」那条先吃掉
+        (f'{v}[data-theme="dark"] ', 'html[data-theme="dark"] '),
+        (f'{v}[data-theme="dark"]', 'html[data-theme="dark"]'),
+        (f'{v}:not([data-theme="dark"]) ', 'html:not([data-theme="dark"]) '),
+        (f'{v}:not([data-theme="dark"])', 'html:not([data-theme="dark"])'),
+        (f"{v} ", "html "),
+        (v, "html"),
+    ]
+    for old, new in replacements:
+        css = css.replace(old, new)
 
-    # 3. 选择器改写：方案前缀 -> 整站默认。
-    #    亮色方案改用 :not([data-theme="dark"]) 限定，
-    #    这样即使访客切到暗色，也会落回基础样式的暗色令牌，不会出现半亮半暗。
-    scoped = f'html:not([data-theme="dark"])' if theme == "light" else "html"
-
-    css = css.replace(f'html[data-variant="{variant}"]:not([data-theme="dark"])', scoped)
-    css = css.replace(f'html[data-variant="{variant}"][data-theme="dark"]', scoped)
-    # 「带尾随空格」的形式必须放在裸形式前面替换，否则会先命中裸形式而丢掉选择器
-    css = css.replace(f'html[data-variant="{variant}"] ', f"{scoped} ")
-    css = css.replace(f'html[data-variant="{variant}"]', scoped)
-
-    # 4. 移除方案自带的主题按钮样式（各分支的主题按钮显隐统一由下面统一注入的规则控制）
+    # 3. 移除方案自带的主题按钮样式（按钮现在恢复可用，不再需要禁用提示）
     css = re.sub(r"/\* [^\n]*主题按钮[^\n]*\*/\n(?=\.theme-toggle)", "", css, count=1)
     css = re.sub(r"\.theme-toggle(::after)? \{[^}]*\}\n?", "", css)
 
-    # 5. 统一注入：本方案锁定单一主题，隐藏主题按钮，保证 index.html 可与 main 完全一致
-    css += (
-        "\n/* 本方案锁定单一主题，隐藏主题切换按钮\n"
-        "   （按钮保留在 HTML 中，以便 index.html 与 main 分支保持逐字一致）*/\n"
-        ".theme-toggle {\n  display: none !important;\n}\n"
-    )
-
     if "data-variant" in css:
         raise SystemExit("CSS 中仍残留 data-variant，请检查选择器改写逻辑")
+
+    # 4. 校验两套令牌都在，避免把某一种主题漏掉
+    if 'html[data-theme="dark"] {' not in css:
+        raise SystemExit("缺少暗色令牌块：本方案未能提供暗色主题")
+    if "html:not([data-theme=\"dark\"]) {" not in css:
+        raise SystemExit("缺少亮色令牌块：本方案未能提供亮色主题")
 
     banner = BANNER.format(X=variant.upper(), x=variant, NAME=NAMES[variant], THEME=theme)
     return banner + "\n" + css.strip() + "\n"
@@ -164,22 +170,44 @@ def prune_readme() -> None:
         p.write_text(text, encoding="utf-8", newline="\n")
 
 
+def strip_existing_block(css: str) -> str:
+    """剥离此前追加过的定稿块，使本脚本可以重复运行而不叠加样式。
+
+    按标记字符串定位，然后回退到该注释块的起始 /*。
+    因为定稿块永远追加在文件末尾，直接截断即可。
+    """
+    idx = css.find(MARKER)
+    if idx == -1:
+        return css
+    start = css.rfind("/*", 0, idx)
+    if start == -1:
+        start = idx
+    print("  检测到已有定稿块，先剥离再重新应用（保证幂等）")
+    return css[:start].rstrip() + "\n"
+
+
 def main() -> None:
     if len(sys.argv) < 2 or sys.argv[1] not in PLAN:
-        sys.exit("用法: python tools/apply_variant.py {a|b|c}")
+        sys.exit("用法: python tools/variant_converter.py {a|b|c}")
     variant = sys.argv[1]
 
     converted = convert_css(variant)
 
     target = SITE / "assets" / "css" / "style.css"
-    base = target.read_text(encoding="utf-8")
+    # 先剥离旧定稿块，避免重复运行时样式叠加
+    base = strip_existing_block(target.read_text(encoding="utf-8"))
     target.write_text(base.rstrip() + "\n\n" + converted, encoding="utf-8", newline="\n")
+
+    # 复核：定稿块只能有一份
+    final = target.read_text(encoding="utf-8")
+    if final.count(MARKER) != 1:
+        sys.exit(f"定稿块数量异常（{final.count(MARKER)} 份），请检查 strip_existing_block")
 
     apply_html(variant)
     drop_preview_lab()
     prune_readme()
 
-    print(f"已应用方案 {variant.upper()}（主题由样式表决定：{PLAN[variant]['theme']}）")
+    print(f"已应用方案 {variant.upper()}（含亮/暗两套主题，默认 {PLAN[variant]['theme']}）")
     print(f"  style.css 追加 {len(converted)} 字符")
     print("  index.html / main.js 未做改动 —— 与 main 分支保持一致")
     print("  preview/ 预览实验室已移除")
