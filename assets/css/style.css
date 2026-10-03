@@ -1564,3 +1564,388 @@ html footer {
   font-size: 0.78rem;
   letter-spacing: 0.02em;
 }
+
+
+/* ===========================================================================
+   15. 站点主题定稿（方案 B：温润刊物 / Editorial）
+   ---------------------------------------------------------------------------
+   以下规则来自改版方案 preview/vB.css，已改写为整站默认样式。
+   本分支通过样式表锁定观感（面向 light 主题），
+   index.html 与 main 分支保持逐字一致，因此内容可以整文件同步。
+   =========================================================================== */
+
+/* ---------- 1. 设计令牌（亮色） ---------- */
+html:not([data-theme="dark"]) {
+  --font-display: Georgia, "Times New Roman", "Songti SC", "Noto Serif SC", "Source Han Serif SC",
+    "SimSun", serif;
+
+  --bg-body: #f7f3ec;
+  --bg-editor: #fffdf8;
+  --bg-card: #fffdf8;
+  --bg-panel: #f2ece1;
+  --bg-sidebar: #efe8dc;
+  --bg-toolbar: #efe8dc;
+  --bg-glass: rgba(247, 243, 236, 0.9);
+  --bg-hover: #ece4d6;
+  --bg-active: #f0e4d2;
+
+  --text-main: #2b2622;
+  --text-muted: #6d635a;
+  --text-subtle: #948a7e;
+  --text-invert: #fffdf8;
+
+  --primary: #9a5b33;
+  --primary-hover: #7d4522;
+  --primary-glow: rgba(154, 91, 51, 0.18);
+  --selection: #e8d8c3;
+  --terminal-user: #8a6a3f;
+  --terminal-path: #a8703c;
+
+  --border-light: #e2d9ca;
+  --border-strong: #cdc1ad;
+  --radius-md: 2px;
+  --radius-full: 2px;
+
+  --shadow-sm: 0 1px 2px rgba(80, 62, 42, 0.06);
+  --shadow-card: 0 2px 10px rgba(80, 62, 42, 0.08);
+  --shadow-hover: 0 8px 24px rgba(80, 62, 42, 0.12);
+
+  --gradient-title: linear-gradient(135deg, #2b2622 0%, #9a5b33 100%);
+}
+
+/* 暗色下切换为暖黑，保持纸质气质 */
+/* ---------- 2. 纸张质感 ---------- */
+html:not([data-theme="dark"]) .intro .bg-decoration {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(120, 96, 68, 0.028) 0px,
+    rgba(120, 96, 68, 0.028) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+html:not([data-theme="dark"]) .intro .bg-decoration::before,
+html:not([data-theme="dark"]) .intro .bg-decoration::after {
+  content: none;
+  animation: none;
+}
+
+/* ---------- 3. 导航：刊物页眉 ---------- */
+html:not([data-theme="dark"]) nav {
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--bg-body);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html:not([data-theme="dark"]) .nav-container {
+  height: 72px;
+}
+
+html:not([data-theme="dark"]) .logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* 终端 Logo 在刊物风里显得突兀：隐藏终端文本，改用站点名做纯文字签名。
+   站点名来自 index.html 中 .logo 的 data-site 属性，改名字只需改一处。 */
+html:not([data-theme="dark"]) .logo-terminal {
+  display: none;
+}
+
+html:not([data-theme="dark"]) .logo::before {
+  content: attr(data-site);
+  font-family: var(--font-display);
+  font-size: 1.34rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-main);
+}
+
+html:not([data-theme="dark"]) .nav-links {
+  gap: 22px;
+}
+
+html:not([data-theme="dark"]) .nav-links a {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+html:not([data-theme="dark"]) .nav-links a::after {
+  height: 1px;
+  background: var(--primary);
+}
+
+html:not([data-theme="dark"]) .control-btn {
+  border-radius: 2px;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 4. 首屏：刊物封面 ---------- */
+html:not([data-theme="dark"]) .avatar-container::before {
+  content: none;
+  animation: none;
+}
+
+html:not([data-theme="dark"]) .avatar-glow {
+  display: none;
+}
+
+html:not([data-theme="dark"]) .avatar {
+  border-radius: 2px;
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 10px 24px rgba(80, 62, 42, 0.16), 0 0 0 8px var(--bg-card),
+    0 0 0 9px var(--border-light);
+}
+
+html:not([data-theme="dark"]) .gradient-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.6rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+
+/* 标题上下的刊物式双线 */
+html:not([data-theme="dark"]) .gradient-text::before,
+html:not([data-theme="dark"]) .gradient-text::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 1px;
+  margin: 0 auto;
+  background: var(--border-strong);
+}
+
+html:not([data-theme="dark"]) .gradient-text::before {
+  margin-bottom: 22px;
+}
+
+html:not([data-theme="dark"]) .gradient-text::after {
+  margin-top: 20px;
+}
+
+html:not([data-theme="dark"]) .subtitle {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.95;
+  color: var(--text-muted);
+}
+
+html:not([data-theme="dark"]) .intro-contact-link {
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  letter-spacing: 0.03em;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+}
+
+html:not([data-theme="dark"]) .intro-contact-link:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--text-invert);
+}
+
+/* ---------- 5. 栏目标题：章节标题 ---------- */
+html:not([data-theme="dark"]) h2 {
+  font-family: var(--font-display);
+  font-size: 1.62rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+}
+
+/* 原来的主色短横线改为发丝线 */
+html:not([data-theme="dark"]) h2::after {
+  width: 66px;
+  height: 1px;
+  border-radius: 0;
+  background: var(--border-strong);
+  margin-top: 14px;
+  transition: width 0.4s ease;
+}
+
+html:not([data-theme="dark"]) h2:hover::after {
+  width: 120px;
+}
+
+/* 标题下再加一条贯穿全宽的细线，形成刊物章节感 */
+html:not([data-theme="dark"]) .section-padding .container > h2 {
+  padding-bottom: 0;
+}
+
+html:not([data-theme="dark"]) .section-hint {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin: 0 0 30px;
+}
+
+/* ---------- 6. 卡片：刊物内框 ---------- */
+html:not([data-theme="dark"]) .card,
+html:not([data-theme="dark"]) .project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  box-shadow: var(--shadow-card);
+}
+
+html:not([data-theme="dark"]) .project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-strong);
+}
+
+html:not([data-theme="dark"]) .project-info h3 {
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  font-weight: 600;
+}
+
+html:not([data-theme="dark"]) .project-info p {
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  line-height: 1.95;
+  color: var(--text-muted);
+}
+
+html:not([data-theme="dark"]) .project-tag {
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+}
+
+html:not([data-theme="dark"]) .project-tag:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--text-invert);
+}
+
+html:not([data-theme="dark"]) .project-action {
+  border-radius: 2px;
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
+}
+
+html:not([data-theme="dark"]) .empty-state {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  border-radius: 0;
+  padding: 34px 20px;
+  color: var(--text-subtle);
+}
+
+html:not([data-theme="dark"]) .video-card {
+  border-left: 1px solid var(--border-light);
+}
+
+html:not([data-theme="dark"]) .video-platform {
+  border-radius: 2px;
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: transparent;
+}
+
+/* ---------- 7. 时间轴：年表 ---------- */
+html:not([data-theme="dark"]) .timeline-container {
+  max-width: 720px;
+}
+
+html:not([data-theme="dark"]) .timeline-container::before {
+  width: 1px;
+  background: var(--border-strong);
+}
+
+html:not([data-theme="dark"]) .timeline-dot {
+  width: 9px;
+  height: 9px;
+  left: -34px;
+  background: var(--bg-body);
+  border: 1px solid var(--primary);
+}
+
+html:not([data-theme="dark"]) .timeline-dot::after {
+  border-color: var(--primary);
+}
+
+html:not([data-theme="dark"]) .timeline-date {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+html:not([data-theme="dark"]) .timeline-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.16rem;
+  font-weight: 600;
+}
+
+html:not([data-theme="dark"]) .timeline-content p {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+/* ---------- 8. 技术栈 ---------- */
+html:not([data-theme="dark"]) .skill-category h3 {
+  font-family: var(--font-display);
+  font-size: 0.84rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+html:not([data-theme="dark"]) .skill-badge {
+  border-radius: 2px;
+  font-family: var(--font-display);
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+}
+
+html:not([data-theme="dark"]) .skill-badge:hover {
+  border-color: var(--border-strong);
+  color: var(--text-main);
+  background: var(--bg-panel);
+}
+
+/* ---------- 9. 页脚：版权页 ---------- */
+html:not([data-theme="dark"]) footer {
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+  border-top: 1px solid var(--border-strong);
+  padding: 38px 20px;
+}
+
+/* 本方案锁定单一主题，隐藏主题切换按钮
+   （按钮保留在 HTML 中，以便 index.html 与 main 分支保持逐字一致）*/
+.theme-toggle {
+  display: none !important;
+}
