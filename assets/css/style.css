@@ -1233,348 +1233,16 @@ h2:hover::after {
 
 
 /* ===========================================================================
-   15. 站点主题定稿（方案 A：终端编辑器 / Terminal）
-   ---------------------------------------------------------------------------
-   以下规则来自改版方案 preview/vA.css，已改写为整站默认样式。
-   本分支为单主题设计：data-theme 固定为 dark，主题切换按钮已移除。
-   =========================================================================== */
-
-/* ---------- 1. 设计令牌 ---------- */
-html {
-  --font-main: "JetBrains Mono", "Cascadia Code", "Fira Code", "SF Mono", Consolas,
-    "PingFang SC", "Microsoft YaHei", monospace;
-  --font-display: var(--font-main);
-
-  --bg-body: #0b0e14;
-  --bg-editor: #0b0e14;
-  --bg-card: #11151c;
-  --bg-panel: #0f1319;
-  --bg-sidebar: #0d1117;
-  --bg-toolbar: #0d1117;
-  --bg-glass: rgba(11, 14, 20, 0.85);
-  --bg-hover: #1b2230;
-  --bg-active: #16324f;
-
-  --text-main: #e6edf3;
-  --text-muted: #8b949e;
-  --text-subtle: #6a737d;
-  --text-invert: #0b0e14;
-
-  --primary: #58a6ff;
-  --primary-hover: #79b8ff;
-  --primary-glow: rgba(88, 166, 255, 0.24);
-  --selection: #264f78;
-  --terminal-user: #3fb950;
-  --terminal-path: #d29922;
-
-  --border-light: #1f2630;
-  --border-strong: #30363d;
-  --radius-md: 4px;
-  --radius-full: 4px;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.5);
-  --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.6);
-
-  --gradient-title: linear-gradient(135deg, #e6edf3 0%, #58a6ff 100%);
-}
-
-/* 方案 A 期间强制深色：切到浅色会破坏编辑器观感 */
-html {
-  background: var(--bg-body);
-}
-
-/* 方案 A 为固定深色，主题按钮在此方案下无意义，做禁用提示 */
-html 
-html 
-/* ---------- 2. 导航：编辑器标题栏 ---------- */
-html nav {
-  border-bottom: 1px solid var(--border-light);
-}
-
-html .logo-terminal {
-  background: #0d1117;
-  border: 1px solid var(--border-strong);
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-html .nav-links a {
-  font-size: 0.82rem;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
-  padding: 4px 2px;
-}
-
-html .nav-links a:hover,
-html .nav-links a.active {
-  color: var(--primary);
-}
-
-html .nav-links a::after {
-  height: 2px;
-  border-radius: 0;
-}
-
-html .control-btn {
-  border-radius: 4px;
-  font-family: var(--font-main);
-  font-size: 0.75rem;
-}
-
-/* ---------- 3. 首屏：编辑器窗口感 ---------- */
-html .intro .bg-decoration {
-  display: block;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: linear-gradient(rgba(88, 166, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(88, 166, 255, 0.045) 1px, transparent 1px);
-  background-size: 44px 44px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 10%, transparent 75%);
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 10%, transparent 75%);
-}
-
-/* 关掉基础样式里的光斑与旋转光环，改为代码感装饰 */
-html .intro .bg-decoration::before,
-html .intro .bg-decoration::after {
-  content: none;
-  animation: none;
-}
-
-html .avatar-container::before {
-  content: none;
-  animation: none;
-}
-
-html .avatar {
-  border-radius: 6px;
-  border: 1px solid var(--border-strong);
-  box-shadow: 0 0 0 6px rgba(88, 166, 255, 0.07);
-}
-
-html .avatar-glow {
-  display: none;
-}
-
-html .gradient-text {
-  font-family: var(--font-main);
-  font-weight: 700;
-  font-size: 2.1rem;
-  letter-spacing: -0.01em;
-  background: none;
-  -webkit-text-fill-color: currentColor;
-  color: var(--text-main);
-}
-
-/* 标题前加一行等宽注释，强化终端气质 */
-html .gradient-text::before {
-  content: "// ";
-  color: var(--terminal-user);
-  font-weight: 400;
-}
-
-html .subtitle {
-  font-size: 0.92rem;
-  line-height: 1.85;
-  color: var(--text-muted);
-}
-
-html .intro-contact-link {
-  border-radius: 4px;
-  font-family: var(--font-main);
-  font-size: 0.78rem;
-  border: 1px solid var(--border-strong);
-  background: var(--bg-card);
-}
-
-html .intro-contact-link:hover {
-  border-color: var(--primary);
-  background: var(--bg-active);
-}
-
-/* ---------- 4. 栏目标题：文件路径风格 ---------- */
-html h2 {
-  font-family: var(--font-main);
-  font-size: 1.16rem;
-  font-weight: 600;
-  text-align: left;
-  letter-spacing: 0;
-  margin-bottom: 22px;
-}
-
-html h2::before {
-  content: "~/";
-  color: var(--text-subtle);
-  font-weight: 400;
-}
-
-html h2::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 1px;
-  margin: 14px 0 0;
-  border-radius: 0;
-  background: linear-gradient(90deg, var(--border-strong), transparent);
-  transition: none;
-}
-
-html h2:hover::after {
-  width: 100%;
-}
-
-html .section-hint {
-  text-align: left;
-  margin: -14px 0 26px;
-  font-family: var(--font-main);
-  font-size: 0.8rem;
-}
-
-html .section-hint::before {
-  content: "# ";
-  color: var(--terminal-path);
-}
-
-/* ---------- 5. 卡片：编辑器面板 ---------- */
-html .card,
-html .project-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-}
-
-html .project-card:hover {
-  border-color: rgba(88, 166, 255, 0.45);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(88, 166, 255, 0.12);
-  transform: translateY(-2px);
-}
-
-html .project-info h3 {
-  font-family: var(--font-main);
-  font-size: 1.02rem;
-  font-weight: 600;
-}
-
-html .project-info p {
-  font-size: 0.9rem;
-  line-height: 1.8;
-}
-
-/* 标签做成代码关键字胶囊 */
-html .project-tag {
-  border-radius: 3px;
-  font-family: var(--font-main);
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  background: rgba(88, 166, 255, 0.1);
-  border: 1px solid rgba(88, 166, 255, 0.25);
-  color: var(--primary);
-}
-
-html .project-tag:hover {
-  background: var(--primary);
-  color: var(--text-invert);
-}
-
-/* 空状态提示：做成注释块 */
-html .empty-state {
-  text-align: left;
-  font-family: var(--font-main);
-  font-size: 0.84rem;
-  padding: 18px 18px 18px 20px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border-light);
-  border-left: 3px solid var(--terminal-user);
-  border-radius: 4px;
-  color: var(--text-muted);
-}
-
-html .empty-state::before {
-  content: "// ";
-  color: var(--terminal-user);
-}
-
-/* 视频卡片的左侧主色竖条改为虚线，像未暂存的文件标记 */
-html .video-card {
-  border-left: 3px solid var(--primary);
-}
-
-/* ---------- 6. 时间轴：Git 提交历史 ---------- */
-html .timeline-container::before {
-  background: var(--border-strong);
-  width: 2px;
-}
-
-html .timeline-dot {
-  width: 11px;
-  height: 11px;
-  left: -34px;
-  background: var(--bg-body);
-  border: 2px solid var(--primary);
-}
-
-html .timeline-dot::after {
-  border-color: var(--primary);
-}
-
-html .timeline-date {
-  font-family: var(--font-main);
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--terminal-path);
-}
-
-html .timeline-content h3 {
-  font-family: var(--font-main);
-  font-size: 1rem;
-}
-
-html .timeline-content p {
-  font-size: 0.88rem;
-  line-height: 1.8;
-}
-
-/* ---------- 7. 技术栈：徽章等宽化 ---------- */
-html .skill-category h3 {
-  font-family: var(--font-main);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-subtle);
-}
-
-html .skill-badge {
-  border-radius: 4px;
-  font-family: var(--font-main);
-  font-size: 0.78rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
-}
-
-html .skill-badge:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-/* ---------- 8. 页脚 ---------- */
-html footer {
-  font-family: var(--font-main);
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
-}
-
-
-/* ===========================================================================
    15. 站点主题定稿（方案 C：霓虹潮玩 / Neo-brutalism）
    ---------------------------------------------------------------------------
    以下规则来自改版方案 preview/vC.css，已改写为整站默认样式。
-   本分支通过样式表锁定观感（面向 light 主题），
-   index.html 与 main 分支保持逐字一致，因此内容可以整文件同步。
+   本方案提供「亮 / 暗」两套完整令牌：
+     html:not([data-theme="dark"])  → 亮色
+     html[data-theme="dark"]        → 暗色
+   默认观感偏向 light 主题；index.html 与 main 分支保持逐字一致。
    =========================================================================== */
 
-/* ---------- 1. 设计令牌 ---------- */
+/* ---------- 1. 设计令牌（亮色：海报奶油底） ---------- */
 html:not([data-theme="dark"]) {
   --ink: #141414; /* 粗描边与硬阴影统一的墨色 */
 
@@ -1616,18 +1284,52 @@ html:not([data-theme="dark"]) {
   --gradient-title: none;
 }
 
-/* 方案 C 为固定亮色海报风 */
-html:not([data-theme="dark"]) 
-html:not([data-theme="dark"]) 
+/* ---------- 1b. 设计令牌（暗色：夜店霓虹）----------
+   粗野主义在暗色下的关键：描边与硬阴影改用浅色，否则黑描边会糊进背景。 */
+html[data-theme="dark"] {
+  --ink: #ebe6df;
+
+  --bg-body: #131313;
+  --bg-editor: #131313;
+  --bg-card: #1e1e1e;
+  --bg-panel: #1a1a1a;
+  --bg-sidebar: #191919;
+  --bg-toolbar: #191919;
+  --bg-glass: rgba(19, 19, 19, 0.95);
+  --bg-hover: #2a2a2a;
+  --bg-active: #3a2233;
+
+  --text-main: #f0f0f5;
+  --text-muted: #a0a0b0;
+  --text-subtle: #707080;
+  --text-invert: #131313;
+
+  --primary: #ff4d7e;
+  --primary-hover: #ff7a9c;
+  --primary-glow: rgba(255, 77, 126, 0.32);
+  --selection: #ffd93d;
+  --terminal-user: #35d99a;
+  --terminal-path: #ff7a9c;
+
+  --border-light: #ebe6df;
+  --border-strong: #ebe6df;
+
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --shadow-card: 6px 6px 0 var(--ink);
+  --shadow-hover: 10px 10px 0 var(--ink);
+
+  --gradient-title: none;
+}
+
 /* ---------- 2. 全局：粗描边 + 硬阴影 ---------- */
-html:not([data-theme="dark"]) nav {
+html nav {
   border-bottom: 3px solid var(--ink);
   background: var(--bg-body);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
-html:not([data-theme="dark"]) .logo-terminal {
+html .logo-terminal {
   background: var(--selection);
   border: 3px solid var(--ink);
   border-radius: 999px;
@@ -1638,19 +1340,19 @@ html:not([data-theme="dark"]) .logo-terminal {
   font-weight: 800;
 }
 
-html:not([data-theme="dark"]) .terminal-user {
+html .terminal-user {
   color: var(--ink);
 }
 
-html:not([data-theme="dark"]) .terminal-path {
+html .terminal-path {
   color: var(--primary);
 }
 
-html:not([data-theme="dark"]) .terminal-symbol {
+html .terminal-symbol {
   color: var(--ink);
 }
 
-html:not([data-theme="dark"]) .nav-links a {
+html .nav-links a {
   font-weight: 800;
   font-size: 0.9rem;
   letter-spacing: 0.01em;
@@ -1658,33 +1360,33 @@ html:not([data-theme="dark"]) .nav-links a {
   text-transform: uppercase;
 }
 
-html:not([data-theme="dark"]) .nav-links a::after {
+html .nav-links a::after {
   height: 4px;
   background: var(--primary);
   border-radius: 0;
 }
 
-html:not([data-theme="dark"]) .nav-links a:hover,
-html:not([data-theme="dark"]) .nav-links a.active {
+html .nav-links a:hover,
+html .nav-links a.active {
   color: var(--primary);
 }
 
-html:not([data-theme="dark"]) .control-btn {
+html .control-btn {
   border: 3px solid var(--ink);
   border-radius: 999px;
   font-weight: 800;
-  background: #fff;
+  background: var(--bg-card);
   box-shadow: 3px 3px 0 var(--ink);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-html:not([data-theme="dark"]) .control-btn:hover {
+html .control-btn:hover {
   transform: translate(-2px, -2px);
   box-shadow: 5px 5px 0 var(--ink);
 }
 
 /* ---------- 3. 首屏：波点背景 + 圆形头像徽章 ---------- */
-html:not([data-theme="dark"]) .intro .bg-decoration {
+html .intro .bg-decoration {
   display: block;
   position: absolute;
   inset: 0;
@@ -1694,33 +1396,33 @@ html:not([data-theme="dark"]) .intro .bg-decoration {
   opacity: 0.09;
 }
 
-html:not([data-theme="dark"]) .intro .bg-decoration::before,
-html:not([data-theme="dark"]) .intro .bg-decoration::after {
+html .intro .bg-decoration::before,
+html .intro .bg-decoration::after {
   content: none;
   animation: none;
 }
 
-html:not([data-theme="dark"]) .avatar-container::before {
+html .avatar-container::before {
   content: none;
   animation: none;
 }
 
-html:not([data-theme="dark"]) .avatar-glow {
+html .avatar-glow {
   display: none;
 }
 
-html:not([data-theme="dark"]) .avatar {
+html .avatar {
   border: 5px solid var(--ink);
   box-shadow: 8px 8px 0 var(--primary);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-html:not([data-theme="dark"]) .avatar-container:hover .avatar {
+html .avatar-container:hover .avatar {
   transform: translate(-3px, -3px) rotate(-2deg);
   box-shadow: 12px 12px 0 var(--primary);
 }
 
-html:not([data-theme="dark"]) .gradient-text {
+html .gradient-text {
   font-family: var(--font-display);
   font-size: 3.1rem;
   font-weight: 900;
@@ -1734,12 +1436,12 @@ html:not([data-theme="dark"]) .gradient-text {
   -webkit-text-fill-color: currentColor;
 }
 
-html:not([data-theme="dark"]) .subtitle {
+html .subtitle {
   font-size: 1.02rem;
   font-weight: 600;
   line-height: 1.8;
   color: var(--text-main);
-  background: #fff;
+  background: var(--bg-card);
   border: 3px solid var(--ink);
   border-radius: 14px;
   padding: 14px 20px;
@@ -1747,35 +1449,35 @@ html:not([data-theme="dark"]) .subtitle {
   margin-top: 22px;
 }
 
-html:not([data-theme="dark"]) .intro-contact-links {
+html .intro-contact-links {
   gap: 12px;
 }
 
-html:not([data-theme="dark"]) .intro-contact-link {
+html .intro-contact-link {
   border: 3px solid var(--ink);
   border-radius: 999px;
-  background: #fff;
+  background: var(--bg-card);
   font-weight: 800;
   box-shadow: 4px 4px 0 var(--ink);
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 }
 
-html:not([data-theme="dark"]) .intro-contact-link:hover {
+html .intro-contact-link:hover {
   background: var(--selection);
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0 var(--ink);
 }
 
-html:not([data-theme="dark"]) .intro-contact-link i {
+html .intro-contact-link i {
   transform: none;
 }
 
-html:not([data-theme="dark"]) .intro-contact-link:hover i {
+html .intro-contact-link:hover i {
   transform: none;
 }
 
 /* ---------- 4. 栏目标题：贴纸标签 ---------- */
-html:not([data-theme="dark"]) h2 {
+html h2 {
   font-family: var(--font-display);
   font-size: 2.1rem;
   font-weight: 900;
@@ -1786,7 +1488,7 @@ html:not([data-theme="dark"]) h2 {
 }
 
 /* 主色高亮块，做成马克笔涂过的效果 */
-html:not([data-theme="dark"]) h2::before {
+html h2::before {
   content: "";
   display: block;
   width: 76px;
@@ -1797,7 +1499,7 @@ html:not([data-theme="dark"]) h2::before {
   border-radius: 999px;
 }
 
-html:not([data-theme="dark"]) h2::after {
+html h2::after {
   height: 6px;
   width: 100%;
   border-radius: 0;
@@ -1805,45 +1507,45 @@ html:not([data-theme="dark"]) h2::after {
   margin-top: 16px;
 }
 
-html:not([data-theme="dark"]) h2:hover::after {
+html h2:hover::after {
   width: 100%;
 }
 
-html:not([data-theme="dark"]) .section-hint {
+html .section-hint {
   font-weight: 700;
   font-size: 0.95rem;
   color: var(--text-muted);
 }
 
 /* ---------- 5. 卡片：贴纸面板 ---------- */
-html:not([data-theme="dark"]) .card,
-html:not([data-theme="dark"]) .project-card {
+html .card,
+html .project-card {
   background: var(--bg-card);
   border: 3px solid var(--ink);
   border-radius: 16px;
   box-shadow: 6px 6px 0 var(--ink);
 }
 
-html:not([data-theme="dark"]) .project-card:hover {
+html .project-card:hover {
   transform: translate(-4px, -4px);
   box-shadow: 10px 10px 0 var(--ink);
   border-color: var(--ink);
 }
 
-html:not([data-theme="dark"]) .project-info h3 {
+html .project-info h3 {
   font-family: var(--font-display);
   font-size: 1.16rem;
   font-weight: 900;
   letter-spacing: -0.01em;
 }
 
-html:not([data-theme="dark"]) .project-info p {
+html .project-info p {
   font-size: 0.95rem;
   line-height: 1.8;
   color: var(--text-main);
 }
 
-html:not([data-theme="dark"]) .project-tag {
+html .project-tag {
   border: 2px solid var(--ink);
   border-radius: 999px;
   background: var(--selection);
@@ -1853,28 +1555,28 @@ html:not([data-theme="dark"]) .project-tag {
   padding: 3px 11px;
 }
 
-html:not([data-theme="dark"]) .project-tag:hover {
+html .project-tag:hover {
   background: var(--primary);
-  color: #fff;
+  color: var(--text-invert);
   transform: translateY(-2px);
 }
 
-html:not([data-theme="dark"]) .project-action {
+html .project-action {
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: #fff;
+  background: var(--bg-card);
   font-weight: 800;
   box-shadow: 2px 2px 0 var(--ink);
 }
 
-html:not([data-theme="dark"]) .project-action:hover {
+html .project-action:hover {
   background: var(--primary);
-  color: #fff;
+  color: var(--text-invert);
   transform: translate(-1px, -1px);
 }
 
-html:not([data-theme="dark"]) .empty-state {
-  background: #fff;
+html .empty-state {
+  background: var(--bg-card);
   border: 3px dashed var(--ink);
   border-radius: 16px;
   font-weight: 700;
@@ -1883,25 +1585,25 @@ html:not([data-theme="dark"]) .empty-state {
   padding: 40px 22px;
 }
 
-html:not([data-theme="dark"]) .video-card {
+html .video-card {
   border-left: 3px solid var(--ink);
 }
 
-html:not([data-theme="dark"]) .video-platform {
+html .video-platform {
   border: 2px solid var(--ink);
   border-radius: 999px;
   background: var(--primary);
-  color: #fff;
+  color: var(--text-invert);
   font-weight: 800;
 }
 
 /* ---------- 6. 时间轴：粗节点 ---------- */
-html:not([data-theme="dark"]) .timeline-container::before {
+html .timeline-container::before {
   width: 4px;
   background: var(--ink);
 }
 
-html:not([data-theme="dark"]) .timeline-dot {
+html .timeline-dot {
   width: 18px;
   height: 18px;
   left: -39px;
@@ -1910,36 +1612,36 @@ html:not([data-theme="dark"]) .timeline-dot {
   border: 3px solid var(--ink);
 }
 
-html:not([data-theme="dark"]) .timeline-dot::after {
+html .timeline-dot::after {
   border: 3px solid var(--primary);
   inset: -6px;
 }
 
-html:not([data-theme="dark"]) .timeline-date {
+html .timeline-date {
   display: inline-block;
   font-weight: 900;
   font-size: 0.78rem;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: var(--text-invert);
   background: var(--ink);
   border-radius: 999px;
   padding: 3px 12px;
   margin-bottom: 10px;
 }
 
-html:not([data-theme="dark"]) .timeline-content h3 {
+html .timeline-content h3 {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 900;
 }
 
-html:not([data-theme="dark"]) .timeline-content p {
+html .timeline-content p {
   font-size: 0.94rem;
   line-height: 1.8;
 }
 
 /* ---------- 7. 技术栈：徽章贴纸 ---------- */
-html:not([data-theme="dark"]) .skill-category h3 {
+html .skill-category h3 {
   font-family: var(--font-display);
   font-size: 0.92rem;
   font-weight: 900;
@@ -1947,30 +1649,24 @@ html:not([data-theme="dark"]) .skill-category h3 {
   color: var(--ink);
 }
 
-html:not([data-theme="dark"]) .skill-badge {
+html .skill-badge {
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: #fff;
+  background: var(--bg-card);
   font-weight: 700;
   box-shadow: 2px 2px 0 var(--ink);
 }
 
-html:not([data-theme="dark"]) .skill-badge:hover {
+html .skill-badge:hover {
   background: var(--selection);
   transform: translate(-1px, -1px);
   box-shadow: 4px 4px 0 var(--ink);
 }
 
 /* ---------- 8. 页脚 ---------- */
-html:not([data-theme="dark"]) footer {
+html footer {
   border-top: 3px solid var(--ink);
   background: var(--selection);
   font-weight: 800;
   color: var(--ink);
-}
-
-/* 本方案锁定单一主题，隐藏主题切换按钮
-   （按钮保留在 HTML 中，以便 index.html 与 main 分支保持逐字一致）*/
-.theme-toggle {
-  display: none !important;
 }
