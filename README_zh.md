@@ -35,6 +35,7 @@
 - [五、绑定自己的域名（可选）](#五绑定自己的域名可选)
 - [六、目录结构](#六目录结构)
 - [七、推送前的自检脚本](#七推送前的自检脚本)
+- [八、多套风格分支：内容同步](#八多套风格分支内容同步)
 - [八、常见问题](#八常见问题)
 
 ---
@@ -478,7 +479,79 @@ node tools/verify_render.js
 
 ---
 
-## 八、常见问题
+## 八、多套风格分支：内容同步
+
+仓库里同时存在多套视觉风格，分别放在不同分支。**每套风格都自带亮色与暗色两套完整配色**，右上角的主题按钮在三个分支上都可用。
+
+| 分支 | 风格 | 亮色 | 暗色 |
+| --- | --- | --- | --- |
+| `main` | 终端编辑器（**线上生效**） | 浅色代码编辑器：`#f6f8fa` 底 / 深蓝主色 | 深夜编辑器：`#0b0e14` 底 / 亮蓝主色 |
+| `variant-b` | 温润刊物 | 暖白纸张：`#f7f3ec` / 赭石主色 | 暖黑：`#1a1714` / 浅赭主色 |
+| `variant-c` | 霓虹潮玩 | 奶油海报：`#fdf6e8` / 亮粉主色 | 夜店霓虹：`#131313` / 荧光粉 + 浅色描边 |
+
+> 暗色并非简单反色。粗野主义方案在暗色下把**描边与硬阴影改用浅色**（否则黑描边会糊进背景）；
+> 刊物方案保留纸质气质、改用暖黑；编辑器方案的浅色模式则是完整的 VS Code Light+ 配色。
+
+### 核心约定：内容归 main，样式归各分支
+
+这是整套机制能成立的关键：
+
+- **内容**（`index.html`、`lang/*.json`、`assets/js/*`、`assets/images/*`、`tools/*`、README）
+  以 **main 为唯一真源**；
+- **样式**只有 `assets/css/style.css` 一个文件，是**各分支自己的**，永远不会被覆盖。
+
+因此各分支的 `index.html` 与 main **逐字一致**，同步时直接整文件覆盖即可，**不会产生任何合并冲突**。
+主题也不再写死在 HTML 里，而是由各分支的样式表决定（`variant-b`/`variant-c` 的样式表把主题按钮隐藏并锁定观感）。
+
+### 改内容的标准流程
+
+**只改 main，不要直接改风格分支。** 改完推送后运行同步脚本：
+
+```bash
+# 1. 在 main 上改内容并推送
+git checkout main
+#   ... 编辑 lang/zh.json、assets/js/main.js 等 ...
+git add . && git commit -m "新增一篇文章" && git push
+
+# 2. 同步到各风格分支
+python tools/sync_content.py                 # 先预览会改哪些文件（dry-run）
+python tools/sync_content.py --apply         # 实际写入并提交
+python tools/sync_content.py --apply --push  # 写入、提交并推送
+```
+
+脚本会：只覆盖内容文件 → 提交 → 校验 `style.css` 确实没被动过 → （可选）推送。
+`--branches variant-b` 可只同步指定分支。
+
+### 校验：内容是否真的一致
+
+```bash
+python tools/verify_branches.py
+```
+
+输出会逐项列出：各分支 12 个内容文件是否与 main 逐字一致、各分支样式是否各自独立、
+以及**差异文件清单是否只剩 `assets/css/style.css`**。
+
+### 新增内容文件时
+
+如果你新增了一个需要各分支共享的文件，把它加进 `tools/sync_content.py` 的
+`CONTENT_FILES`（单文件）或 `CONTENT_DIRS`（整个目录，`assets/images`、`tools` 已在其中）。
+**千万不要把 `assets/css/style.css` 加进去**，它是各分支的样式本体。
+
+### 切换线上风格
+
+GitHub Pages 只服务 `main`。想把某套风格上线：
+
+```bash
+git checkout main
+git merge variant-b     # 或 variant-c
+git push
+```
+
+合并只会带来 `style.css` 的变化，不会碰内容。
+
+---
+
+## 九、常见问题
 
 **Q：页面空白，或者标题显示成 `documents.item0.title` 这样的键名？**
 语言包里缺少这个键，或者键名拼错了。检查 `lang/zh.json` 与 `lang/en.json` 是否都有对应的键，注意大小写与层级完全一致。
