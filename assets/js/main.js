@@ -159,24 +159,6 @@
     container.appendChild(hint);
   }
 
-  function initThemeToggle() {
-    const toggleBtn = qs('.theme-toggle');
-    const htmlEl = document.documentElement;
-    if (!toggleBtn) return;
-
-    const savedTheme = localStorage.getItem('theme') || htmlEl.getAttribute('data-theme') || 'light';
-    htmlEl.setAttribute('data-theme', savedTheme);
-
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = htmlEl.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-      htmlEl.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      console.log(`[Theme] Switched to ${newTheme}`);
-    });
-  }
-
   function initLangToggle() {
     const toggleBtn = qs('.lang-toggle');
     if (!toggleBtn) return;
@@ -439,7 +421,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    initThemeToggle();
     initLangToggle();
     initSmoothScroll();
     initLogoTypewriter();
