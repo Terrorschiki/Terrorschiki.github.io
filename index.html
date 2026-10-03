@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,8 @@
   <title>Terrorschiki 的个人博客</title>
 
   <script>
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    // 默认黑夜模式；访客手动切换后会记住自己的选择
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
