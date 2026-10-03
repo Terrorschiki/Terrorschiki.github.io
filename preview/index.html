@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terrorschiki 的个人博客：项目、文章与经历。">
+  <link rel="icon" href="../assets/images/avatar.svg" type="image/svg+xml">
+  <title>改版方案预览 · Terrorschiki 的个人博客</title>
+  
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="./va.css" id="variant-sheet">
+  <link rel="stylesheet" href="./preview-switcher.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    /* 换肤逻辑：只替换方案样式表的 href，页面结构与渲染逻辑完全不动。
+       优先级：URL 参数 ?v=x > localStorage > 默认 A */
+    (function () {
+      var VARIANTS = ['a', 'b', 'c', 'd'];
+      var KEY = 'previewVariant';
+
+      function readParam() {
+        var m = /[?&]v=([a-d])/i.exec(location.search);
+        return m ? m[1].toLowerCase() : null;
+      }
+
+      var initial = readParam();
+      if (!initial) {
+        try { initial = localStorage.getItem(KEY); } catch (e) { initial = null; }
+      }
+      if (VARIANTS.indexOf(initial) === -1) initial = 'a';
+      window.__INITIAL_VARIANT__ = initial;
+
+      /* 每个方案都是「单主题」设计：A 固定深色（代码编辑器），B/C/D 固定亮色。
+         站点自带的基础样式只有在一个合适的主题下才会与方案配色协调，
+         因此这里跟随方案强制设置主题，避免出现「暖纸质方案落进通用暗色」这类破功。 */
+      var VARIANT_THEME = { a: 'dark', b: 'light', c: 'light', d: 'light' };
+
+      var sheet = document.getElementById('variant-sheet');
+      if (sheet) sheet.setAttribute('href', './v' + initial + '.css');
+      try { localStorage.setItem('theme', VARIANT_THEME[initial]); } catch (e) {}
+
+      window.__applyVariant = function (v) {
+        if (VARIANTS.indexOf(v) === -1) return;
+        var link = document.getElementById('variant-sheet');
+        if (link) link.setAttribute('href', './v' + v + '.css');
+
+        // 这两行缺一不可：data-variant 决定方案样式表里 html[data-variant="x"] 是否命中，
+        // data-theme 决定基础样式用亮色还是暗色令牌。
+        document.documentElement.setAttribute('data-variant', v);
+        var theme = VARIANT_THEME[v] || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+
+        try {
+          localStorage.setItem('theme', theme);
+          localStorage.setItem(KEY, v);
+        } catch (e) {}
+        document.querySelectorAll('.variant-btn').forEach(function (b) {
+          b.classList.toggle('is-active', b.getAttribute('data-variant') === v);
+        });
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        window.__applyVariant(window.__INITIAL_VARIANT__);
+
+        /* 各方案为单主题设计，锁住主题按钮，避免访客误触后画面破功 */
+        var themeBtn = document.querySelector('.theme-toggle');
+        if (themeBtn) {
+          themeBtn.setAttribute('title', '预览中各方案为单主题设计，主题按钮已锁定');
+          themeBtn.setAttribute('aria-disabled', 'true');
+          themeBtn.style.pointerEvents = 'none';
+          themeBtn.style.opacity = '0.45';
+          var fresh = themeBtn.cloneNode(true);
+          themeBtn.parentNode.replaceChild(fresh, themeBtn);
+        }
+
+        document.querySelectorAll('.variant-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            window.__applyVariant(btn.getAttribute('data-variant'));
+          });
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+          var idx = VARIANTS.indexOf(document.documentElement.getAttribute('data-variant') || 'a');
+          if (e.key === 'ArrowRight') window.__applyVariant(VARIANTS[(idx + 1) % VARIANTS.length]);
+          if (e.key === 'ArrowLeft') window.__applyVariant(VARIANTS[(idx - 1 + VARIANTS.length) % VARIANTS.length]);
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="container nav-container">
+      <a href="#" class="logo" aria-label="Terrorschiki 的个人博客" data-site="Terrorschiki">
+        <span class="logo-terminal" aria-hidden="true"><span class="terminal-typewriter"><span class="terminal-user">terrorschiki@blog</span><span class="terminal-path">:~</span></span><span class="terminal-symbol">$</span><span class="terminal-cursor"></span></span>
+      </a>
+      
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="#projects" data-i18n="nav.projects">Projects</a>
+          <a href="#documents" data-i18n="nav.documents">Docs</a>
+          <a href="#videos" data-i18n="nav.videos">Videos</a>
+          <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+          <a href="#skills" data-i18n="nav.skills">Stack</a>
+        </div>
+        
+        <div class="nav-controls">
+          <button class="control-btn lang-toggle" aria-label="Toggle Language">English</button>
+          <button class="control-btn theme-toggle" aria-label="Toggle Theme">
+            <i class="fas fa-sun sun-icon"></i>
+            <i class="fas fa-moon moon-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section id="intro" class="intro">
+    <div class="bg-decoration"></div>
+    <div class="container flex-center column">
+      <div class="avatar-container">
+        <img src="../assets/images/avatar.svg" alt="Avatar" class="avatar" data-i18n="intro.avatarAlt">
+        <div class="avatar-glow"></div>
+      </div>
+      <h1 class="gradient-text" data-i18n="intro.title">Hi, I'm Terrorschiki</h1>
+      <p class="subtitle" data-i18n="intro.desc">...</p>
+      <div class="intro-contact-links" aria-label="Social Links"></div>
+    </div>
+  </section>
+
+  <section id="projects" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="projects.title">My Projects</h2>
+      <div class="projects-grid"></div>
+    </div>
+  </section>
+
+  <section id="documents" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="documents.title">Documents</h2>
+      <div class="documents-grid"></div>
+    </div>
+  </section>
+
+  <section id="videos" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="videos.title">Videos</h2>
+      <p class="section-hint" data-i18n="videos.hint">短视频与长视频更新</p>
+      <div class="videos-grid"></div>
+    </div>
+  </section>
+
+  <section id="timeline" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="timeline.title">Timeline</h2>
+      <div class="timeline-container"></div>
+    </div>
+  </section>
+
+  <section id="skills" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="skills.title">Tech Stack</h2>
+      <div class="skills-wrapper"></div>
+    </div>
+  </section>
+
+  <footer data-i18n="footer.copyright">© 2026 Terrorschiki | 个人博客</footer>
+
+  <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/main.js"></script>
+
+  <!-- ===== 改版方案预览切换器（仅本地预览用，不影响线上站点）===== -->
+  <div class="variant-switcher" role="group" aria-label="改版方案切换">
+    <span class="variant-label">改版方案</span>
+    <div class="variant-btns">
+      <button type="button" class="variant-btn" data-variant="a">A 终端编辑器</button>
+      <button type="button" class="variant-btn" data-variant="b">B 温润刊物</button>
+      <button type="button" class="variant-btn" data-variant="c">C 霓虹潮玩</button>
+      <button type="button" class="variant-btn" data-variant="d">D 极简留白</button>
+    </div>
+    <span class="variant-tip">← → 键切换 · 语言/主题按钮照常可用</span>
+  </div>
+</body>
+</html>

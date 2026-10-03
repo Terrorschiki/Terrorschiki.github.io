@@ -1,0 +1,464 @@
+/* ===========================================================================
+   改版方案 D —— 「极简留白」 （Minimal / Nordic）
+   ---------------------------------------------------------------------------
+   设计取向：极淡的灰白体系 + 单一克制的点缀色，去掉所有阴影与圆角，
+             用大量留白、发丝线、字距与字重建立秩序感。内容居中、左对齐标题、
+             章节编号（01 / 02 / 03）标记顺序。
+   适用人群：求职作品集、工程师个人页；希望给人「干净、专业、靠谱」的印象。
+   取舍：最耐看、最通用，但也最「安全」——个性表达最弱，全靠内容取胜。
+   ---------------------------------------------------------------------------
+   实现约定：加载在 style.css 之后，只做覆盖，不改动 HTML 结构。
+   =========================================================================== */
+
+/* ---------- 1. 设计令牌（亮色） ---------- */
+html[data-variant="d"]:not([data-theme="dark"]) {
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  --bg-body: #fcfcfc;
+  --bg-editor: #ffffff;
+  --bg-card: #ffffff;
+  --bg-panel: #f7f7f7;
+  --bg-sidebar: #fafafa;
+  --bg-toolbar: #fafafa;
+  --bg-glass: rgba(252, 252, 252, 0.92);
+  --bg-hover: #f1f1f1;
+  --bg-active: #f0f0f0;
+
+  --text-main: #17181a;
+  --text-muted: #6b6f76;
+  --text-subtle: #9aa0a6;
+  --text-invert: #ffffff;
+
+  --primary: #2f6df6;
+  --primary-hover: #1f56cc;
+  --primary-glow: rgba(47, 109, 246, 0.14);
+  --selection: #e6efff;
+  --terminal-user: #6b6f76;
+  --terminal-path: #b0b5bb;
+
+  --border-light: #e8e9eb;
+  --border-strong: #d6d8db;
+  --radius-md: 0px;
+  --radius-full: 0px;
+
+  --shadow-sm: none;
+  --shadow-card: none;
+  --shadow-hover: none;
+
+  --gradient-title: none;
+}
+
+/* 暗色：纯中性灰阶，不加任何色彩倾向 */
+html[data-variant="d"][data-theme="dark"] {
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --bg-body: #0f0f10;
+  --bg-editor: #0f0f10;
+  --bg-card: #161617;
+  --bg-panel: #141415;
+  --bg-sidebar: #121213;
+  --bg-toolbar: #121213;
+  --bg-glass: rgba(15, 15, 16, 0.92);
+  --bg-hover: #1e1e20;
+  --bg-active: #232326;
+
+  --text-main: #ededed;
+  --text-muted: #9a9a9d;
+  --text-subtle: #6e6e72;
+  --text-invert: #0f0f10;
+
+  --primary: #7aa2ff;
+  --primary-hover: #9bb8ff;
+  --primary-glow: rgba(122, 162, 255, 0.16);
+  --selection: #1e2a44;
+  --terminal-user: #9a9a9d;
+  --terminal-path: #5f5f63;
+
+  --border-light: #232325;
+  --border-strong: #333336;
+  --radius-md: 0px;
+  --radius-full: 0px;
+  --shadow-sm: none;
+  --shadow-card: none;
+  --shadow-hover: none;
+  --gradient-title: none;
+}
+
+/* ---------- 2. 去掉所有装饰性特效，保持极净 ---------- */
+html[data-variant="d"] .intro .bg-decoration,
+html[data-variant="d"] .avatar-glow {
+  display: none;
+}
+
+html[data-variant="d"] .avatar-container::before {
+  content: none;
+  animation: none;
+}
+
+html[data-variant="d"] .timeline-dot::after {
+  content: none;
+  animation: none;
+}
+
+html[data-variant="d"] .card,
+html[data-variant="d"] .project-card {
+  box-shadow: none;
+}
+
+/* ---------- 3. 导航：通栏发丝线 ---------- */
+html[data-variant="d"] nav {
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-glass);
+}
+
+html[data-variant="d"] .nav-container {
+  height: 76px;
+}
+
+html[data-variant="d"] .logo-terminal {
+  background: none;
+  border: 0;
+  padding: 0;
+  height: auto;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+html[data-variant="d"] .terminal-user {
+  color: var(--text-subtle);
+  letter-spacing: 0.14em;
+}
+
+html[data-variant="d"] .terminal-path {
+  color: var(--text-subtle);
+}
+
+html[data-variant="d"] .nav-links {
+  gap: 26px;
+}
+
+html[data-variant="d"] .nav-links a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+html[data-variant="d"] .nav-links a::after {
+  height: 1px;
+  background: var(--text-main);
+}
+
+html[data-variant="d"] .control-btn {
+  border: 1px solid var(--border-light);
+  border-radius: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+html[data-variant="d"] .control-btn:hover {
+  border-color: var(--text-main);
+  color: var(--text-main);
+}
+
+/* ---------- 4. 首屏：小尺寸正方形头像 ---------- */
+html[data-variant="d"] .intro {
+  padding-top: 104px;
+}
+
+html[data-variant="d"] .avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 0;
+  border: 0;
+  filter: grayscale(1);
+  opacity: 0.9;
+  transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+html[data-variant="d"] .avatar-container:hover .avatar {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+html[data-variant="d"] .gradient-text {
+  font-family: var(--font-display);
+  font-size: 2.15rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-top: 26px;
+  color: var(--text-main);
+  -webkit-text-fill-color: currentColor;
+}
+
+html[data-variant="d"] .subtitle {
+  font-size: 0.98rem;
+  line-height: 2;
+  max-width: 560px;
+  color: var(--text-muted);
+}
+
+html[data-variant="d"] .intro-contact-links {
+  gap: 26px;
+  margin-top: 34px;
+}
+
+/* 联系入口退化成一排下划线文字链接，最克制 */
+html[data-variant="d"] .intro-contact-link {
+  border: 0;
+  background: transparent;
+  padding: 0 0 4px;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border-strong);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  transition: color 0.2s ease, border-color 0.2s ease, padding 0.2s ease;
+}
+
+html[data-variant="d"] .intro-contact-link:hover {
+  color: var(--text-main);
+  border-color: var(--text-main);
+  padding-bottom: 7px;
+}
+
+html[data-variant="d"] .intro-contact-link i {
+  display: none;
+}
+
+/* ---------- 5. 栏目：左对齐标题 + 章节编号 ---------- */
+html[data-variant="d"] .section-padding {
+  padding: 88px 0;
+}
+
+html[data-variant="d"] h2 {
+  font-family: var(--font-display);
+  font-size: 1.24rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: left;
+  width: auto;
+  display: block;
+  margin-bottom: 40px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light);
+  counter-increment: section;
+}
+
+/* 用计数器生成 01 / 02 / 03。
+   注意：计数器按「元素树中的祖先」作用域，各个 section 是兄弟节点，
+   所以必须在每个 section 上分别重置，否则会全部显示 01。 */
+html[data-variant="d"] #projects { counter-reset: section 0; }
+html[data-variant="d"] #documents { counter-reset: section 1; }
+html[data-variant="d"] #videos { counter-reset: section 2; }
+html[data-variant="d"] #timeline { counter-reset: section 3; }
+html[data-variant="d"] #skills { counter-reset: section 4; }
+
+html[data-variant="d"] h2::before {
+  content: "0" counter(section);
+  display: inline-block;
+  min-width: 46px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  vertical-align: 2px;
+}
+
+html[data-variant="d"] h2::after {
+  content: none;
+  display: none;
+}
+
+html[data-variant="d"] .section-hint {
+  text-align: left;
+  font-size: 0.86rem;
+  margin: -26px 0 36px;
+  color: var(--text-subtle);
+}
+
+/* ---------- 6. 卡片：细线分隔，无边框盒子 ---------- */
+html[data-variant="d"] .card,
+html[data-variant="d"] .project-card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-light);
+  border-radius: 0;
+  padding: 30px 2px;
+}
+
+html[data-variant="d"] .project-card:hover {
+  transform: none;
+  border-top-color: var(--border-strong);
+  background: var(--bg-panel);
+}
+
+html[data-variant="d"] .project-info h3 {
+  font-family: var(--font-display);
+  font-size: 1.06rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+html[data-variant="d"] .project-info p {
+  font-size: 0.93rem;
+  line-height: 1.95;
+  color: var(--text-muted);
+  max-width: 68ch;
+}
+
+html[data-variant="d"] .project-tag {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  padding: 3px 9px;
+}
+
+html[data-variant="d"] .project-tag:hover {
+  background: var(--text-main);
+  border-color: var(--text-main);
+  color: var(--bg-body);
+  transform: none;
+}
+
+html[data-variant="d"] .project-action {
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  padding: 3px 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+html[data-variant="d"] .project-action:hover {
+  color: var(--text-main);
+  border-color: var(--text-main);
+}
+
+html[data-variant="d"] .empty-state {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  border-radius: 0;
+  text-align: left;
+  padding: 40px 2px;
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--text-subtle);
+}
+
+html[data-variant="d"] .video-card {
+  border-left: 0;
+}
+
+html[data-variant="d"] .video-platform {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+/* ---------- 7. 时间轴：细线年表 ---------- */
+html[data-variant="d"] .timeline-container {
+  padding-left: 22px;
+  max-width: 100%;
+}
+
+html[data-variant="d"] .timeline-container::before {
+  width: 1px;
+  background: var(--border-light);
+}
+
+html[data-variant="d"] .timeline-item {
+  margin-bottom: 40px;
+}
+
+html[data-variant="d"] .timeline-dot {
+  width: 7px;
+  height: 7px;
+  left: -25px;
+  top: 8px;
+  background: var(--bg-body);
+  border: 1px solid var(--text-subtle);
+}
+
+html[data-variant="d"] .timeline-date {
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+html[data-variant="d"] .timeline-content h3 {
+  font-size: 1.04rem;
+  font-weight: 600;
+}
+
+html[data-variant="d"] .timeline-content p {
+  font-size: 0.92rem;
+  line-height: 1.95;
+  color: var(--text-muted);
+}
+
+/* ---------- 8. 技术栈：文字网格 ---------- */
+html[data-variant="d"] .skill-category h3 {
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+html[data-variant="d"] .skill-list {
+  gap: 6px;
+}
+
+html[data-variant="d"] .skill-badge {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 4px 0;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+html[data-variant="d"] .skill-badge i {
+  color: var(--text-subtle);
+  width: 18px;
+}
+
+html[data-variant="d"] .skill-badge:hover {
+  transform: none;
+  color: var(--primary);
+}
+
+html[data-variant="d"] .skill-badge:hover i {
+  transform: none;
+  color: var(--primary);
+}
+
+/* ---------- 9. 页脚 ---------- */
+html[data-variant="d"] footer {
+  border-top: 1px solid var(--border-light);
+  background: transparent;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  padding: 44px 20px;
+  color: var(--text-subtle);
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>改版方案对比 · Terrorschiki 个人博客</title>
+<style>
+  :root {
+    --ink: #17181a;
+    --muted: #6b6f76;
+    --line: #e4e5e8;
+    --accent: #2f6df6;
+    --bg: #fbfbfc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+      "Microsoft YaHei", sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 56px 24px 80px; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 28px; margin-bottom: 40px; }
+  .kicker {
+    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 12px;
+  }
+  h1 { font-size: 1.9rem; margin: 0 0 14px; letter-spacing: -0.02em; font-weight: 650; }
+  .lede { color: var(--muted); margin: 0; max-width: 76ch; font-size: 0.98rem; }
+  .note {
+    margin: 26px 0 0; padding: 14px 18px; border-left: 3px solid var(--accent);
+    background: #f2f6fe; font-size: 0.9rem; color: #33415c;
+  }
+  .note code { background: #e5edfd; padding: 1px 5px; border-radius: 3px; font-size: 0.86em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 22px; }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 22px; display: flex; flex-direction: column;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover { border-color: #c9ccd2; box-shadow: 0 10px 26px rgba(20, 24, 32, 0.09); transform: translateY(-2px); }
+  .tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-bottom: 14px;
+    align-self: flex-start;
+  }
+  .tag.a { background: #11151c; color: #58a6ff; }
+  .tag.b { background: #f7f3ec; color: #9a5b33; border: 1px solid #e2d9ca; }
+  .tag.c { background: #fdf6e8; color: #e0114b; border: 1px solid #141414; }
+  .tag.d { background: #f4f4f5; color: #2f6df6; }
+  .card h2 { font-size: 1.16rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .card .en { font-size: 0.76rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 14px; }
+  .card p { margin: 0 0 14px; font-size: 0.92rem; color: #3c4149; }
+  dl { margin: 0 0 18px; font-size: 0.86rem; }
+  dt { font-weight: 650; margin-top: 10px; color: var(--ink); }
+  dd { margin: 2px 0 0; color: var(--muted); }
+  .swatches { display: flex; gap: 6px; margin: 0 0 18px; }
+  .sw { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.14); }
+  .actions { margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+  a.btn {
+    display: inline-block; text-decoration: none; font-size: 0.86rem; font-weight: 600;
+    padding: 9px 16px; border-radius: 7px; background: var(--ink); color: #fff;
+    transition: opacity 0.18s ease;
+  }
+  a.btn:hover { opacity: 0.84; }
+  a.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  a.btn.ghost:hover { border-color: var(--ink); }
+  footer { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 0.84rem; color: var(--muted); }
+  footer code { background: #f0f1f3; padding: 1px 5px; border-radius: 3px; }
+  @media (max-width: 560px) { .wrap { padding: 36px 16px 60px; } h1 { font-size: 1.5rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">Redesign Proposals</p>
+    <h1>4 个个人网站改版方案</h1>
+    <p class="lede">
+      四套方案共用同一份页面结构与渲染逻辑，只替换样式表。点任意一个方案的「查看方案效果」
+      进入站点预览，再点右下角的「改版方案」按钮（或按 ← → 方向键）即可实时换肤、当场对比。
+    </p>
+    <p class="note">
+      <strong>这些是设计方案，不是最终配色。</strong>选定方向后告诉我，我把它应用到线上站点，
+      再按你的喜好微调配色与字号。对比页与方案样式表都在 <code>preview/</code> 目录，
+      不影响已上线的 <code>terrorschiki.github.io</code>。
+    </p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <span class="tag a">方案 A · 深色</span>
+      <h2>终端编辑器</h2>
+      <p class="en">Terminal / Code Editor</p>
+      <div class="swatches">
+        <div class="sw" style="background:#0b0e14"></div>
+        <div class="sw" style="background:#58a6ff"></div>
+        <div class="sw" style="background:#3fb950"></div>
+        <div class="sw" style="background:#d29922"></div>
+      </div>
+      <p>把主页做成一个深夜代码编辑器：等宽字体、栏目标题写成 <code>~/Projects</code> 文件路径、空状态写成 <code>//</code> 注释块、时间轴像 Git 提交历史。</p>
+      <dl>
+        <dt>最适合</dt>
+        <dd>技术博客、开发者求职；受众以程序员为主时辨识度最高</dd>
+        <dt>优点</dt>
+        <dd>与你的终端 Logo 高度统一，气质专业、有记忆点</dd>
+        <dt>取舍</dt>
+        <dd>固定深色，对非技术访客略冷淡；长文阅读体验一般</dd>
+      </dl>
+      <div class="actions">
+        <a class="btn" href="?v=a">查看方案效果</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="tag b">方案 B · 亮色</span>
+      <h2>温润刊物</h2>
+      <p class="en">Editorial / Paper</p>
+      <div class="swatches">
+        <div class="sw" style="background:#f7f3ec"></div>
+        <div class="sw" style="background:#9a5b33"></div>
+        <div class="sw" style="background:#2b2622"></div>
+        <div class="sw" style="background:#e2d9ca"></div>
+      </div>
+      <p>当成一本纸质刊物来排版：衬线标题、暖白纸张底色、居中对称版式、发丝分隔线，终端 Logo 换成纯文字签名。</p>
+      <dl>
+        <dt>最适合</dt>
+        <dd>偏内容型的博客、写长文的人</dd>
+        <dt>优点</dt>
+        <dd>最耐看、最适合阅读，给人沉稳专业的印象</dd>
+        <dt>取舍</dt>
+        <dd>视觉冲击力弱于 C，动效克制</dd>
+      </dl>
+      <div class="actions">
+        <a class="btn" href="?v=b">查看方案效果</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="tag c">方案 C · 亮色</span>
+      <h2>霓虹潮玩</h2>
+      <p class="en">Neo-brutalism / Pop</p>
+      <div class="swatches">
+        <div class="sw" style="background:#fdf6e8"></div>
+        <div class="sw" style="background:#e0114b"></div>
+        <div class="sw" style="background:#ffe066"></div>
+        <div class="sw" style="background:#141414"></div>
+      </div>
+      <p>高饱和撞色 + 粗黑描边 + 硬阴影（不模糊）+ 胶囊标签，把主页做成一张潮流海报。</p>
+      <dl>
+        <dt>最适合</dt>
+        <dd>做自媒体、视频、设计或前端方向，想让人一眼记住</dd>
+        <dt>优点</dt>
+        <dd>个性与辨识度最强，和「自媒体视频」栏目气质最搭</dd>
+        <dt>取舍</dt>
+        <dd>偏潮玩；正式学术或传统求职场景可能显得跳脱</dd>
+      </dl>
+      <div class="actions">
+        <a class="btn" href="?v=c">查看方案效果</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="tag d">方案 D · 亮色</span>
+      <h2>极简留白</h2>
+      <p class="en">Minimal / Nordic</p>
+      <div class="swatches">
+        <div class="sw" style="background:#fcfcfc"></div>
+        <div class="sw" style="background:#2f6df6"></div>
+        <div class="sw" style="background:#17181a"></div>
+        <div class="sw" style="background:#e8e9eb"></div>
+      </div>
+      <p>去掉所有阴影与圆角，用大量留白、发丝线与字距建立秩序：栏目标题左对齐并带 01 / 02 / 03 编号，卡片退化成细分隔线。</p>
+      <dl>
+        <dt>最适合</dt>
+        <dd>求职作品集、工程师个人页</dd>
+        <dt>优点</dt>
+        <dd>最通用耐看、加载最轻，全靠内容取胜；信息层级最清晰</dd>
+        <dt>取舍</dt>
+        <dd>个性表达最弱，偏「安全」</dd>
+      </dl>
+      <div class="actions">
+        <a class="btn" href="?v=d">查看方案效果</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    想调整某个方案？直接改 <code>preview/v?.css</code>，刷新浏览器即可看到变化。
+    <br>
+    站点结构若有改动，运行 <code>python tools/build_preview.py</code> 重新同步预览页。
+  </footer>
+</div>
+</body>
+</html>
