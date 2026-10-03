@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="我的个人主页：项目、文章与经历。">
+  <link rel="icon" href="assets/images/avatar.svg" type="image/svg+xml">
+  <title>My Homepage</title>
+  
+  <script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <nav>
+    <div class="container nav-container">
+      <a href="#" class="logo" aria-label="My Homepage">
+        <span class="logo-terminal" aria-hidden="true"><span class="terminal-user">me@blog</span><span class="terminal-path">:~</span><span class="terminal-symbol">$</span><span class="terminal-cursor"></span></span>
+      </a>
+      
+      <div class="nav-actions">
+        <div class="nav-links">
+          <a href="#projects" data-i18n="nav.projects">Projects</a>
+          <a href="#documents" data-i18n="nav.documents">Docs</a>
+          <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+          <a href="#skills" data-i18n="nav.skills">Stack</a>
+        </div>
+        
+        <div class="nav-controls">
+          <button class="control-btn lang-toggle" aria-label="Toggle Language">English</button>
+          <button class="control-btn theme-toggle" aria-label="Toggle Theme">
+            <i class="fas fa-sun sun-icon"></i>
+            <i class="fas fa-moon moon-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section id="intro" class="intro">
+    <div class="bg-decoration"></div>
+    <div class="container flex-center column">
+      <div class="avatar-container">
+        <img src="assets/images/avatar.svg" alt="Avatar" class="avatar" data-i18n="intro.avatarAlt">
+        <div class="avatar-glow"></div>
+      </div>
+      <h1 class="gradient-text" data-i18n="intro.title">Hi, I'm XXX</h1>
+      <p class="subtitle" data-i18n="intro.desc">...</p>
+      <div class="intro-contact-links" aria-label="Social Links"></div>
+    </div>
+  </section>
+
+  <section id="projects" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="projects.title">My Projects</h2>
+      <div class="projects-grid"></div>
+    </div>
+  </section>
+
+  <section id="documents" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="documents.title">Documents</h2>
+      <div class="documents-grid"></div>
+    </div>
+  </section>
+
+  <section id="timeline" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="timeline.title">Timeline</h2>
+      <div class="timeline-container"></div>
+    </div>
+  </section>
+
+  <section id="skills" class="section-padding">
+    <div class="container">
+      <h2 data-i18n="skills.title">Tech Stack</h2>
+      <div class="skills-wrapper"></div>
+    </div>
+  </section>
+
+  <footer data-i18n="footer.copyright">© 2026 XXX | 个人主页</footer>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

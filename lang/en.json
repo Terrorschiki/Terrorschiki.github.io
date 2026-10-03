@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "timeline": "Timeline",
+    "skills": "Tech Stack",
+    "contact": "Contact",
+    "documents": "Articles"
+  },
+  "intro": {
+    "avatarAlt": "Avatar",
+    "title": "Hi, I'm XXX",
+    "desc": "A one-line introduction about yourself, e.g. your focus / what you are working on<br>Your core skills<br>What you are learning right now"
+  },
+  "projects": {
+    "title": "Projects",
+    "imgAlt": "Project image",
+    "empty": "Nothing here yet. Open assets/js/main.js and add your projects to the PROJECTS array.",
+    "links": {
+      "code": "Code",
+      "docs": "Docs",
+      "demo": "Demo",
+      "website": "Website",
+      "feishu": "Feishu Wiki",
+      "zhihu": "Zhihu Article",
+      "firmware": "Firmware",
+      "mechanical": "Mechanical",
+      "vision": "Vision",
+      "followup": "Follow-up video"
+    }
+  },
+  "documents": {
+    "title": "Articles",
+    "empty": "Articles are being organized. Stay tuned."
+  },
+  "timeline": {
+    "title": "Timeline",
+    "empty": "Nothing here yet. Open assets/js/main.js and add your experience to TIMELINE_EVENTS."
+  },
+  "skills": {
+    "title": "Tech Stack",
+    "embedded": "Embedded Development",
+    "robotics": "Robotics",
+    "simulation": "Simulation & Training",
+    "software": "Toolchain",
+    "hardware": "Mechanical & Hardware Design"
+  },
+  "contact": {
+    "title": "Let's Connect",
+    "bilibili": "Bilibili",
+    "github": "GitHub",
+    "twitter": "Twitter",
+    "zhihu": "Zhihu",
+    "email": "Email"
+  },
+  "footer": {
+    "copyright": "© 2026 XXX | Personal Homepage"
+  }
+}

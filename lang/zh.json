@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "home": "首页",
+    "projects": "项目",
+    "timeline": "时间轴",
+    "skills": "技术栈",
+    "contact": "联系我",
+    "documents": "文章"
+  },
+  "intro": {
+    "avatarAlt": "头像",
+    "title": "你好，我是 XXX",
+    "desc": "一句话介绍你自己，例如：专注方向 / 当前在做的事情<br>擅长的技能<br>正在学习或钻研的内容"
+  },
+  "projects": {
+    "title": "项目合集",
+    "imgAlt": "项目图片",
+    "empty": "这里还没有内容。打开 assets/js/main.js，在 PROJECTS 数组中添加你的项目即可。",
+    "links": {
+      "code": "代码仓库",
+      "docs": "在线文档",
+      "demo": "演示视频",
+      "website": "项目网站",
+      "feishu": "飞书知识库",
+      "zhihu": "知乎文章",
+      "firmware": "固件开源",
+      "mechanical": "机械开源",
+      "vision": "视觉开源",
+      "followup": "后续视频"
+    }
+  },
+  "documents": {
+    "title": "文章",
+    "empty": "文章整理中，敬请期待。"
+  },
+  "timeline": {
+    "title": "经历时间轴",
+    "empty": "这里还没有内容。打开 assets/js/main.js，在 TIMELINE_EVENTS 中添加经历即可。"
+  },
+  "skills": {
+    "title": "技术栈",
+    "embedded": "嵌入式开发",
+    "robotics": "机器人技术",
+    "simulation": "仿真与训练",
+    "software": "开发工具链",
+    "hardware": "结构与硬件设计"
+  },
+  "contact": {
+    "title": "联系我",
+    "bilibili": "哔哩哔哩",
+    "github": "代码仓库",
+    "twitter": "推特",
+    "zhihu": "知乎",
+    "email": "邮箱"
+  },
+  "footer": {
+    "copyright": "© 2026 XXX | 个人主页"
+  }
+}
