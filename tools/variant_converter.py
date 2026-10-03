@@ -41,6 +41,38 @@ BANNER = """
 """
 
 
+def drop_rule_block(css: str, selector: str) -> str:
+    """删除「选择器 + 花括号块」整段。
+
+    用花括号配对定位结束位置，而不是正则懒匹配 —— 后者在遇到 :not()、
+    嵌套函数或注释里的花括号时容易配错，把后面的规则一起吞掉。
+    """
+    idx = css.find(selector)
+    if idx == -1:
+        return css
+
+    brace = css.find("{", idx)
+    if brace == -1:
+        return css
+
+    depth = 0
+    end = -1
+    for i in range(brace, len(css)):
+        if css[i] == "{":
+            depth += 1
+        elif css[i] == "}":
+            depth -= 1
+            if depth == 0:
+                end = i + 1
+                break
+    if end == -1:
+        sys.exit(f"选择器 {selector} 的规则块花括号不配对")
+
+    while end < len(css) and css[end] in "\r\n":
+        end += 1
+    return css[:idx] + css[end:]
+
+
 def convert_css(variant: str) -> str:
     src = SITE / "preview" / f"v{variant}.css"
     if not src.is_file():
