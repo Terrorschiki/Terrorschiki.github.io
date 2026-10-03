@@ -47,6 +47,7 @@ class El {
 const containers = {
   '.projects-grid': new El('div'),
   '.documents-grid': new El('div'),
+  '.videos-grid': new El('div'),
   '.timeline-container': new El('div'),
   '.skills-wrapper': new El('div'),
   '.intro-contact-links': new El('div'),
@@ -116,12 +117,15 @@ function check(name, cond, extra = '') {
   if (i18nLoadedHandler) i18nLoadedHandler();
 
   const docsHtml = containers['.documents-grid'].innerHTML;
+  const videoHtml = containers['.videos-grid'].innerHTML;
   const projHtml = containers['.projects-grid'].innerHTML;
   const tlHtml = containers['.timeline-container'].innerHTML;
   const contactHtml = containers['.intro-contact-links'].innerHTML;
 
   check('文章板块显示空提示', docsHtml.includes('文章整理中'), docsHtml.trim().slice(0, 80));
   check('文章板块没有残留卡片', !docsHtml.includes('project-card'));
+  check('视频板块显示空提示', videoHtml.includes('VIDEOS'), videoHtml.trim().slice(0, 70));
+  check('视频板块没有残留卡片', !videoHtml.includes('project-card'));
   check('项目板块显示空提示', projHtml.includes('PROJECTS'), projHtml.trim().slice(0, 60));
   check('时间轴显示空提示', tlHtml.includes('TIMELINE_EVENTS'), tlHtml.trim().slice(0, 60));
   check('技术栈为空且不报错', containers['.skills-wrapper'].innerHTML === '');
@@ -138,6 +142,10 @@ function check(name, cond, extra = '') {
       `const PROJECTS = [{ img: '', titleKey: 'documents.title', descKey: 'documents.empty', tags: ['TagA'], links: [{ href: 'https://example.com', labelKey: 'projects.links.code', icon: 'fab fa-github' }] },`,
     )
     .replace('const TIMELINE_EVENTS = [', `const TIMELINE_EVENTS = ['timeline.zzz',`)
+    .replace(
+      'const VIDEOS = [',
+      `const VIDEOS = [{ titleKey: 'documents.title', descKey: 'documents.fixtureDesc', platform: 'Bilibili', links: [{ href: 'https://example.com', labelKey: 'projects.links.demo', icon: 'fab fa-bilibili' }] },`,
+    )
     .replace(
       'const DOCUMENTS = [',
       `const DOCUMENTS = [{ titleKey: 'documents.title', descKey: 'documents.fixtureDesc', links: [{ href: 'https://example.com', labelKey: 'projects.links.zhihu', icon: 'fab fa-zhihu' }] },`,
@@ -176,6 +184,7 @@ function check(name, cond, extra = '') {
   if (handler2) handler2();
 
   const d2 = containers['.documents-grid'].innerHTML;
+  const v2 = containers['.videos-grid'].innerHTML;
   const p2 = containers['.projects-grid'].innerHTML;
   const t2 = containers['.timeline-container'].innerHTML;
   const s2 = containers['.skills-wrapper'].innerHTML;
@@ -189,6 +198,8 @@ function check(name, cond, extra = '') {
 
   check('[示例数据] 文章卡片渲染成功', d2.includes('project-card') && d2.includes('知乎文章'), d2.trim().slice(0, 100));
   check('[示例数据] 文章卡片不再显示空提示', !d2.includes('文章整理中'));
+  check('[示例数据] 视频卡片渲染成功', v2.includes('project-card') && v2.includes('video-platform') && v2.includes('Bilibili') && v2.includes('演示视频'), v2.trim().slice(0, 110));
+  check('[示例数据] 视频卡片不再显示空提示', !v2.includes('VIDEOS'));
   check('[示例数据] 项目卡片渲染成功', p2.includes('project-card') && p2.includes('TagA') && p2.includes('代码仓库'));
   check('[示例数据] 时间轴事件渲染成功', t2.includes('timeline-item') && t2.includes('示例经历') && t2.includes('2026.01'));
   check('[示例数据] 技术栈渲染成功', s2.includes('skill-badge') && s2.includes('Python') && s2.includes('开发工具链'));

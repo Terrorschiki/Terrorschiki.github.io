@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "projects": "Projects",
+    "videos": "Videos",
     "timeline": "Timeline",
     "skills": "Tech Stack",
     "contact": "Contact",
@@ -32,6 +33,13 @@
   "documents": {
     "title": "Articles",
     "empty": "Articles are being organized. Stay tuned."
+  },
+  "videos": {
+    "title": "My Videos",
+    "hint": "Updates on Bilibili / Douyin / YouTube and more",
+    "platform": "Platform",
+    "watch": "Watch",
+    "empty": "Videos are on the way ~ Open assets/js/main.js and add your videos to the VIDEOS array."
   },
   "timeline": {
     "title": "Timeline",

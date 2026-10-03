@@ -414,6 +414,14 @@ h2::after {
   gap: 20px;
 }
 
+/* 视频栏目卡片较矮，用网格排布更活泼；auto-fit 会自适应列数 */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
 .card {
   background: var(--bg-editor);
   border-radius: var(--radius-md);
@@ -974,4 +982,251 @@ nav {
 
 .skills-wrapper:has(> .empty-state) {
   grid-template-columns: 1fr;
+}
+
+/* =========================================
+   14. Video Cards（自媒体视频栏目）
+   ========================================= */
+.video-card .project-info h3 {
+  padding-right: 0;
+}
+
+/* 平台角标：Bilibili / Douyin / YouTube ... */
+.video-platform {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  margin-right: auto;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--primary);
+  background: var(--bg-active);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+}
+
+.video-platform i {
+  font-size: 0.62rem;
+}
+
+/* 视频卡片左侧加一条主色竖条，与文章卡片区分开 */
+.video-card {
+  border-left: 3px solid var(--primary);
+}
+
+/* =========================================
+   15. Liveliness Layer（活力化动效）
+   在不改变任何结构与渲染逻辑的前提下，纯 CSS 增强观感
+   ========================================= */
+
+/* --- 15.1 自我介绍区背景光斑（原本 display:none，这里启用）--- */
+.intro .bg-decoration {
+  display: block;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.intro {
+  position: relative;
+  overflow: hidden;
+}
+
+.intro .bg-decoration::before,
+.intro .bg-decoration::after {
+  content: '';
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.16;
+  will-change: transform;
+}
+
+.intro .bg-decoration::before {
+  top: -160px;
+  left: -120px;
+  background: var(--primary);
+  animation: float-blob 18s var(--ease-standard) infinite alternate;
+}
+
+.intro .bg-decoration::after {
+  right: -140px;
+  bottom: -180px;
+  background: var(--terminal-user);
+  opacity: 0.12;
+  animation: float-blob 22s var(--ease-standard) infinite alternate-reverse;
+}
+
+@keyframes float-blob {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(60px, 40px, 0) scale(1.15); }
+}
+
+/* 光斑在背景层，内容需在其之上 */
+.intro .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- 15.2 头像：缓慢旋转的渐变光环 --- */
+.avatar-container::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--primary),
+    var(--terminal-user),
+    var(--terminal-path),
+    var(--primary)
+  );
+  opacity: 0.45;
+  filter: blur(14px);
+  animation: spin-slow 12s linear infinite;
+  transition: opacity var(--transition-base);
+}
+
+.avatar-container:hover::before {
+  opacity: 0.8;
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+/* --- 15.3 标题下划线：划过时展开成渐变色 --- */
+h2::after {
+  background: linear-gradient(90deg, var(--primary), var(--terminal-user));
+  transition: width var(--transition-base), background var(--transition-base);
+}
+
+h2:hover::after {
+  width: 88px;
+}
+
+/* --- 15.4 栏目副标题（用于视频栏目等）--- */
+.section-hint {
+  text-align: center;
+  margin: -18px 0 32px;
+  font-size: 0.92rem;
+  color: var(--text-subtle);
+}
+
+/* --- 15.5 卡片悬停：轻微上浮 + 更明显的阴影 --- */
+.project-card {
+  transition: transform var(--duration-fast) var(--ease-standard),
+              box-shadow var(--transition-base),
+              border-color var(--transition-base);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+/* --- 15.6 标签悬停：主色填充 --- */
+.project-tag {
+  transition: background-color var(--duration-fast) ease,
+              color var(--duration-fast) ease,
+              transform var(--duration-fast) ease;
+}
+
+.project-tag:hover {
+  background: var(--primary);
+  color: var(--text-invert);
+  transform: translateY(-1px);
+  border-color: var(--primary);
+}
+
+/* --- 15.7 时间轴圆点：柔和的呼吸脉冲 --- */
+.timeline-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  opacity: 0;
+  animation: dot-pulse 2.6s var(--ease-standard) infinite;
+}
+
+@keyframes dot-pulse {
+  0%   { opacity: 0.6; transform: scale(0.8); }
+  70%  { opacity: 0;   transform: scale(1.6); }
+  100% { opacity: 0;   transform: scale(1.6); }
+}
+
+/* --- 15.8 技能徽章悬停：图标轻微弹起 --- */
+.skill-badge {
+  transition: transform var(--duration-fast) var(--ease-standard),
+              border-color var(--transition-base),
+              box-shadow var(--transition-base);
+}
+
+.skill-badge:hover {
+  transform: translateY(-2px);
+}
+
+.skill-badge i {
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.skill-badge:hover i {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+/* --- 15.9 联系入口按钮悬停：图标轻微位移 --- */
+.intro-contact-link i {
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.intro-contact-link:hover i {
+  transform: translateX(3px) scale(1.08);
+}
+
+/* --- 15.10 Logo 打字机光标（结构未变，仅强化视觉）--- */
+.logo-terminal:hover .terminal-cursor {
+  animation-duration: 0.7s;
+}
+
+/* 打字机动画只在脚本成功测量宽度后由 .is-typing 启用，
+   避免脚本失败或禁用 JS 时内容被裁掉 */
+.logo-terminal.is-typing .terminal-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  animation: typewriter-reveal 1.05s steps(24, end) 300ms both;
+}
+
+@keyframes typewriter-reveal {
+  from { width: 0; }
+  to   { width: var(--typewriter-width, 100%); }
+}
+
+/* --- 15.11 尊重系统「减少动态效果」设置 --- */
+@media (prefers-reduced-motion: reduce) {
+  .intro .bg-decoration::before,
+  .intro .bg-decoration::after,
+  .avatar-container::before,
+  .timeline-dot::after {
+    animation: none;
+  }
+
+  .logo-terminal.is-typing .terminal-typewriter {
+    animation: none;
+    width: auto;
+    overflow: visible;
+  }
+
+  .project-card:hover,
+  .project-tag:hover,
+  .skill-badge:hover {
+    transform: none;
+  }
 }

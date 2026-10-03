@@ -5,10 +5,12 @@
 - 支持中文 / English 一键切换
 - 支持亮色 / 暗色主题
 - 响应式布局，适配手机与桌面
+- 六个并列栏目：**项目合集 / 文章 / 自媒体视频 / 经历时间轴 / 技术栈 / 联系方式**
+- 轻量的活力化动效（背景光斑、头像光环、Logo 打字机、卡片悬浮），并自动尊重系统「减少动态效果」设置
 - 所有内容都在两个文件里维护：`assets/js/main.js` 和 `lang/*.json`
 
 > **当前状态：所有示例内容已清空，等待填入你自己的内容。**
-> 页面上的 `XXX`、`your-email@example.com`、`your-name` 都是占位符，请替换成你自己的信息。
+> 页面上的 `your-email@example.com` 等占位符，请替换成你自己的信息。
 > 详细步骤见下面的「[如何添加你自己的内容](#三如何添加你自己的内容)」。
 
 ---
@@ -21,11 +23,12 @@
   - [1. 修改站点标题与浏览器标签](#1-修改站点标题与浏览器标签)
   - [2. 替换头像](#2-替换头像)
   - [3. 写第一篇文章](#3-写第一篇文章)
-  - [4. 添加项目](#4-添加项目)
-  - [5. 添加经历时间轴](#5-添加经历时间轴)
-  - [6. 添加技术栈](#6-添加技术栈)
-  - [7. 修改联系方式](#7-修改联系方式)
-  - [8. 改配色](#8-改配色)
+  - [4. 添加自媒体账号视频](#4-添加自媒体账号视频)
+  - [5. 添加项目](#5-添加项目)
+  - [6. 添加经历时间轴](#6-添加经历时间轴)
+  - [7. 添加技术栈](#7-添加技术栈)
+  - [8. 修改联系方式](#8-修改联系方式)
+  - [9. 改配色](#9-改配色)
 - [四、部署到 GitHub Pages](#四部署到-github-pages)
 - [五、绑定自己的域名（可选）](#五绑定自己的域名可选)
 - [六、目录结构](#六目录结构)
@@ -82,7 +85,7 @@ npx serve .
 
 | 你要改的东西 | 文件 | 说明 |
 | --- | --- | --- |
-| **有哪些内容、顺序、图片、链接** | `assets/js/main.js` | 顶部的 5 个数组 |
+| **有哪些内容、顺序、图片、链接** | `assets/js/main.js` | 顶部的 6 个数组 |
 | **每张卡片上显示的文字** | `lang/zh.json`、`lang/en.json` | 用 `.` 分层的文案键 |
 
 > `main.js` 里的 `titleKey` / `descKey` 就是语言包里的键名。**两边必须同时改，键名必须完全一致**，否则页面上会显示键名本身（例如 `documents.item0.title`）。
@@ -190,7 +193,46 @@ links: [{ href: 'posts/hello-world.html', label: '阅读全文', icon: 'fas fa-b
 
 > 站内链接用相对路径（`posts/hello-world.html`），外链用完整地址（`https://...`）。
 
-### 4. 添加项目
+### 4. 添加自媒体账号视频
+
+「自媒体视频」栏目用来展示你在 B 站 / 抖音 / YouTube / 小红书 等平台发布的内容。**静态站点不存放视频文件本身**，卡片点击后跳转到对应平台观看，所以和文章一样只维护一个数组。
+
+第 1 步，编辑 `assets/js/main.js` 的 `VIDEOS`：
+
+```js
+const VIDEOS = [
+  {
+    titleKey: 'videos.item0.title',
+    descKey: 'videos.item0.desc',
+    platform: 'Bilibili',          // 可选，显示成卡片上的平台角标
+    links: [
+      { href: 'https://www.bilibili.com/video/BV1xxxxxxxxx', labelKey: 'projects.links.demo', icon: 'fab fa-bilibili' },
+    ],
+  },
+];
+```
+
+第 2 步，在 `lang/zh.json` 与 `lang/en.json` 里补上文案：
+
+```json
+"videos": {
+  "title": "自媒体视频",
+  "hint": "B 站 / 抖音 / YouTube 等平台的内容更新",
+  "empty": "视频正在路上～",
+  "item0": {
+    "title": "我的第一个视频",
+    "desc": "这期视频讲了什么内容。"
+  }
+}
+```
+
+- `platform` 字段可以省略，省略后卡片上就不显示角标。
+- 一个视频有多个平台版本时，在 `links` 里写多项即可（例如同时给 B 站和 YouTube 两个按钮）。
+- 常用图标：`fab fa-bilibili`、`fab fa-youtube`、`fab fa-tiktok`、`fab fa-xiaohongshu`（小红书若无图标可用 `fas fa-book-heart`）。
+- 空数组时栏目显示「视频正在路上～」提示，加入第一个视频后自动消失。
+- 视频卡片在宽屏下**自动排成两列**，窄屏自动变成单列，不需要手动调整。
+
+### 5. 添加项目
 
 同样是两步。先编辑 `PROJECTS`：
 
@@ -227,7 +269,7 @@ const PROJECTS = [
 - `links` 里的 `labelKey` 可复用模板自带标签（`projects.links.code` / `docs` / `demo` / `website` / `zhihu` 等）；想显示别的文字就直接写 `label: '自定义文字'`。
 - 图标名到 [Font Awesome 6](https://fontawesome.com/search?o=r&m=free) 搜索，复制形如 `fab fa-github` 的名字即可。
 
-### 5. 添加经历时间轴
+### 6. 添加经历时间轴
 
 `TIMELINE_EVENTS` 是一个字符串数组，**数组顺序就是页面显示顺序**（建议新的在上面）：
 
@@ -252,7 +294,7 @@ const TIMELINE_EVENTS = [
 }
 ```
 
-### 6. 添加技术栈
+### 7. 添加技术栈
 
 `TECH_STACK` 按分类组织，每个技能项包含名称和图标：
 
@@ -270,7 +312,7 @@ const TECH_STACK = [
 
 模板自带 5 个分类标题，都写在语言包里：`skills.embedded`、`skills.robotics`、`skills.simulation`、`skills.software`、`skills.hardware`。想加新分类，就在 `lang/*.json` 的 `skills` 里加一个键，并在 `TECH_STACK` 中引用它。
 
-### 7. 修改联系方式
+### 8. 修改联系方式
 
 `CONTACT_LINKS` 决定头像下方那一排入口按钮，**现在只保留了邮箱和 GitHub**，其余的都写成了注释，取消注释并改成你自己的地址即可：
 
@@ -285,7 +327,7 @@ const CONTACT_LINKS = [
 
 按钮文字来自语言包的 `contact.*`，已有：`email`、`github`、`bilibili`、`twitter`、`zhihu`。
 
-### 8. 改配色
+### 9. 改配色
 
 打开 `assets/css/style.css`，最上方的 `:root`（亮色）与 `[data-theme="dark"]`（暗色）集中定义了所有颜色：
 
@@ -378,7 +420,7 @@ Pages 会自动重新构建，通常一两分钟后生效。
 │   │   └── style.css           # 全部样式：配色变量、布局、组件、响应式
 │   ├── js/
 │   │   ├── i18n.js             # 读取 lang/*.json，负责中英文切换
-│   │   └── main.js             # ★ 内容配置区：5 个数组都在这里
+│   │   └── main.js             # ★ 内容配置区：6 个数组都在这里
 │   └── images/
 │       └── avatar.svg          # 占位头像，替换成你自己的照片后可删除
 ├── lang/
@@ -444,6 +486,12 @@ node tools/verify_render.js
 
 **Q：「文章整理中，敬请期待」怎么去掉？**
 往 `DOCUMENTS` 数组里加第一篇文章就会自动消失。如果想连整个板块一起隐藏：删掉 `index.html` 中 `id="documents"` 的整个 `<section>`，并删掉导航栏里 `href="#documents"` 的那个 `<a>`。
+
+**Q：自媒体视频栏目可以直接放视频文件吗？**
+不建议。静态站点托管视频会很快超出 GitHub Pages 的流量与仓库体积限制。把视频发到 B 站 / 抖音 / YouTube，然后用 `VIDEOS` 数组做卡片跳转即可（这也是模板的默认做法）。
+
+**Q：视频栏目的卡片为什么有时是两列、有时是一列？**
+这是自适应网格（`auto-fit` + `minmax(320px, 1fr)`）：容器够宽就两列，窄屏自动变单列，不需要手动配置。
 
 **Q：改了文件但页面没变化？**
 本地是浏览器缓存，按 `Ctrl + F5` 强制刷新；线上则等 Pages 构建完成（仓库 **Actions** 页面能看到进度）。

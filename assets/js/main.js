@@ -11,6 +11,7 @@
   //  字段速查：
   //    PROJECTS      img(封面图,可省略) / titleKey / descKey / tags[] / links[]
   //    DOCUMENTS     titleKey / descKey / links[]
+  //    VIDEOS        titleKey / descKey / platform(平台角标) / links[]
   //    TIMELINE_EVENTS  ['timeline.eventX', ...]  顺序即展示顺序（新→旧）
   //    TECH_STACK    category(语言包键) / items[{ name, icon }]
   //    CONTACT_LINKS icon / key(语言包键) / link
@@ -49,14 +50,30 @@
     // },
   ];
 
-  // ---------- 3. 时间轴（数组顺序 = 页面展示顺序）----------
+  // ---------- 3. 自媒体账号视频 ----------
+  // 用卡片展示你在 B 站 / 抖音 / YouTube / 小红书 等平台发布的视频，
+  // 点击卡片按钮跳转到对应平台观看（静态站点不存放视频文件本身）。
+  // platform 可选，会显示成卡片右上角的平台小标签。
+  const VIDEOS = [
+    // 示例（语言包中需存在 videos.item0.title / .desc）：
+    // {
+    //   titleKey: 'videos.item0.title',
+    //   descKey: 'videos.item0.desc',
+    //   platform: 'Bilibili',
+    //   links: [
+    //     { href: 'https://www.bilibili.com/video/BVxxxxxxxxx', labelKey: 'projects.links.demo', icon: 'fab fa-bilibili' },
+    //   ],
+    // },
+  ];
+
+  // ---------- 4. 时间轴（数组顺序 = 页面展示顺序）----------
   const TIMELINE_EVENTS = [
     // 示例（语言包中需存在 timeline.event0.date / .title / .desc）：
     // 'timeline.event0',
     // 'timeline.event1',
   ];
 
-  // ---------- 4. 技术栈 ----------
+  // ---------- 5. 技术栈 ----------
   const TECH_STACK = [
     // 示例：
     // {
@@ -68,7 +85,7 @@
     // },
   ];
 
-  // ---------- 5. 联系方式（Hero 区域下方的入口）----------
+  // ---------- 6. 联系方式（Hero 区域下方的入口）----------
   const CONTACT_LINKS = [
     { icon: 'fas fa-envelope', key: 'contact.email', link: 'mailto:your-email@example.com' },  // ← 改成你的邮箱
     { icon: 'fab fa-github', key: 'contact.github', link: 'https://github.com/Terrorschiki' },
@@ -239,6 +256,38 @@
     });
   }
 
+  function initVideos() {
+    const grid = qs('.videos-grid');
+    if (!grid) return;
+    clear(grid);
+
+    if (VIDEOS.length === 0) {
+      renderEmptyState(grid, 'videos.empty');
+      return;
+    }
+
+    VIDEOS.forEach((video) => {
+      const actionsHtml = renderProjectActions(video.links);
+      const platformHtml = video.platform
+        ? `<span class="video-platform"><i class="fas fa-play"></i> ${video.platform}</span>`
+        : '';
+
+      const card = document.createElement('div');
+      card.className = 'card project-card project-card--text-only video-card';
+      card.innerHTML = `
+        <div class="project-info">
+          <h3>${t(video.titleKey)}</h3>
+          <p>${t(video.descKey)}</p>
+          <div class="project-meta-row">
+            ${platformHtml}
+            ${actionsHtml}
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
   function initTimeline() {
     const container = qs('.timeline-container');
     if (!container) return;
@@ -302,6 +351,29 @@
     });
   }
 
+  /**
+   * Logo 打字机效果（纯装饰，失败不影响任何内容）。
+   * 先测量真实宽度写入 CSS 变量，再加类触发动画，
+   * 因此即使脚本报错或用户禁用 JS，Logo 也始终完整显示。
+   */
+  function initLogoTypewriter() {
+    const logo = qs('.logo-terminal');
+    const target = qs('.terminal-typewriter');
+    if (!logo || !target) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return;
+
+    try {
+      const width = Math.ceil(target.getBoundingClientRect().width) || target.scrollWidth;
+      if (!width) return;
+      target.style.setProperty('--typewriter-width', `${width}px`);
+      logo.classList.add('is-typing');
+    } catch {
+      /* 装饰性效果，任何异常都不影响页面 */
+    }
+  }
+
   function initSmoothScroll() {
     qsa('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', function (e) {
@@ -331,6 +403,7 @@
     const targets = [
       ...qsa('.projects-grid .card'),
       ...qsa('.documents-grid .card'),
+      ...qsa('.videos-grid .card'),
       ...qsa('.timeline-container .timeline-item'),
       ...qsa('.skills-wrapper .skill-category'),
     ];
@@ -369,12 +442,14 @@
     initThemeToggle();
     initLangToggle();
     initSmoothScroll();
+    initLogoTypewriter();
   });
 
   window.addEventListener('i18nLoaded', () => {
     console.log('[main] i18n loaded, rendering content...');
     initProjects();
     initDocuments();
+    initVideos();
     initTimeline();
     initTechStack();
     initContactLinks();

@@ -1,8 +1,8 @@
 /*
  * 站点自检脚本：在推送到 GitHub 之前跑一遍，能提前发现绝大多数低级错误。
  *
- * 用法（在本目录的上一级，也就是站点根目录下执行）：
- *     node _tools/check_site.js
+ * 用法（在站点根目录下执行）：
+ *     node tools/check_site.js
  *
  * 检查内容：
  *   1. lang/*.json 是否为合法 JSON；
@@ -11,7 +11,9 @@
  *      是否在两个语言包里都存在；
  *   4. PROJECTS 里引用的封面图是否真实存在；
  *   5. index.html 里的图片与脚本路径是否存在；
- *   6. 是否还残留模板作者的个人信息。
+ *   6. 五个内容数组（PROJECTS / DOCUMENTS / VIDEOS / TIMELINE_EVENTS /
+ *      TECH_STACK）是否仍然存在，避免误改结构；
+ *   7. 是否还残留模板作者的个人信息。
  */
 const fs = require('fs');
 const path = require('path');
@@ -104,11 +106,23 @@ function stripComments(src) {
 const mainSrc = stripComments(read(MAIN));
 
 const keyLiterals = new Set();
-for (const m of mainSrc.matchAll(/(?:titleKey|descKey|category)\s*:\s*'([^']+)'/g)) keyLiterals.add(m[1]);
+for (const m of mainSrc.matchAll(/\b(titleKey|descKey|category|platform)\s*:\s*'([^']+)'/g)) {
+  const [, field, value] = m;
+  // platform 的值是平台名（Bilibili 等），不指向语言包，跳过
+  if (field === 'platform') continue;
+  keyLiterals.add(value);
+}
 for (const m of mainSrc.matchAll(/\{\s*icon:\s*'[^']*',\s*key:\s*'([^']+)'/g)) keyLiterals.add(m[1]);
 for (const m of mainSrc.matchAll(/labelKey:\s*'([^']+)'/g)) keyLiterals.add(m[1]);
 // TIMELINE_EVENTS 这类以字符串形式列出的键
 for (const m of mainSrc.matchAll(/'(timeline\.[A-Za-z0-9_]+)'/g)) keyLiterals.add(m[1]);
+
+// 结构校验：五个内容数组必须都还在，避免后续维护时误删
+for (const name of ['PROJECTS', 'DOCUMENTS', 'VIDEOS', 'TIMELINE_EVENTS', 'TECH_STACK']) {
+  if (!new RegExp(`const\\s+${name}\\s*=\\s*\\[`).test(mainSrc)) {
+    problems.push(`${MAIN} 中找不到内容数组 ${name}，结构可能被误改`);
+  }
+}
 
 for (const key of keyLiterals) {
   if (!hasKey(key)) {

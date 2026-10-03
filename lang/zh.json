@@ -2,6 +2,7 @@
   "nav": {
     "home": "首页",
     "projects": "项目",
+    "videos": "视频",
     "timeline": "时间轴",
     "skills": "技术栈",
     "contact": "联系我",
@@ -32,6 +33,13 @@
   "documents": {
     "title": "文章",
     "empty": "文章整理中，敬请期待。"
+  },
+  "videos": {
+    "title": "自媒体视频",
+    "hint": "B 站 / 抖音 / YouTube 等平台的内容更新",
+    "platform": "平台",
+    "watch": "去观看",
+    "empty": "视频正在路上～ 打开 assets/js/main.js，在 VIDEOS 数组中添加你的视频即可。"
   },
   "timeline": {
     "title": "经历时间轴",
