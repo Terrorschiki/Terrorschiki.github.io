@@ -106,7 +106,7 @@ function check(name, cond, extra = '') {
 (async () => {
   await new Promise((r) => setTimeout(r, 120));
 
-  // ---- 场景 A：使用仓库中真实的（空）数据渲染 ----
+  // ---- 场景 A：使用仓库中真实的数据渲染（作品集内容已填入）----
   vm.runInContext(fs.readFileSync(path.join(SITE, 'assets', 'js', 'main.js'), 'utf8'), sandbox, { filename: 'main.js' });
   check('main.js 执行未抛错', true);
   check('window.i18n.get 可用', typeof sandbox.window.i18n?.get === 'function');
@@ -122,16 +122,17 @@ function check(name, cond, extra = '') {
   const tlHtml = containers['.timeline-container'].innerHTML;
   const contactHtml = containers['.intro-contact-links'].innerHTML;
 
+  // ---- 场景 A：使用仓库中真实的数据渲染（作品集内容已填入）----
   check('文章板块显示空提示', docsHtml.includes('文章整理中'), docsHtml.trim().slice(0, 80));
   check('文章板块没有残留卡片', !docsHtml.includes('project-card'));
-  check('视频板块显示空提示', videoHtml.includes('VIDEOS'), videoHtml.trim().slice(0, 70));
-  check('视频板块没有残留卡片', !videoHtml.includes('project-card'));
-  check('项目板块显示空提示', projHtml.includes('PROJECTS'), projHtml.trim().slice(0, 60));
+  check('视频板块渲染作品集视频', videoHtml.includes('project-card') && videoHtml.includes('Bilibili'), videoHtml.trim().slice(0, 70));
+  const projCardCount = (projHtml.match(/class="card project-card/g) || []).length;
+  check('项目板块渲染作品集项目（6 个）', projCardCount === 6, `count=${projCardCount}`);
   check('时间轴显示空提示', tlHtml.includes('TIMELINE_EVENTS'), tlHtml.trim().slice(0, 60));
-  check('技术栈为空且不报错', containers['.skills-wrapper'].innerHTML === '');
+  check('技术栈渲染正常', containers['.skills-wrapper'].innerHTML.includes('skill-badge'), containers['.skills-wrapper'].innerHTML.trim().slice(0, 60));
   check('联系方式保留邮箱+GitHub', contactHtml.includes('邮箱') && contactHtml.includes('代码仓库'), contactHtml.trim().slice(0, 120));
   check('联系方式已移除 playground', !contactHtml.includes('在线策略体验'));
-  check('渲染结果不含 Lain', !JSON.stringify(containers).includes('Lain'));
+  check('渲染结果包含外骨骼开源仓库链接', JSON.stringify(containers).includes('Lain-Ego0/G-Exo'));
   check('渲染结果不含项目残留图片', !JSON.stringify(containers).includes('assets/images/qxzn'));
 
   // ---- 场景 B：填入示例数据，确认卡片渲染路径正常 ----

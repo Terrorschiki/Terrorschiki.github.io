@@ -11,7 +11,7 @@
   "intro": {
     "avatarAlt": "Terrorschiki's avatar",
     "title": "Hi, I'm Terrorschiki",
-    "desc": "A one-line introduction about yourself, e.g. your focus / what you are working on<br>Your core skills<br>What you are learning right now"
+    "desc": "Focused on quadruped robot reinforcement learning, SLAM localization, and embedded systems — with awards including a ROBOCON National Second Prize and a Physical AI Hackathon track championship."
   },
   "projects": {
     "title": "Projects",
@@ -27,7 +27,34 @@
       "firmware": "Firmware",
       "mechanical": "Mechanical",
       "vision": "Vision",
-      "followup": "Follow-up video"
+      "followup": "Follow-up video",
+      "imuDriver": "IMU Driver",
+      "exoRepo": "Exoskeleton Repo",
+      "installScript": "Install Script"
+    },
+    "item0": {
+      "title": "Quadruped Robot RL Gait Training & Navigation",
+      "desc": "Quadruped gait trained with the Robot_lab framework and deployed via RL_sar for Sim2Real; features a customized GLIM odometry, art-planner 2.5D elevation-map navigation, and a self-developed local planner with low compute requirements. Won the National Second Prize in ROBOCON Bio-inspired Legged Robots, and was invited by the ROBOCON committee to represent Bilibili at the WAIC World AI Conference flash event."
+    },
+    "item1": {
+      "title": "SkylandX C01 LiDAR ROS2 Driver & IMU Calibration Tools",
+      "desc": "A lightweight LiDAR driver built on raw UDP communication — unpacks data, publishes point clouds in PointCloud2 format, and outputs IMU data in m/s² SI units, with no complex SDK dependency. Includes a one-click IMU calibration script based on the kailbr project, improving LiDAR odometry accuracy by 300% (closed-loop test with GLIM). Planned open-source release after October stability tests."
+    },
+    "item2": {
+      "title": "Four-IMU Reinforcement Learning Exoskeleton",
+      "desc": "Local agent deployment and communication framework on the SpacemiT K3 dev board; an improved EpsonG354 driver with multi-IMU hardware binding and hot-swappable topics, fusing ESKF + Mahony for IMU attitude — providing fine-grained pose data for RL motion control; a one-click motor homing program for Lingzu RS02 motors. Won the ALLOPO Track Championship at the Physical AI Hackathon."
+    },
+    "item3": {
+      "title": "GLIM-based Robot Localization System",
+      "desc": "GLIM odometry with real-time mapping output and GPU acceleration; offline point-cloud optimization and segmentation feed the relocalization module; the Small-GICP relocalization module delivers high-precision point-cloud relocalization on a modest compute budget, correcting the robot's pose in real time. Accuracy surpasses the closed-source Odin1 algorithm, achieving 1cm accuracy in RC arenas. Nominated for the DJI ROBOCON AWARD (Technical Track)."
+    },
+    "item4": {
+      "title": "Gitea-based Lab Intranet Management System",
+      "desc": "Intranet version management based on Gitea, handling version control and inter-team collaboration for large files such as SolidWorks/STL; an Ubuntu-based NAS provides multi-redundant backups of important files. Achieves over 10x the upload/download rates of competing products, with more rigorous Git-based version management. Nominated for the DJI ROBOCON AWARD (Management Track)."
+    },
+    "item5": {
+      "title": "RK3588-based Intelligent Omni Steer-Wheel AGV",
+      "desc": "Cartographer-based 2D LiDAR SLAM and localization with indoor relocalization error under 5cm; autonomous navigation via ROS2 Navigation for the steer-wheel platform; YOLO flame and parcel detection on the RK3588 NPU, with pipeline optimizations doubling inference speed (200% of baseline). Won the National Second Prize in the Embedded Chip & System Design Competition."
     }
   },
   "documents": {
@@ -39,7 +66,11 @@
     "hint": "Updates on Bilibili / Douyin / YouTube and more",
     "platform": "Platform",
     "watch": "Watch",
-    "empty": "Videos are on the way ~ Open assets/js/main.js and add your videos to the VIDEOS array."
+    "empty": "Videos are on the way ~ Open assets/js/main.js and add your videos to the VIDEOS array.",
+    "item0": {
+      "title": "We Built a Four-DOF RL Exoskeleton at the Physical AI Hackathon — Track Champion!",
+      "desc": "A demo of the four-IMU reinforcement learning exoskeleton: from sensor communication framework to RL motion control, winning the ALLOPO Track Championship at the Physical AI Hackathon."
+    }
   },
   "timeline": {
     "title": "Timeline",

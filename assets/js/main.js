@@ -26,16 +26,48 @@
 
   // ---------- 1. 项目卡片 ----------
   const PROJECTS = [
-    // 示例（复制后修改，并记得在语言包补上 projects.itemN.title / .desc）：
-    // {
-    //   img: 'assets/images/my-project-cover.png',
-    //   titleKey: 'projects.item0.title',
-    //   descKey: 'projects.item0.desc',
-    //   tags: ['Python', 'Open Source'],
-    //   links: [
-    //     { href: 'https://github.com/your-name/your-repo', labelKey: 'projects.links.code', icon: 'fab fa-github' },
-    //   ],
-    // },
+    {
+      img: 'assets/images/project-quadruped.jpg',
+      titleKey: 'projects.item0.title',
+      descKey: 'projects.item0.desc',
+      tags: ['ROS2', '强化学习', 'GLIM', '导航'],
+    },
+    {
+      img: 'assets/images/project-skylandx.png',
+      titleKey: 'projects.item1.title',
+      descKey: 'projects.item1.desc',
+      tags: ['ROS2', '驱动开发', 'IMU 标定'],
+    },
+    {
+      img: 'assets/images/project-exoskeleton.jpg',
+      titleKey: 'projects.item2.title',
+      descKey: 'projects.item2.desc',
+      tags: ['强化学习', '外骨骼', 'IMU'],
+      links: [
+        { href: 'https://github.com/GZ89mid/Epson_HotSwap_ws', labelKey: 'projects.links.imuDriver', icon: 'fab fa-github' },
+        { href: 'https://github.com/Lain-Ego0/G-Exo', labelKey: 'projects.links.exoRepo', icon: 'fab fa-github' },
+      ],
+    },
+    {
+      img: 'assets/images/project-glim.jpg',
+      titleKey: 'projects.item3.title',
+      descKey: 'projects.item3.desc',
+      tags: ['GLIM', 'SLAM', '重定位'],
+      links: [
+        { href: 'https://github.com/GZ89mid/GLIMinstall', labelKey: 'projects.links.installScript', icon: 'fab fa-github' },
+      ],
+    },
+    {
+      titleKey: 'projects.item4.title',
+      descKey: 'projects.item4.desc',
+      tags: ['Gitea', 'NAS', '版本管理'],
+    },
+    {
+      img: 'assets/images/project-agv.jpg',
+      titleKey: 'projects.item5.title',
+      descKey: 'projects.item5.desc',
+      tags: ['RK3588', 'YOLO', '导航'],
+    },
   ];
 
   // ---------- 2. 文章 / 文档卡片 ----------
@@ -55,15 +87,14 @@
   // 点击卡片按钮跳转到对应平台观看（静态站点不存放视频文件本身）。
   // platform 可选，会显示成卡片右上角的平台小标签。
   const VIDEOS = [
-    // 示例（语言包中需存在 videos.item0.title / .desc）：
-    // {
-    //   titleKey: 'videos.item0.title',
-    //   descKey: 'videos.item0.desc',
-    //   platform: 'Bilibili',
-    //   links: [
-    //     { href: 'https://www.bilibili.com/video/BVxxxxxxxxx', labelKey: 'projects.links.demo', icon: 'fab fa-bilibili' },
-    //   ],
-    // },
+    {
+      titleKey: 'videos.item0.title',
+      descKey: 'videos.item0.desc',
+      platform: 'Bilibili',
+      links: [
+        { href: 'https://www.bilibili.com/video/BV1uuu36uEjx', labelKey: 'videos.watch', icon: 'fab fa-bilibili' },
+      ],
+    },
   ];
 
   // ---------- 4. 时间轴（数组顺序 = 页面展示顺序）----------
@@ -75,14 +106,41 @@
 
   // ---------- 5. 技术栈 ----------
   const TECH_STACK = [
-    // 示例：
-    // {
-    //   category: 'skills.software',
-    //   items: [
-    //     { name: 'Python', icon: 'fab fa-python' },
-    //     { name: 'Git', icon: 'fab fa-git-alt' },
-    //   ],
-    // },
+    {
+      category: 'skills.robotics',
+      items: [
+        { name: 'ROS2', icon: 'fas fa-robot' },
+        { name: 'GLIM 里程计', icon: 'fas fa-location-crosshairs' },
+        { name: 'Cartographer', icon: 'fas fa-map' },
+        { name: 'ROS2 Navigation', icon: 'fas fa-route' },
+        { name: 'YOLO', icon: 'fas fa-eye' },
+      ],
+    },
+    {
+      category: 'skills.simulation',
+      items: [
+        { name: '强化学习', icon: 'fas fa-brain' },
+        { name: 'Robot_lab', icon: 'fas fa-flask' },
+        { name: 'RL_sar', icon: 'fas fa-dog' },
+        { name: 'Sim2Real', icon: 'fas fa-right-left' },
+      ],
+    },
+    {
+      category: 'skills.embedded',
+      items: [
+        { name: 'RK3588', icon: 'fas fa-microchip' },
+        { name: 'Epson IMU', icon: 'fas fa-compass' },
+        { name: '灵足 RS02 电机', icon: 'fas fa-gears' },
+      ],
+    },
+    {
+      category: 'skills.software',
+      items: [
+        { name: 'Git', icon: 'fab fa-git-alt' },
+        { name: 'Gitea', icon: 'fab fa-code-branch' },
+        { name: 'Ubuntu NAS', icon: 'fab fa-ubuntu' },
+      ],
+    },
   ];
 
   // ---------- 6. 联系方式（Hero 区域下方的入口）----------

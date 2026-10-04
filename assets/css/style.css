@@ -724,8 +724,8 @@ footer {
   }
 
   .project-thumbnail-wrapper {
-    height: 190px;
-    min-height: 190px;
+    height: 220px;
+    min-height: 220px;
     border-right: 0;
     border-bottom: 1px solid var(--border-light);
   }
