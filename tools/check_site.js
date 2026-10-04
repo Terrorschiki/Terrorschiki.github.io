@@ -152,7 +152,9 @@ for (const rel of localRefs) {
 }
 
 // ---------- 6. 残留个人信息 / 占位符提醒 ----------
-const PERSONAL = ['Lain-Ego', 'lain-ego', 'Ego0', 'lain@db', 'KKR'];
+// 'Lain-Ego' / 'Ego0' 是本站主人自己的 GitHub 用户名（作品集中外骨骼仓库
+// github.com/Lain-Ego0/G-Exo 需要引用），对本站而言不算模板作者残留信息。
+const PERSONAL = ['lain@db', 'KKR'];
 const filesToScan = ['index.html', MAIN, 'assets/js/i18n.js', 'lang/zh.json', 'lang/en.json', 'assets/css/style.css'];
 for (const rel of filesToScan) {
   const src = read(rel);
