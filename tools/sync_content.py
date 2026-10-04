@@ -77,11 +77,13 @@ def sync_branch(branch, apply_changes, push):
     # 排序保证输出稳定；index.html 放最前便于阅读
     ordered = sorted(targets, key=lambda p: (p != "index.html", p))
 
-    # 哪些文件在分支上确实不同
+    # 哪些文件在分支上确实不同。
+    # 用 blob 哈希比较而不是比较文件内容：图片等二进制文件无法按 UTF-8 解码，
+    # 直接 diff 内容会抛 UnicodeDecodeError（对比哈希更安全也更快）。
     differing = []
     for f in ordered:
-        a = run(["git", "show", f"{MAIN}:{f}"], check=False)
-        b = run(["git", "show", f"{branch}:{f}"], check=False)
+        a = run(["git", "rev-parse", f"{MAIN}:{f}"], check=False)
+        b = run(["git", "rev-parse", f"{branch}:{f}"], check=False)
         if a != b:
             differing.append(f)
 
