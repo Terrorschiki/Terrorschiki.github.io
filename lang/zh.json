@@ -11,7 +11,7 @@
   "intro": {
     "avatarAlt": "Terrorschiki 的头像",
     "title": "你好，我是 Terrorschiki",
-    "desc": "一句话介绍你自己，例如：专注方向 / 当前在做的事情<br>擅长的技能<br>正在学习或钻研的内容"
+    "desc": "专注四足机器人强化学习、SLAM 定位与嵌入式系统开发，曾获 ROBOCON 国家二等奖、Physical AI 黑客松赛道冠军等多项奖项。"
   },
   "projects": {
     "title": "项目合集",
@@ -27,7 +27,34 @@
       "firmware": "固件开源",
       "mechanical": "机械开源",
       "vision": "视觉开源",
-      "followup": "后续视频"
+      "followup": "后续视频",
+      "imuDriver": "IMU 驱动开源",
+      "exoRepo": "外骨骼开源",
+      "installScript": "一键安装脚本"
+    },
+    "item0": {
+      "title": "四足机器狗强化学习步态训练与导航",
+      "desc": "基于 Robot_lab 框架训练四足步态，通过 RL_sar 部署框架实现 Sim2Real；采用定制化 GLIM 里程计与 art-planner 2.5D 高程图导航，自研低算力需求局部规划器。获 ROBOCON 仿生足式国家二等奖，受 ROBOCON 组委会邀请代表哔哩哔哩弹幕网参加 WAIC 世界人工智能大会快闪。"
+    },
+    "item1": {
+      "title": "SkylandX C01 雷达 ROS2 驱动与 IMU 标定 tools",
+      "desc": "基于雷达 UDP 通信解包，以 PointCloud2 格式发送点云，IMU 数据以 m/s² 国际单位输出，驱动轻量化、不依赖复杂 SDK；基于 kailbr 项目实现客户傻瓜式一键 IMU 标定，标定后雷达里程计精度提升 300%（基于 GLIM 算法的闭环测试）。计划 10 月稳定性测试通过后开源，目前仓库暂未公开。"
+    },
+    "item2": {
+      "title": "基于四 IMU 的强化学习外骨骼设备",
+      "desc": "基于进迭时空 K3 开发板进行本地 Agent 部署与通信框架搭建；改进 EpsonG354 驱动，支持多 IMU 硬件绑定与热插拔实时增减话题，ESKF+Mahony 输出 IMU 姿态，为 RL 运动控制提供精细位姿数据；灵足 RS02 电机回零位程序，一键自适应电机角度。获 Physical AI 黑客松 ALLOPO 赛道冠军。"
+    },
+    "item3": {
+      "title": "基于 GLIM 里程计的机器人定位系统",
+      "desc": "采用 GLIM 里程计实时建图输出里程计，支持 GPU 加速；点云离线优化与分割后将点云地图提供给重定位模块；Small-GICP 重定位模块以较低性能预算实现高精度点云重定位，实时矫正机器人位姿与相对坐标。定位精度超越留形科技 Odin1 闭源算法，实现 RC 赛场内 1cm 精度。获大疆创新 DJI ROBOCON AWARD 技术方向提名。"
+    },
+    "item4": {
+      "title": "基于 Gitea 的实验室内网管理系统",
+      "desc": "基于 Gitea 的内网版本管理，实现 SolidWorks、STL 等超大文件与代码文件的版本管理和组间协作；搭建基于 Ubuntu 的 NAS 系统，对重要文件进行多重备份；对比竞品「追光几何」上传下载速率提升 10 倍以上，使用 Git 进行版本管理，逻辑更严谨。获大疆创新 DJI ROBOCON AWARD 管理方向提名。"
+    },
+    "item5": {
+      "title": "基于 RK3588 智能全向舵轮 AGV 小车",
+      "desc": "基于 Cartographer 实现 2D 激光雷达建图与定位，室内重定位误差控制在 5cm 内；基于 ROS2 Navigation 实现舵轮小车自主导航；基于 RK3588 NPU 的 YOLO 火焰识别与快递包裹识别，通过优化处理流程将推理速度提升至原先 200%。获嵌入式芯片与系统设计竞赛国家二等奖。"
     }
   },
   "documents": {
@@ -39,7 +66,11 @@
     "hint": "B 站 / 抖音 / YouTube 等平台的内容更新",
     "platform": "平台",
     "watch": "去观看",
-    "empty": "视频正在路上～ 打开 assets/js/main.js，在 VIDEOS 数组中添加你的视频即可。"
+    "empty": "视频正在路上～ 打开 assets/js/main.js，在 VIDEOS 数组中添加你的视频即可。",
+    "item0": {
+      "title": "在 Physical AI 黑客松我们做了一个四自由度强化学习外骨骼！赛道冠军！",
+      "desc": "基于四 IMU 的强化学习外骨骼设备演示：从传感器通信框架搭建到 RL 运动控制，最终斩获 Physical AI 黑客松 ALLOPO 赛道冠军。"
+    }
   },
   "timeline": {
     "title": "经历时间轴",
@@ -55,11 +86,12 @@
   },
   "contact": {
     "title": "联系我",
+    "email": "邮箱",
     "bilibili": "哔哩哔哩",
     "github": "代码仓库",
-    "twitter": "推特",
+    "xiaohongshu": "小红书",
     "zhihu": "知乎",
-    "email": "邮箱"
+    "twitter": "推特"
   },
   "footer": {
     "copyright": "© 2026 Terrorschiki | 个人博客"
