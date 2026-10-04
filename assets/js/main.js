@@ -88,7 +88,7 @@
   // ---------- 6. 联系方式（Hero 区域下方的入口）----------
   const CONTACT_LINKS = [
     { icon: 'fas fa-envelope', key: 'contact.email', link: 'mailto:2455682411@qq.com' },
-    { icon: 'fab fa-github', key: 'contact.github', link: 'https://github.com/GZ89mid?tab=repositories' },
+    { icon: 'fab fa-github', key: 'contact.github', link: 'https://github.com/GZ89mid' },
     { icon: 'fab fa-bilibili', key: 'contact.bilibili', link: 'https://space.bilibili.com/3494362002491801' },
     { img: 'assets/images/icon-xiaohongshu.svg', key: 'contact.xiaohongshu', link: 'https://www.xiaohongshu.com/user/profile/6511656e0000000023026002' },
     { icon: 'fab fa-zhihu', key: 'contact.zhihu', link: 'https://www.zhihu.com/people/terrorist-11-67' },
