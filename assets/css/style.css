@@ -377,6 +377,25 @@ nav {
   font-size: 0.82rem;
 }
 
+/* 图片图标（如小红书：Font Awesome 免费版没有这个品牌图标）。
+   尺寸与上面的字体图标对齐；SVG 内部使用 currentColor，
+   因此在亮色 / 暗色主题下都会自动跟随文字颜色，无需额外处理。 */
+.intro-contact-link .icon-img {
+  width: 0.95em;
+  height: 0.95em;
+  flex: 0 0 auto;
+  display: block;
+}
+
+/* 悬停时与字体图标保持同样的位移效果 */
+.intro-contact-link .icon-img {
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.intro-contact-link:hover .icon-img {
+  transform: translateX(3px) scale(1.08);
+}
+
 .intro-contact-link:hover {
   background: var(--bg-active);
   color: var(--primary);

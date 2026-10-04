@@ -87,11 +87,11 @@
 
   // ---------- 6. 联系方式（Hero 区域下方的入口）----------
   const CONTACT_LINKS = [
-    { icon: 'fas fa-envelope', key: 'contact.email', link: 'mailto:your-email@example.com' },  // ← 改成你的邮箱
-    { icon: 'fab fa-github', key: 'contact.github', link: 'https://github.com/Terrorschiki' },
-    // { icon: 'fab fa-bilibili', key: 'contact.bilibili', link: 'https://space.bilibili.com/xxxxx' },
-    // { icon: 'fab fa-zhihu', key: 'contact.zhihu', link: 'https://www.zhihu.com/people/xxxxx' },
-    // { icon: 'fab fa-twitter', key: 'contact.twitter', link: 'https://x.com/xxxxx' },
+    { icon: 'fas fa-envelope', key: 'contact.email', link: 'mailto:2455682411@qq.com' },
+    { icon: 'fab fa-github', key: 'contact.github', link: 'https://github.com/GZ89mid?tab=repositories' },
+    { icon: 'fab fa-bilibili', key: 'contact.bilibili', link: 'https://space.bilibili.com/3494362002491801' },
+    { img: 'assets/images/icon-xiaohongshu.svg', key: 'contact.xiaohongshu', link: 'https://www.xiaohongshu.com/user/profile/6511656e0000000023026002' },
+    { icon: 'fab fa-zhihu', key: 'contact.zhihu', link: 'https://www.zhihu.com/people/terrorist-11-67' },
   ];
 
   // ===========================================================
@@ -123,6 +123,19 @@
   function renderProjectTags(tags) {
     if (!Array.isArray(tags) || tags.length === 0) return '';
     return `<div class="project-tags">${renderSpanTags(tags, 'project-tag')}</div>`;
+  }
+
+  /**
+   * 生成图标 HTML。支持两种写法：
+   *   img: 'assets/images/icon-xiaohongshu.svg'  -> 用图片（适合 Font Awesome 没有的品牌图标）
+   *   icon: 'fab fa-github'                      -> 用 Font Awesome 类名
+   * 图片图标用 <img> 承载已内嵌 currentColor 的 SVG，因此会自动跟随主题文字颜色。
+   */
+  function renderIcon(entry) {
+    if (entry.img) {
+      return `<img class="icon-img" src="${entry.img}" alt="" aria-hidden="true" loading="lazy">`;
+    }
+    return `<i class="${entry.icon || 'fas fa-link'}"></i>`;
   }
 
   function renderProjectActions(links) {
@@ -347,7 +360,7 @@
       }
       item.title = label;
       item.setAttribute('aria-label', label);
-      item.innerHTML = `<span>${label}</span><i class="${contact.icon}"></i>`;
+      item.innerHTML = `<span>${label}</span>${renderIcon(contact)}`;
       container.appendChild(item);
     });
   }

@@ -55,11 +55,12 @@
   },
   "contact": {
     "title": "Let's Connect",
+    "email": "Email",
     "bilibili": "Bilibili",
     "github": "GitHub",
-    "twitter": "Twitter",
+    "xiaohongshu": "Xiaohongshu",
     "zhihu": "Zhihu",
-    "email": "Email"
+    "twitter": "Twitter"
   },
   "footer": {
     "copyright": "© 2026 Terrorschiki | Personal Blog"

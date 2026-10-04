@@ -55,11 +55,12 @@
   },
   "contact": {
     "title": "联系我",
+    "email": "邮箱",
     "bilibili": "哔哩哔哩",
     "github": "代码仓库",
-    "twitter": "推特",
+    "xiaohongshu": "小红书",
     "zhihu": "知乎",
-    "email": "邮箱"
+    "twitter": "推特"
   },
   "footer": {
     "copyright": "© 2026 Terrorschiki | 个人博客"
