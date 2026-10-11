@@ -1030,6 +1030,22 @@ nav {
   font-size: 0.62rem;
 }
 
+/* 分类角标：设备评测 / 算法演示 —— 与平台角标同排，弱化底色以作区分 */
+.video-category {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 6px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
 /* 视频卡片左侧加一条主色竖条，与文章卡片区分开 */
 .video-card {
   border-left: 3px solid var(--primary);
