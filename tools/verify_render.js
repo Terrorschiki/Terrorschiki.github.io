@@ -127,8 +127,9 @@ function check(name, cond, extra = '') {
   const contactHtml = containers['.intro-contact-links'].innerHTML;
 
   // ---- 场景 A：使用仓库中真实的数据渲染（作品集内容已填入）----
-  check('文章板块显示空提示', docsHtml.includes('文章整理中'), docsHtml.trim().slice(0, 80));
-  check('文章板块没有残留卡片', !docsHtml.includes('project-card'));
+  const docCardCount = (docsHtml.match(/class="card project-card/g) || []).length;
+  check('文章板块渲染 2 篇文章卡片', docCardCount === 2, `count=${docCardCount}`);
+  check('文章卡片带阅读链接（articles/article.html）', docsHtml.includes('articles/article.html?md=dji-rc-award-2026-tech.md') && docsHtml.includes('articles/article.html?md=dji-rc-award-2026-mgmt.md'), docsHtml.trim().slice(0, 120));
   const videoCardCount = (videoHtml.match(/class="card project-card/g) || []).length;
   check('视频板块渲染 4 个视频卡片', videoCardCount === 4, `count=${videoCardCount}`);
   check('视频卡片带平台角标（中文语言包 → 哔哩哔哩）', videoHtml.includes('video-platform') && videoHtml.includes('哔哩哔哩'), videoHtml.trim().slice(0, 90));

@@ -92,15 +92,23 @@
   ];
 
   // ---------- 2. 文章 / 文档卡片 ----------
+  // 长文统一放在 articles/ 目录，由 articles/article.html 前端渲染（marked + KaTeX），
+  // 通过 ?md= 参数选择要渲染的 Markdown 文件。
   const DOCUMENTS = [
-    // 示例：
-    // {
-    //   titleKey: 'documents.item0.title',
-    //   descKey: 'documents.item0.desc',
-    //   links: [
-    //     { href: 'https://zhuanlan.zhihu.com/p/xxxxxxx', labelKey: 'projects.links.zhihu', icon: 'fab fa-zhihu' },
-    //   ],
-    // },
+    {
+      titleKey: 'documents.item0.title',
+      descKey: 'documents.item0.desc',
+      links: [
+        { href: 'articles/article.html?md=dji-rc-award-2026-tech.md', labelKey: 'documents.read', icon: 'fas fa-book-open' },
+      ],
+    },
+    {
+      titleKey: 'documents.item1.title',
+      descKey: 'documents.item1.desc',
+      links: [
+        { href: 'articles/article.html?md=dji-rc-award-2026-mgmt.md', labelKey: 'documents.read', icon: 'fas fa-book-open' },
+      ],
+    },
   ];
 
   // ---------- 3. 自媒体账号视频 ----------

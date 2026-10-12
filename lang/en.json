@@ -59,7 +59,16 @@
   },
   "documents": {
     "title": "Articles",
-    "empty": "Articles are being organized. Stay tuned."
+    "empty": "Articles are being organized. Stay tuned.",
+    "read": "Read",
+    "item0": {
+      "title": "DJI RC AWARD 2026 (Technical): GLIM + Small-GICP Arena Localization",
+      "desc": "Historical archive of the 2026 RC AWARD (Technical / Algorithm) application: root-cause analysis of the 2025 Orin Nano odometry drift, and the complete GLIM factor-graph SLAM three-layer async pipeline plus Small-GICP dual-channel relocalization architecture, with host-computer selection benchmarks and screenshots."
+    },
+    "item1": {
+      "title": "DJI RC AWARD 2026 (Management): From Cross-Team Sync to Lab Infrastructure",
+      "desc": "Historical archive of the 2026 RC AWARD (Management / Deputy Captain) application: breaking down inter-team communication walls, NAS + Gitea version control, lab intranet rebuild (NoMachine latency 200 ms → 10 ms), the first team rulebook, and cost-effective hardware selection."
+    }
   },
   "videos": {
     "title": "My Videos",

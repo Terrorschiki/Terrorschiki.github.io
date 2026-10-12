@@ -59,7 +59,16 @@
   },
   "documents": {
     "title": "文章",
-    "empty": "文章整理中，敬请期待。"
+    "empty": "文章整理中，敬请期待。",
+    "read": "阅读全文",
+    "item0": {
+      "title": "DJI RC AWARD 2026（技术）申报：GLIM + Small-GICP 赛场定位方案",
+      "desc": "2026 赛季 RC AWARD 技术方向（算法）申报材料历史性整理：从 2025 赛季 Orin Nano 定位漂移的根因分析，到 GLIM 因子图 SLAM 三层异步流水线、Small-GICP 双通道重定位架构的完整方案，含上位机选型对比与实测截图。"
+    },
+    "item1": {
+      "title": "DJI RC AWARD 2026（管理）申报：从跨部门协同到实验室基础设施",
+      "desc": "2026 赛季 RC AWARD 管理方向（战队副队长）申报材料历史性整理：打破组间沟通壁垒、NAS + Gitea 版本管理、实验室内网改造（NoMachine 延迟 200ms→10ms）、首版队规与高性价比硬件选型等管理案例。"
+    }
   },
   "videos": {
     "title": "自媒体视频",
