@@ -154,3 +154,9 @@ GitHub Pages 会自动重建 `main`，通常一两分钟内生效，进度见仓
 - 「文章」栏目目前没有任何内容。
 - `projects.item1`（SkylandX C01 驱动）尚未公开，计划 10 月稳定性测试通过后开源。
 - `assets/images/avatar.svg` 仍是中性占位头像，替换时记得同时改 [`index.html`](index.html) 里的 `<link rel="icon">`。
+
+## 鸣谢
+
+感谢 [**Lain-Ego**](https://github.com/Lain-Ego0)：本站所基于的博客模板源自 Lain-Ego 的个人主页项目，
+上文提到的几套视觉风格重写与内容配置方式，都是在它的基础上完成的。
+
