@@ -25,24 +25,36 @@
   // ===========================================================
 
   // ---------- 1. 项目卡片 ----------
+  // tags 支持两种写法：
+  //   tags: ['SLAM', 'ROS2']                      -> 中英文共用同一组标签
+  //   tags: { zh: ['强化学习'], en: ['Reinforcement Learning'] }  -> 按语言分别翻译
   const PROJECTS = [
     {
       img: 'assets/images/project-quadruped.jpg',
       titleKey: 'projects.item0.title',
       descKey: 'projects.item0.desc',
-      tags: ['ROS2', '强化学习', 'GLIM', '导航'],
+      tags: {
+        zh: ['SLAM', '导航', 'ROS2', '强化学习', 'RL'],
+        en: ['SLAM', 'Navigation', 'ROS2', 'Reinforcement Learning', 'RL'],
+      },
     },
     {
       img: 'assets/images/project-skylandx.png',
       titleKey: 'projects.item1.title',
       descKey: 'projects.item1.desc',
-      tags: ['ROS2', '驱动开发', 'IMU 标定'],
+      tags: {
+        zh: ['ROS2', '驱动开发', 'IMU 标定'],
+        en: ['ROS2', 'Driver Development', 'IMU Calibration'],
+      },
     },
     {
       img: 'assets/images/project-exoskeleton.jpg',
       titleKey: 'projects.item2.title',
       descKey: 'projects.item2.desc',
-      tags: ['强化学习', '外骨骼', 'IMU'],
+      tags: {
+        zh: ['强化学习', '外骨骼', 'IMU'],
+        en: ['Reinforcement Learning', 'Exoskeleton', 'IMU'],
+      },
       links: [
         { href: 'https://github.com/GZ89mid/Epson_HotSwap_ws', labelKey: 'projects.links.imuDriver', icon: 'fab fa-github' },
         { href: 'https://github.com/Lain-Ego0/G-Exo', labelKey: 'projects.links.exoRepo', icon: 'fab fa-github' },
@@ -52,7 +64,10 @@
       img: 'assets/images/project-glim.jpg',
       titleKey: 'projects.item3.title',
       descKey: 'projects.item3.desc',
-      tags: ['GLIM', 'SLAM', '重定位'],
+      tags: {
+        zh: ['GLIM', 'SLAM', '重定位'],
+        en: ['GLIM', 'SLAM', 'Relocalization'],
+      },
       links: [
         { href: 'https://github.com/GZ89mid/GLIMinstall', labelKey: 'projects.links.installScript', icon: 'fab fa-github' },
       ],
@@ -60,13 +75,19 @@
     {
       titleKey: 'projects.item4.title',
       descKey: 'projects.item4.desc',
-      tags: ['Gitea', 'NAS', '版本管理'],
+      tags: {
+        zh: ['Gitea', 'NAS', '版本管理'],
+        en: ['Gitea', 'NAS', 'Version Control'],
+      },
     },
     {
       img: 'assets/images/project-agv.jpg',
       titleKey: 'projects.item5.title',
       descKey: 'projects.item5.desc',
-      tags: ['RK3588', 'YOLO', '导航'],
+      tags: {
+        zh: ['RK3588', 'YOLO', '导航'],
+        en: ['RK3588', 'YOLO', 'Navigation'],
+      },
     },
   ];
 
@@ -85,23 +106,62 @@
   // ---------- 3. 自媒体账号视频 ----------
   // 用卡片展示你在 B 站 / 抖音 / YouTube / 小红书 等平台发布的视频，
   // 点击卡片按钮跳转到对应平台观看（静态站点不存放视频文件本身）。
-  // platform 可选，会显示成卡片右上角的平台小标签。
+  //   platformKey    平台角标（走语言包，如 videos.platform.bilibili）
+  //   categoryKey    分类角标，可选（如 videos.category.deviceReview）
+  //   links[].href   留空字符串则该按钮不渲染 —— 用于「链接待补」的卡片
   const VIDEOS = [
     {
       titleKey: 'videos.item0.title',
       descKey: 'videos.item0.desc',
-      platform: 'Bilibili',
+      platformKey: 'videos.platformName.bilibili',
       links: [
         { href: 'https://www.bilibili.com/video/BV1uuu36uEjx', labelKey: 'videos.watch', icon: 'fab fa-bilibili' },
       ],
     },
+    {
+      titleKey: 'videos.item1.title',
+      descKey: 'videos.item1.desc',
+      platformKey: 'videos.platformName.bilibili',
+      categoryKey: 'videos.category.deviceReview',
+      links: [
+        { href: '', labelKey: 'videos.watch', icon: 'fab fa-bilibili' }, // TODO 待补 B 站链接
+      ],
+    },
+    {
+      titleKey: 'videos.item2.title',
+      descKey: 'videos.item2.desc',
+      platformKey: 'videos.platformName.bilibili',
+      categoryKey: 'videos.category.deviceReview',
+      links: [
+        { href: '', labelKey: 'videos.watch', icon: 'fab fa-bilibili' }, // TODO 待补 B 站链接
+      ],
+    },
+    {
+      titleKey: 'videos.item3.title',
+      descKey: 'videos.item3.desc',
+      platformKey: 'videos.platformName.xiaohongshu',
+      categoryKey: 'videos.category.algorithmDemo',
+      links: [
+        { href: 'https://www.xiaohongshu.com/discovery/item/6a1d2262000000000803ec94?source=webshare&xhsshare=pc_web&xsec_token=AB425erwa72L3LIUqDS35fc10WlaqtsL9ZO7w0bMuWJ58=&xsec_source=pc_share', labelKey: 'videos.watch', icon: 'fas fa-arrow-up-right-from-square' },
+      ],
+    },
   ];
 
-  // ---------- 4. 时间轴（数组顺序 = 页面展示顺序）----------
+  // ---------- 4. 时间轴（数组顺序 = 页面展示顺序，即由近及远）----------
+  // 每一条都需要语言包中存在 timeline.eventN.date / .title / .desc（zh.json 与 en.json 各一份）
   const TIMELINE_EVENTS = [
-    // 示例（语言包中需存在 timeline.event0.date / .title / .desc）：
-    // 'timeline.event0',
-    // 'timeline.event1',
+    'timeline.event0', // 教育经历（长期主线，置顶）
+    'timeline.event1', // 2026.07 - 2026.08 Physical AI 黑客松外骨骼
+    'timeline.event2', // 2026.07 WAIC 2026 快闪
+    'timeline.event3', // 2025.09 - 2026.08 ROBOCON2026 武林探秘 & 仿生足式
+    'timeline.event4', // 2025.08 - 至今 实验室副队长
+    'timeline.event5', // 2024.09 - 2025.08 作为嘉宾受邀参与 RC 年会
+    'timeline.event6', // 2024.09 - 2025.08 ROBOCON2025 飞身上篮 & 仿生足式
+    'timeline.event7', // 2025.09 发明专利
+    'timeline.event8', // 2025.05 - 2025.08 嵌赛 RK3588 AGV
+    'timeline.event9', // 2025 宏平长青奖学金
+    'timeline.event10', // 2024.06 - 2024.08 睿抗 AIROBOT
+    'timeline.event11', // 2024.05 - 2024.07 香港 YEPC
   ];
 
   // ---------- 5. 技术栈 ----------
@@ -109,36 +169,39 @@
     {
       category: 'skills.robotics',
       items: [
-        { name: 'ROS2', icon: 'fas fa-robot' },
-        { name: 'GLIM 里程计', icon: 'fas fa-location-crosshairs' },
-        { name: 'Cartographer', icon: 'fas fa-map' },
-        { name: 'ROS2 Navigation', icon: 'fas fa-route' },
-        { name: 'YOLO', icon: 'fas fa-eye' },
+        { nameKey: 'techStack.ROS2', icon: 'fas fa-robot' },
+        { nameKey: 'techStack.SLAM', icon: 'fas fa-map' },
+        { nameKey: 'techStack.Navigation', icon: 'fas fa-route' },
+        { nameKey: 'techStack.OpenCV', icon: 'fas fa-eye' },
+        { nameKey: 'techStack.YOLO', icon: 'fas fa-bullseye' },
       ],
     },
     {
       category: 'skills.simulation',
       items: [
-        { name: '强化学习', icon: 'fas fa-brain' },
-        { name: 'Robot_lab', icon: 'fas fa-flask' },
-        { name: 'RL_sar', icon: 'fas fa-dog' },
-        { name: 'Sim2Real', icon: 'fas fa-right-left' },
+        { nameKey: 'techStack.RL', icon: 'fas fa-brain' },
+        { nameKey: 'techStack.Robot_lab', icon: 'fas fa-flask' },
+        { nameKey: 'techStack.RL_sar', icon: 'fas fa-dog' },
+        { nameKey: 'techStack.Sim2Real', icon: 'fas fa-right-left' },
       ],
     },
     {
       category: 'skills.embedded',
       items: [
-        { name: 'RK3588', icon: 'fas fa-microchip' },
-        { name: 'Epson IMU', icon: 'fas fa-compass' },
-        { name: '灵足 RS02 电机', icon: 'fas fa-gears' },
+        { name: 'X86', icon: 'fas fa-microchip' },
+        { name: 'RISC-V', icon: 'fas fa-microchip' },
+        { name: 'ARM64', icon: 'fas fa-microchip' },
+        { nameKey: 'techStack.OpenCV', icon: 'fas fa-camera' },
+        { nameKey: 'techStack.ROS2Interface', icon: 'fas fa-plug' },
       ],
     },
     {
       category: 'skills.software',
       items: [
-        { name: 'Git', icon: 'fab fa-git-alt' },
-        { name: 'Gitea', icon: 'fab fa-code-branch' },
-        { name: 'Ubuntu NAS', icon: 'fab fa-ubuntu' },
+        { nameKey: 'techStack.Linux', icon: 'fab fa-linux' },
+        { nameKey: 'techStack.Git', icon: 'fab fa-git-alt' },
+        { nameKey: 'techStack.CMake', icon: 'fas fa-cube' },
+        { nameKey: 'techStack.Docker', icon: 'fab fa-docker' },
       ],
     },
   ];
@@ -178,9 +241,24 @@
     return tags.map((tag) => `<span class="${className}">${tag}</span>`).join('');
   }
 
+  /**
+   * 取出当前语言下的标签数组。支持两种写法：
+   *   tags: ['SLAM', 'ROS2']                                    -> 直接使用
+   *   tags: { zh: ['强化学习'], en: ['Reinforcement Learning'] } -> 按当前语言取，缺该语言时回退
+   */
+  function resolveTags(tags) {
+    if (Array.isArray(tags)) return tags;
+    if (!tags || typeof tags !== 'object') return [];
+
+    const lang = window.i18n?.currentLang ? window.i18n.currentLang() : 'en';
+    const list = tags[lang] || tags.en || tags.zh || [];
+    return Array.isArray(list) ? list : [];
+  }
+
   function renderProjectTags(tags) {
-    if (!Array.isArray(tags) || tags.length === 0) return '';
-    return `<div class="project-tags">${renderSpanTags(tags, 'project-tag')}</div>`;
+    const list = resolveTags(tags);
+    if (list.length === 0) return '';
+    return `<div class="project-tags">${renderSpanTags(list, 'project-tag')}</div>`;
   }
 
   /**
@@ -194,6 +272,19 @@
       return `<img class="icon-img" src="${entry.img}" alt="" aria-hidden="true" loading="lazy">`;
     }
     return `<i class="${entry.icon || 'fas fa-link'}"></i>`;
+  }
+
+  /**
+   * 角标（平台 / 分类）。支持两种写法：
+   *   icon: 'fab fa-bilibili'  -> Font Awesome 图标
+   *   text: '中文'             -> 直接用文字（用于中英文一致的标签）
+   */
+  function renderBadge(entry, className) {
+    if (!entry) return '';
+    const label = entry.key ? t(entry.key) : entry.text;
+    if (!label) return '';
+    const iconHtml = entry.icon ? `<i class="${entry.icon}"></i> ` : '';
+    return `<span class="${className}">${iconHtml}${label}</span>`;
   }
 
   function renderProjectActions(links) {
@@ -340,9 +431,15 @@
 
     VIDEOS.forEach((video) => {
       const actionsHtml = renderProjectActions(video.links);
-      const platformHtml = video.platform
-        ? `<span class="video-platform"><i class="fas fa-play"></i> ${video.platform}</span>`
-        : '';
+      const platformHtml = renderBadge(
+        {
+          key: video.platformKey,
+          text: video.platform,
+          icon: video.platformIcon || 'fas fa-play',
+        },
+        'video-platform',
+      );
+      const categoryHtml = renderBadge({ key: video.categoryKey, text: video.category }, 'video-category');
 
       const card = document.createElement('div');
       card.className = 'card project-card project-card--text-only video-card';
@@ -352,6 +449,7 @@
           <p>${t(video.descKey)}</p>
           <div class="project-meta-row">
             ${platformHtml}
+            ${categoryHtml}
             ${actionsHtml}
           </div>
         </div>
@@ -392,7 +490,11 @@
 
     TECH_STACK.forEach((group) => {
       const itemsHtml = group.items
-        .map((s) => `<div class="skill-badge"><i class="${s.icon}"></i> ${s.name}</div>`)
+        .map((s) => {
+          // name 用于中英文一致的固定名称（如 X86 / RISC-V / ARM64），nameKey 走语言包
+          const label = s.nameKey ? t(s.nameKey) : s.name;
+          return `<div class="skill-badge"><i class="${s.icon}"></i> ${label}</div>`;
+        })
         .join('');
 
       const col = document.createElement('div');
@@ -402,7 +504,7 @@
     });
   }
 
-  function initContactLinks() {
+  function renderContactLinks() {
     const container = qs('.intro-contact-links');
     if (!container) return;
     clear(container);
@@ -524,7 +626,18 @@
     initVideos();
     initTimeline();
     initTechStack();
-    initContactLinks();
+    renderContactLinks();
     initRevealMotion();
+  });
+
+  // 切换语言时语言包会重新加载并触发 i18nLoaded；这里额外监听 langChanged，
+  // 让项目标签这类「按语言分组」的数据也能立刻跟着切换。
+  window.addEventListener('langChanged', () => {
+    initProjects();
+    initDocuments();
+    initVideos();
+    initTimeline();
+    initTechStack();
+    renderContactLinks();
   });
 })();
