@@ -67,22 +67,119 @@
     "platform": "平台",
     "watch": "去观看",
     "empty": "视频正在路上～ 打开 assets/js/main.js，在 VIDEOS 数组中添加你的视频即可。",
+    "category": {
+      "deviceReview": "设备评测",
+      "algorithmDemo": "算法演示"
+    },
+    "platformName": {
+      "bilibili": "哔哩哔哩",
+      "xiaohongshu": "小红书"
+    },
     "item0": {
       "title": "在 Physical AI 黑客松我们做了一个四自由度强化学习外骨骼！赛道冠军！",
       "desc": "基于四 IMU 的强化学习外骨骼设备演示：从传感器通信框架搭建到 RL 运动控制，最终斩获 Physical AI 黑客松 ALLOPO 赛道冠军。"
+    },
+    "item1": {
+      "title": "大学生不到 500 元捡漏原价万元 3D 激光雷达 VLP-16，是大雷还是性价比之王？",
+      "desc": "二手淘到原价万元的 Velodyne VLP-16 十六线 3D 激光雷达，从外观与内部结构、点云质量到供电与接口逐一实测，给出学生党是否值得入手的结论。"
+    },
+    "item2": {
+      "title": "深度解析两款 30 元档位深度相机大船！究竟哪款更适合学生上手？",
+      "desc": "对比两款 30 元档深度相机的成像效果、深度精度与 SDK 易用性，并给出学生上手建议；配套驱动与工作空间已开源，可直接拉取使用。"
+    },
+    "item3": {
+      "title": "这个 RL 项目太夯了！51 秒训出来可用的模型！",
+      "desc": "新框架 RL 训练流程演示：51 秒即可训练出一个可用模型，展示从环境搭建、启动训练到策略上机运行的全过程。"
     }
   },
   "timeline": {
     "title": "经历时间轴",
-    "empty": "这里还没有内容。打开 assets/js/main.js，在 TIMELINE_EVENTS 中添加经历即可。"
+    "empty": "这里还没有内容。打开 assets/js/main.js，在 TIMELINE_EVENTS 中添加经历即可。",
+    "event0": {
+      "date": "2023.09 - 2027.06",
+      "title": "华南理工大学 · 人工智能（工学学士）",
+      "desc": "未来技术学院。主攻方向：激光雷达定位与导航、机器人控制与强化学习、ROS 2 开发。"
+    },
+    "event1": {
+      "date": "2026.07 - 2026.08",
+      "title": "Physical AI 黑客松 2026｜基于多 IMU 的四自由度多模式外骨骼",
+      "desc": "核心队员。改进 Epson G354 驱动，以 Mahony + ESKF 输出姿态并支持热插拔（驱动与 PCB 载板已开源）；在进迭时空 K3（RISC-V 开发板）上完成 ROS 2 环境部署与本地 Agent 通信；编写灵足电机一键找零位/恢复零位脚本。获 ALLOPO 赛道冠军。"
+    },
+    "event2": {
+      "date": "2026.07",
+      "title": "受邀参与 WAIC 2026 快闪活动",
+      "desc": "受 ROBOCON 组委会邀请，代表哔哩哔哩弹幕网参与 WAIC 世界人工智能大会快闪活动，展示 Robotic 实验室自研的四足强化学习机器狗。"
+    },
+    "event3": {
+      "date": "2025.09 - 2026.08",
+      "title": "ROBOCON2026 武林探秘 & 仿生足式项目｜副队长",
+      "desc": "基于 GLIM 与 Mid-360 激光雷达实现赛场内 1cm 闭环定位精度，超越留形科技闭源 Odin1，获武林探秘技能挑战赛国家一等奖；用 small-gicp 完成点云分割、地图重建与重定位，获淘汰赛国家二等奖；参与 RL_sar 的机器狗 Sim2Real 迁移与雷达导航避障，获赛道国家二等奖。"
+    },
+    "event4": {
+      "date": "2025.08 - 至今",
+      "title": "华工 Robotic 机器人实验室｜副队长",
+      "desc": "负责实验室机器人项目的研发与人员管理；搭建并维护本地 IsaacLab 强化学习服务器、NAS 与局域网络，部署 Gitea 实现 SolidWorks 与代码的版本管理；2026 赛季在 B 站发布 4 条视频（最高播放 1.4w+）、公众号推文 4 篇以上，并接待超 5 家企业参观交流。"
+    },
+    "event5": {
+      "date": "2024.09 - 2025.08",
+      "title": "作为嘉宾受邀参与 RC 年会",
+      "desc": "作为嘉宾受邀参与 RC 年会，交流上位机性能优化、上位机性能分析与激光雷达技术路线选择，与各高校机器人战队交流技术方案与赛事组织经验。"
+    },
+    "event6": {
+      "date": "2024.09 - 2025.08",
+      "title": "ROBOCON2025 飞身上篮 & 仿生足式项目",
+      "desc": "负责机器狗部分 IsaacLab 强化学习训练与上位机性能调优，提升运动控制策略控制频率，获国家一等奖；负责 2D 激光雷达场地定位与视觉定位部署，并基于 IsaacSim 完成舵轮底盘仿真，获国家三等奖。同期参加全国大学生嵌入式芯片与系统设计竞赛获省三等奖。"
+    },
+    "event7": {
+      "date": "2025.09",
+      "title": "发明专利《一种物体分拣机器人》（ZL202610627849.4）",
+      "desc": "负责上位机调用深度相机，用 OpenCV 识别并分割物体、下发分拣指令；训练 YOLO 模型完成目标识别，并在 Orin Nano 上以 TensorRT 加速与量化。"
+    },
+    "event8": {
+      "date": "2025.05 - 2025.08",
+      "title": "全国大学生嵌入式芯片与系统设计竞赛｜RK3588 智能全向舵轮 AGV",
+      "desc": "核心开发。在 RK3588 NPU 上部署 YOLOv8，结合传统视觉算法实现火焰检测与二维码识别；基于 ROS 2 Navigation 框架融合 2D 激光雷达与陀螺仪数据实现自主导航。获国家二等奖。"
+    },
+    "event9": {
+      "date": "2025",
+      "title": "华南理工大学宏平长青奖学金",
+      "desc": "获华南理工大学宏平长青奖学金。"
+    },
+    "event10": {
+      "date": "2024.06 - 2024.08",
+      "title": "睿抗 AIROBOT 大赛｜队长",
+      "desc": "用 IsaacSim 构建合成数据集并结合真实数据，通过 NVIDIA TAO Toolkit 训练 YOLOv8 识别目标；基于 ROS 1 Navigation 为差速轮机器人实现定点导航与自主避障。获国家一等奖、全国亚军。"
+    },
+    "event11": {
+      "date": "2024.05 - 2024.07",
+      "title": "香港青年科技专才展览及比赛 YEPC｜本科组亚军",
+      "desc": "作品《盲行守卫：盲人出行辅助智慧腰带》，基于 STM32MP135 的语音交互智能出行系统，含人行道检测、障碍物与红绿灯识别、百度 API 语音交互与 ChatGPT 流式对话、高德地图 GPS 定位、MPU6050 + SVM 摔倒检测五个模块，获本科组亚军并被华南理工大学公众号报道。"
+    }
   },
   "skills": {
     "title": "技术栈",
-    "embedded": "嵌入式开发",
     "robotics": "机器人技术",
     "simulation": "仿真与训练",
+    "embedded": "上位机开发",
     "software": "开发工具链",
     "hardware": "结构与硬件设计"
+  },
+  "techStack": {
+    "ROS2": "ROS2/ROS1",
+    "SLAM": "SLAM",
+    "Navigation": "导航",
+    "OpenCV": "OpenCV",
+    "YOLO": "YOLO",
+    "RL": "强化学习",
+    "Robot_lab": "Robot_lab",
+    "RL_sar": "RL_sar",
+    "Sim2Real": "Sim2Real",
+    "Calibration": "标定",
+    "ROS2Interface": "ROS2 接口",
+    "CMake": "CMake",
+    "Linux": "Linux",
+    "Git": "Git",
+    "Docker": "Docker"
   },
   "contact": {
     "title": "联系我",

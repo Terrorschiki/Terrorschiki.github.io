@@ -67,22 +67,119 @@
     "platform": "Platform",
     "watch": "Watch",
     "empty": "Videos are on the way ~ Open assets/js/main.js and add your videos to the VIDEOS array.",
+    "category": {
+      "deviceReview": "Device Review",
+      "algorithmDemo": "Algorithm Demo"
+    },
+    "platformName": {
+      "bilibili": "Bilibili",
+      "xiaohongshu": "Xiaohongshu"
+    },
     "item0": {
       "title": "We Built a Four-DOF RL Exoskeleton at the Physical AI Hackathon — Track Champion!",
       "desc": "A demo of the four-IMU reinforcement learning exoskeleton: from sensor communication framework to RL motion control, winning the ALLOPO Track Championship at the Physical AI Hackathon."
+    },
+    "item1": {
+      "title": "A Student Snagged a $1,500 3D LiDAR (VLP-16) for Under $70 — Dud or Best Value Pick?",
+      "desc": "A second-hand Velodyne VLP-16 16-channel 3D LiDAR, originally priced in the thousands of dollars, tested end to end: teardown and build quality, point-cloud quality, and power/interface checks — with a verdict on whether students should buy one."
+    },
+    "item2": {
+      "title": "Two $4 Depth Cameras Compared: Which One Is Better for Students?",
+      "desc": "A head-to-head look at two budget depth cameras around the 30 RMB mark — imaging quality, depth accuracy, and SDK usability — plus advice for students getting started. The matching drivers and workspace are open-sourced and ready to clone."
+    },
+    "item3": {
+      "title": "This RL Project Is Wild: A Usable Model Trained in 51 Seconds!",
+      "desc": "A walkthrough of a new RL training framework: a usable model in just 51 seconds, covering environment setup, launching training, and running the resulting policy on hardware."
     }
   },
   "timeline": {
     "title": "Timeline",
-    "empty": "Nothing here yet. Open assets/js/main.js and add your experience to TIMELINE_EVENTS."
+    "empty": "Nothing here yet. Open assets/js/main.js and add your experience to TIMELINE_EVENTS.",
+    "event0": {
+      "date": "2023.09 - 2027.06",
+      "title": "South China University of Technology | B.Eng. in Artificial Intelligence",
+      "desc": "School of Future Technology. Focus areas: LiDAR localization and navigation, robot control and reinforcement learning, ROS 2 development."
+    },
+    "event1": {
+      "date": "2026.07 - 2026.08",
+      "title": "Physical AI Hackathon 2026 | Multi-IMU Four-DOF Multi-Mode Exoskeleton",
+      "desc": "Core team member. Improved the Epson G354 driver to output attitude via Mahony + ESKF with hot-swap support (driver and PCB carrier board open-sourced); deployed the ROS 2 environment and local agent communication on a SpacemiT K3 (RISC-V) board; wrote one-click motor homing/zero-restore scripts for the Lingzu motors. Won the ALLOPO Track Championship."
+    },
+    "event2": {
+      "date": "2026.07",
+      "title": "Invited to the WAIC 2026 Pop-Up Event",
+      "desc": "Invited by the ROBOCON organizing committee to represent Bilibili at the WAIC (World Artificial Intelligence Conference) pop-up event, exhibiting the Robotic Lab's self-developed RL quadruped robot dog."
+    },
+    "event3": {
+      "date": "2025.09 - 2026.08",
+      "title": "ROBOCON 2026 \"kongfumaster\" & Bionic Legged Robot | Deputy Captain",
+      "desc": "Achieved 1cm closed-loop localization accuracy in the arena with GLIM and a Mid-360 LiDAR, surpassing Liuxing Technology's closed-source Odin1, winning the National First Prize in the Skills Challenge; used small-gicp for point-cloud segmentation, map reconstruction, and relocalization to win the National Second Prize in the elimination rounds; contributed to the sim-to-real transfer of RL_sar and LiDAR navigation/obstacle avoidance for the robot dog, winning the National Second Prize in that track."
+    },
+    "event4": {
+      "date": "2025.08 - Present",
+      "title": "SCUT Robotic Robotics Lab | Deputy Captain",
+      "desc": "Responsible for R&D and personnel management of the lab's robotics projects; built and maintained the local IsaacLab RL server, NAS, and local network, and deployed Gitea for version management of SolidWorks projects and code; published 4 Bilibili videos in the 2026 season (best one exceeding 14k views) and 4+ WeChat articles, and hosted more than 5 company visits."
+    },
+    "event5": {
+      "date": "2024.09 - 2025.08",
+      "title": "Invited as a Guest Speaker to the RC Annual Conference",
+      "desc": "Invited as a guest to the RC Annual Conference, where I shared on host-computer performance optimization and analysis as well as LiDAR technology roadmap decisions, and exchanged technical solutions and competition organization experience with robotics teams from other universities."
+    },
+    "event6": {
+      "date": "2024.09 - 2025.08",
+      "title": "ROBOCON 2025 \"Basketball\" & Bionic Legged Robot Project",
+      "desc": "Responsible for part of the robot dog's IsaacLab RL training and host-computer performance tuning, raising the control frequency of the locomotion policy (National First Prize); deployed the 2D LiDAR field localization and visual localization solutions and built a steering-wheel chassis simulation in IsaacSim (National Third Prize). Also won a provincial Third Prize in the National Undergraduate Embedded Chip and System Design Competition."
+    },
+    "event7": {
+      "date": "2025.09",
+      "title": "Invention Patent: \"An Object Sorting Robot\" (ZL202610627849.4)",
+      "desc": "Responsible for the host computer calling a depth camera to recognize and segment objects with OpenCV and issuing sorting commands; trained a YOLO model for object recognition and accelerated/quantized it with TensorRT on an Orin Nano."
+    },
+    "event8": {
+      "date": "2025.05 - 2025.08",
+      "title": "National Undergraduate Embedded Chip and System Design Competition | RK3588 Omnidirectional Steer-Wheel AGV",
+      "desc": "Core developer. Deployed YOLOv8 on the RK3588 NPU with traditional vision algorithms for flame detection and QR code recognition; implemented autonomous navigation based on the ROS 2 Navigation framework, fusing 2D LiDAR and gyroscope data. Won the National Second Prize."
+    },
+    "event9": {
+      "date": "2025",
+      "title": "SCUT Hongping Changqing Scholarship",
+      "desc": "Awarded the South China University of Technology Hongping Changqing Scholarship."
+    },
+    "event10": {
+      "date": "2024.06 - 2024.08",
+      "title": "RAICOM AIROBOT Competition | Team Captain",
+      "desc": "Built a synthetic dataset with IsaacSim and combined it with real data to train YOLOv8 via the NVIDIA TAO Toolkit; implemented point-to-point navigation and autonomous obstacle avoidance for a differential-drive robot with ROS 1 Navigation. Won the National First Prize and the National Runner-Up."
+    },
+    "event11": {
+      "date": "2024.05 - 2024.07",
+      "title": "Hong Kong Young Technology Talent Exhibition and Competition (YEPC) | Undergraduate Runner-Up",
+      "desc": "Project \"Travel Guard: AI-Enhanced Travel Belt for the Blind\" — a voice-interactive smart travel system on STM32MP135 with five modules: sidewalk detection, obstacle and traffic-light recognition, Baidu API voice interaction with streamed ChatGPT dialogue, Amap GPS positioning, and MPU6050 + SVM fall detection. Won the undergraduate Runner-Up Prize and was covered on SCUT's WeChat official account."
+    }
   },
   "skills": {
     "title": "Tech Stack",
-    "embedded": "Embedded Development",
     "robotics": "Robotics",
     "simulation": "Simulation & Training",
+    "embedded": "Host Computer & Compute Platforms",
     "software": "Toolchain",
     "hardware": "Mechanical & Hardware Design"
+  },
+  "techStack": {
+    "ROS2": "ROS2/ROS1",
+    "SLAM": "SLAM",
+    "Navigation": "Navigation",
+    "OpenCV": "OpenCV",
+    "YOLO": "YOLO",
+    "RL": "Reinforcement Learning",
+    "Robot_lab": "Robot_lab",
+    "RL_sar": "RL_sar",
+    "Sim2Real": "Sim2Real",
+    "Calibration": "Calibration",
+    "ROS2Interface": "ROS2 Interface",
+    "CMake": "CMake",
+    "Linux": "Linux",
+    "Git": "Git",
+    "Docker": "Docker"
   },
   "contact": {
     "title": "Let's Connect",

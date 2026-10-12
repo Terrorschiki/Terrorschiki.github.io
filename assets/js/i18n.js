@@ -62,6 +62,7 @@
 
       updatePageLang();
       window.dispatchEvent(new Event('i18nLoaded'));
+      window.dispatchEvent(new Event('langChanged'));
     } catch (err) {
       console.error('[i18n] Load failed:', err);
       console.warn(`无法加载语言文件: ${url}。请确认文件位于正确的 lang 目录下。`);

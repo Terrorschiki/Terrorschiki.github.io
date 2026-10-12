@@ -125,15 +125,17 @@ for (const name of ['PROJECTS', 'DOCUMENTS', 'VIDEOS', 'TIMELINE_EVENTS', 'TECH_
 }
 
 for (const key of keyLiterals) {
-  if (!hasKey(key)) {
-    problems.push(`${MAIN} 引用了语言包中不存在的键：${key}`);
-    continue;
-  }
-  // 时间轴事件必须同时具备 date / title / desc
+  // 时间轴事件在 main.js 里写的是「前缀键」（timeline.event0），语言包里实际存在的是
+  // 它的三个叶子键 .date / .title / .desc，timeline.eventN 本身是对象、不会出现在叶子键
+  // 集合里 —— 所以必须先判断前缀，否则每一条时间轴都会被误报成「键不存在」。
   if (key.startsWith('timeline.') && !key.endsWith('.empty')) {
     for (const sub of ['date', 'title', 'desc']) {
       if (!hasKey(`${key}.${sub}`)) problems.push(`${MAIN} 的时间轴事件 ${key} 缺少 .${sub}`);
     }
+    continue;
+  }
+  if (!hasKey(key)) {
+    problems.push(`${MAIN} 引用了语言包中不存在的键：${key}`);
   }
 }
 

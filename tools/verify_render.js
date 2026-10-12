@@ -73,8 +73,12 @@ const fetchStub = async (url) => {
 };
 
 let i18nLoadedHandler = null;
+let langChangedHandler = null;
 const windowObj = {
-  addEventListener: (type, fn) => { if (type === 'i18nLoaded') i18nLoadedHandler = fn; },
+  addEventListener: (type, fn) => {
+    if (type === 'i18nLoaded') i18nLoadedHandler = fn;
+    if (type === 'langChanged') langChangedHandler = fn;
+  },
   matchMedia: () => ({ matches: false }),
   scrollTo: () => {},
   dispatchEvent: () => {},
@@ -125,15 +129,47 @@ function check(name, cond, extra = '') {
   // ---- 场景 A：使用仓库中真实的数据渲染（作品集内容已填入）----
   check('文章板块显示空提示', docsHtml.includes('文章整理中'), docsHtml.trim().slice(0, 80));
   check('文章板块没有残留卡片', !docsHtml.includes('project-card'));
-  check('视频板块渲染作品集视频', videoHtml.includes('project-card') && videoHtml.includes('Bilibili'), videoHtml.trim().slice(0, 70));
+  const videoCardCount = (videoHtml.match(/class="card project-card/g) || []).length;
+  check('视频板块渲染 4 个视频卡片', videoCardCount === 4, `count=${videoCardCount}`);
+  check('视频卡片带平台角标（中文语言包 → 哔哩哔哩）', videoHtml.includes('video-platform') && videoHtml.includes('哔哩哔哩'), videoHtml.trim().slice(0, 90));
+  check('视频卡片带分类角标（设备评测 / 算法演示）', videoHtml.includes('video-category') && videoHtml.includes('设备评测') && videoHtml.includes('算法演示'));
+  const watchBtnCount = (videoHtml.match(/class="project-action"/g) || []).length;
+  check('未填链接的视频不渲染观看按钮', watchBtnCount === 2, `buttons=${watchBtnCount}`);
+  check('小红书演示视频带跳转链接', videoHtml.includes('xiaohongshu.com/discovery/item/6a1d2262000000000803ec94'));
   const projCardCount = (projHtml.match(/class="card project-card/g) || []).length;
   check('项目板块渲染作品集项目（6 个）', projCardCount === 6, `count=${projCardCount}`);
-  check('时间轴显示空提示', tlHtml.includes('TIMELINE_EVENTS'), tlHtml.trim().slice(0, 60));
+  const tlItemCount = (tlHtml.match(/class="timeline-item"/g) || []).length;
+  check('时间轴渲染经历条目（12 条）', tlItemCount === 12, `count=${tlItemCount}`);
+  check('时间轴含日期与标题键值', tlHtml.includes('timeline-date') && tlHtml.includes('华南理工大学'), tlHtml.trim().slice(0, 80));
+  check('时间轴已移除动漫社条目', !tlHtml.includes('动漫社') && !tlHtml.includes('Anime Club'));
   check('技术栈渲染正常', containers['.skills-wrapper'].innerHTML.includes('skill-badge'), containers['.skills-wrapper'].innerHTML.trim().slice(0, 60));
   check('联系方式保留邮箱+GitHub', contactHtml.includes('邮箱') && contactHtml.includes('代码仓库'), contactHtml.trim().slice(0, 120));
   check('联系方式已移除 playground', !contactHtml.includes('在线策略体验'));
   check('渲染结果包含外骨骼开源仓库链接', JSON.stringify(containers).includes('Lain-Ego0/G-Exo'));
   check('渲染结果不含项目残留图片', !JSON.stringify(containers).includes('assets/images/qxzn'));
+
+
+  // ---- 场景 A2：英文模式下项目标签、技术栈分类名必须是纯英文 ----
+  sandbox.window.i18n.changeLang('en');
+  await new Promise((r) => setTimeout(r, 120));
+  if (langChangedHandler) langChangedHandler();
+
+  const projEn = containers['.projects-grid'].innerHTML;
+  const skillsEn = containers['.skills-wrapper'].innerHTML;
+  const tlEn = containers['.timeline-container'].innerHTML;
+
+  check('英文项目标签已翻译（Navigation）', projEn.includes('Navigation'), projEn.trim().slice(0, 120));
+  check('英文项目标签含 Reinforcement Learning', projEn.includes('Reinforcement Learning'));
+  check('英文项目标签不再含中文', !/(强化学习|导航|驱动开发|IMU 标定|外骨骼|重定位|版本管理)/.test(projEn));
+  check('英文技术栈分类为 Host Computer', skillsEn.includes('Host Computer'));
+  check('技术栈含 X86 / RISC-V / ARM64', skillsEn.includes('X86') && skillsEn.includes('RISC-V') && skillsEn.includes('ARM64'));
+  check('英文时间轴随语言切换', tlEn.includes('Physical AI Hackathon 2026') || tlEn.includes('South China University'), tlEn.trim().slice(0, 90));
+
+  sandbox.window.i18n.changeLang('zh');
+  await new Promise((r) => setTimeout(r, 120));
+  if (langChangedHandler) langChangedHandler();
+  const projZh = containers['.projects-grid'].innerHTML;
+  check('切回中文后标签恢复中文（导航）', projZh.includes('导航'), projZh.trim().slice(0, 100));
 
   // ---- 场景 B：填入示例数据，确认卡片渲染路径正常 ----
   const patched = fs
@@ -151,14 +187,17 @@ function check(name, cond, extra = '') {
       'const DOCUMENTS = [',
       `const DOCUMENTS = [{ titleKey: 'documents.title', descKey: 'documents.fixtureDesc', links: [{ href: 'https://example.com', labelKey: 'projects.links.zhihu', icon: 'fab fa-zhihu' }] },`,
     )
-    .replace('const TECH_STACK = [', `const TECH_STACK = [{ category: 'skills.software', items: [{ name: 'Python', icon: 'fab fa-python' }] },`);
+    .replace('const TECH_STACK = [', `const TECH_STACK = [{ category: 'skills.software', items: [{ nameKey: 'techStack.Python', icon: 'fab fa-python' }] },`);
   LANGS.zh.documents.fixtureDesc = '这是一段示例文章描述。';
   LANGS.en.documents.fixtureDesc = 'Sample article description.';
+  LANGS.zh.techStack.Python = 'Python';
+  LANGS.en.techStack.Python = 'Python';
   LANGS.zh.timeline.zzz = { date: '2026.01', title: '示例经历', desc: '示例描述' };
   LANGS.en.timeline.zzz = { date: '2026.01', title: 'Sample', desc: 'Sample desc' };
 
   for (const key of Object.keys(containers)) { containers[key].innerHTML = ''; containers[key].textContent = ''; }
   let handler2 = null;
+  let langChanged2 = null;
   const sandbox2 = {
     document,
     localStorage: { store: {}, getItem(k) { return this.store[k] ?? null; }, setItem(k, v) { this.store[k] = String(v); } },
@@ -170,7 +209,10 @@ function check(name, cond, extra = '') {
     IntersectionObserver: undefined,
   };
   sandbox2.window = {
-    addEventListener: (type, fn) => { if (type === 'i18nLoaded') handler2 = fn; },
+    addEventListener: (type, fn) => {
+      if (type === 'i18nLoaded') handler2 = fn;
+      if (type === 'langChanged') langChanged2 = fn;
+    },
     matchMedia: () => ({ matches: false }),
     scrollTo: () => {},
     dispatchEvent: () => {},
