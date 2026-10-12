@@ -154,3 +154,10 @@ GitHub Pages rebuilds `main` automatically, usually live within a minute or two;
 - The Articles section has no entries yet.
 - `projects.item1` (the SkylandX C01 driver) is not public yet — planned for release after October stability testing.
 - `assets/images/avatar.svg` is still the neutral placeholder; replacing it also means updating the `<link rel="icon">` line in [`index.html`](index.html).
+
+## Credits
+
+Thanks to [**Lain-Ego**](https://github.com/Lain-Ego0) — the blog template this site is built on
+originated from Lain-Ego's personal homepage project. The visual redesigns and the content
+configuration described above were built on top of it.
+
