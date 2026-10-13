@@ -44,7 +44,9 @@ CONTENT_FILES = [
 ]
 
 # 这些目录下的文件全部同步（新增图片、新增工具会自动带上）
-CONTENT_DIRS = ["assets/images", "tools"]
+# articles/ 是站内长文（Markdown + 配图），属内容，各风格分支都必须有，
+# 否则切换风格时会丢文章、且 verify_branches 的「差异只剩 style.css」会失败。
+CONTENT_DIRS = ["assets/images", "tools", "articles"]
 
 # 永不同步（各分支自己的样式）
 STYLE_FILES = {"assets/css/style.css"}
