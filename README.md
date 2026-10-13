@@ -27,12 +27,12 @@ A fully static personal homepage — plain HTML, CSS and vanilla JavaScript. No 
 
 | Section | Count | Notes |
 | --- | --- | --- |
-| Projects | 6 cards | 5 with cover images, 1 text-only; 2 cards link out to GitHub (3 links total) |
+| Projects | 7 cards | 6 with cover images, 1 text-only; 3 cards link out (4 links total) |
 | Articles | 2 | Full text of the DJI RC AWARD 2026 (Technical / Management) applications; bodies live in `articles/*.md` and are rendered client-side by `articles/article.html?md=xxx.md` (marked + KaTeX) |
-| Videos | 4 cards | 3 Bilibili + 1 Xiaohongshu; 2 still carry an empty `href`, so their Watch button is not rendered |
+| Videos | 4 cards | 3 Bilibili + 1 RedNote; 2 still carry an empty `href`, so their Watch button is not rendered |
 | Timeline | 12 entries | Newest first; the 2023.09–2027.06 degree entry is pinned at the top as the long-running thread |
 | Tech Stack | 4 groups / 18 items | Robotics 5, Simulation & Training 4, Host Computer 5, Toolchain 4 |
-| Contact | 5 links | Email, GitHub, Bilibili, Xiaohongshu, Zhihu |
+| Contact | 5 links | Email, GitHub, Bilibili, RedNote, ZhiHu |
 
 Everything is bilingual: each card has a matching `zh` / `en` pair, and project tags switch language too (the `{ zh: [...], en: [...] }` form in `PROJECTS`).
 
@@ -52,7 +52,7 @@ Everything is bilingual: each card has a matching `zh` / `en` pair, and project 
 │   ├── js/
 │   │   ├── i18n.js                  # loads lang/*.json, drives the language toggle
 │   │   └── main.js                  # ★ the content config: six arrays at the top
-│   └── images/                      # avatar, Xiaohongshu icon, project cover images
+│   └── images/                      # avatar, RedNote icon, project cover images
 ├── lang/
 │   ├── zh.json                      # ★ Chinese copy
 │   └── en.json                      # ★ English copy
@@ -106,7 +106,7 @@ Worth knowing:
 
 - A `links[]` entry with an empty `href` is skipped, so you can park a card whose link is not published yet.
 - `{ href, labelKey }` reuses a shared label such as `projects.links.code`; `{ href, label }` writes literal text.
-- Icons come from [Font Awesome 6](https://fontawesome.com/search?o=r&m=free) (`fab fa-github`). Brands it lacks can use `img:` pointing at an SVG — that is how the Xiaohongshu icon works.
+- Icons come from [Font Awesome 6](https://fontawesome.com/search?o=r&m=free) (`fab fa-github`). Brands it lacks can use `img:` pointing at an SVG — that is how the RedNote icon works.
 - Emptying an array brings that section's `empty` message back automatically.
 - `skills.hardware` exists in both packs but no `TECH_STACK` group uses it yet — ready for a hardware category.
 

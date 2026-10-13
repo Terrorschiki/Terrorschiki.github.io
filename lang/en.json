@@ -23,7 +23,7 @@
       "demo": "Demo",
       "website": "Website",
       "feishu": "Feishu Wiki",
-      "zhihu": "Zhihu Article",
+      "zhihu": "ZhiHu Article",
       "firmware": "Firmware",
       "mechanical": "Mechanical",
       "vision": "Vision",
@@ -87,7 +87,7 @@
     },
     "platformName": {
       "bilibili": "Bilibili",
-      "xiaohongshu": "rednote"
+      "xiaohongshu": "RedNote"
     },
     "item0": {
       "title": "We Built a Four-DOF RL Exoskeleton at the Physical AI Hackathon — Track Champion!",
@@ -200,8 +200,8 @@
     "email": "Email",
     "bilibili": "Bilibili",
     "github": "GitHub",
-    "xiaohongshu": "rednote",
-    "zhihu": "Zhihu",
+    "xiaohongshu": "RedNote",
+    "zhihu": "ZhiHu",
     "twitter": "Twitter"
   },
   "footer": {
