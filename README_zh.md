@@ -28,7 +28,7 @@
 | 栏目 | 数量 | 说明 |
 | --- | --- | --- |
 | 项目合集 | 6 张卡片 | 5 张有封面图，1 张纯文字；2 张卡片带 GitHub 外链（共 3 个链接） |
-| 文章 | 0 篇 | 显示空状态提示：*文章整理中，敬请期待。* |
+| 文章 | 2 篇 | DJI RC AWARD 2026（技术 / 管理）申报书全文；正文为 `articles/*.md`，由 `articles/article.html?md=xxx.md` 前端渲染（marked + KaTeX） |
 | 自媒体视频 | 4 张卡片 | 3 条哔哩哔哩 + 1 条小红书；其中 2 条 `href` 仍为空，因此不渲染「去观看」按钮 |
 | 经历时间轴 | 12 条 | 由近及远排序；2023.09–2027.06 的本科教育经历作为长期主线置顶 |
 | 技术栈 | 4 组 / 18 项 | 机器人技术 5、仿真与训练 4、上位机开发 5、开发工具链 4 |
@@ -41,6 +41,11 @@
 ```text
 .
 ├── index.html                       # 单页骨架，各栏目由 JS 填充
+├── articles/                        # 长文（文章栏目正文）
+│   ├── article.html                 # 通用 Markdown 阅读器：?md= 参数选择文章
+│   ├── dji-rc-award-2026-tech.md    # DJI RC AWARD 2026（技术）申报书全文
+│   ├── dji-rc-award-2026-mgmt.md    # DJI RC AWARD 2026（管理）申报书全文
+│   └── images/                      # 文章配图（从申报书 PDF 中提取）
 ├── assets/
 │   ├── css/
 │   │   └── style.css                # 全部样式：设计变量、布局、组件、响应式
@@ -151,7 +156,6 @@ GitHub Pages 会自动重建 `main`，通常一两分钟内生效，进度见仓
 ## 待办事项
 
 - `videos.item1`、`videos.item2` 的 `href` 仍为空，B 站链接在 [`assets/js/main.js`](assets/js/main.js) 里标了 `TODO`。
-- 「文章」栏目目前没有任何内容。
 - `projects.item1`（SkylandX C01 驱动）尚未公开，计划 10 月稳定性测试通过后开源。
 - `assets/images/avatar.svg` 仍是中性占位头像，替换时记得同时改 [`index.html`](index.html) 里的 `<link rel="icon">`。
 
