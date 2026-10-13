@@ -28,7 +28,7 @@ A fully static personal homepage — plain HTML, CSS and vanilla JavaScript. No 
 | Section | Count | Notes |
 | --- | --- | --- |
 | Projects | 6 cards | 5 with cover images, 1 text-only; 2 cards link out to GitHub (3 links total) |
-| Articles | 0 | Shows the empty state: *Articles are being organized. Stay tuned.* |
+| Articles | 2 | Full text of the DJI RC AWARD 2026 (Technical / Management) applications; bodies live in `articles/*.md` and are rendered client-side by `articles/article.html?md=xxx.md` (marked + KaTeX) |
 | Videos | 4 cards | 3 Bilibili + 1 Xiaohongshu; 2 still carry an empty `href`, so their Watch button is not rendered |
 | Timeline | 12 entries | Newest first; the 2023.09–2027.06 degree entry is pinned at the top as the long-running thread |
 | Tech Stack | 4 groups / 18 items | Robotics 5, Simulation & Training 4, Host Computer 5, Toolchain 4 |
@@ -41,6 +41,11 @@ Everything is bilingual: each card has a matching `zh` / `en` pair, and project 
 ```text
 .
 ├── index.html                       # single-page shell; the sections are filled in by JS
+├── articles/                        # long-form articles (the Articles section)
+│   ├── article.html                 # generic markdown reader: ?md= picks the file
+│   ├── dji-rc-award-2026-tech.md    # DJI RC AWARD 2026 (Technical) application
+│   ├── dji-rc-award-2026-mgmt.md    # DJI RC AWARD 2026 (Management) application
+│   └── images/                      # article images (extracted from the PDFs)
 ├── assets/
 │   ├── css/
 │   │   └── style.css                # all styling: design tokens, layout, components, responsive
@@ -151,7 +156,6 @@ GitHub Pages rebuilds `main` automatically, usually live within a minute or two;
 ## Open items
 
 - `videos.item1` and `videos.item2` still carry `href: ''`; the Bilibili links are marked `TODO` in [`assets/js/main.js`](assets/js/main.js).
-- The Articles section has no entries yet.
 - `projects.item1` (the SkylandX C01 driver) is not public yet — planned for release after October stability testing.
 - `assets/images/avatar.svg` is still the neutral placeholder; replacing it also means updating the `<link rel="icon">` line in [`index.html`](index.html).
 

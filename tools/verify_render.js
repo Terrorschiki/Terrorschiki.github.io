@@ -127,8 +127,9 @@ function check(name, cond, extra = '') {
   const contactHtml = containers['.intro-contact-links'].innerHTML;
 
   // ---- 场景 A：使用仓库中真实的数据渲染（作品集内容已填入）----
-  check('文章板块显示空提示', docsHtml.includes('文章整理中'), docsHtml.trim().slice(0, 80));
-  check('文章板块没有残留卡片', !docsHtml.includes('project-card'));
+  const docCardCount = (docsHtml.match(/class="card project-card/g) || []).length;
+  check('文章板块渲染 2 篇文章卡片', docCardCount === 2, `count=${docCardCount}`);
+  check('文章卡片带阅读链接（articles/article.html）', docsHtml.includes('articles/article.html?md=dji-rc-award-2026-tech.md') && docsHtml.includes('articles/article.html?md=dji-rc-award-2026-mgmt.md'), docsHtml.trim().slice(0, 120));
   const videoCardCount = (videoHtml.match(/class="card project-card/g) || []).length;
   check('视频板块渲染 4 个视频卡片', videoCardCount === 4, `count=${videoCardCount}`);
   check('视频卡片带平台角标（中文语言包 → 哔哩哔哩）', videoHtml.includes('video-platform') && videoHtml.includes('哔哩哔哩'), videoHtml.trim().slice(0, 90));
@@ -137,7 +138,8 @@ function check(name, cond, extra = '') {
   check('未填链接的视频不渲染观看按钮', watchBtnCount === 2, `buttons=${watchBtnCount}`);
   check('小红书演示视频带跳转链接', videoHtml.includes('xiaohongshu.com/discovery/item/6a1d2262000000000803ec94'));
   const projCardCount = (projHtml.match(/class="card project-card/g) || []).length;
-  check('项目板块渲染作品集项目（6 个）', projCardCount === 6, `count=${projCardCount}`);
+  check('项目板块渲染作品集项目（7 个）', projCardCount === 7, `count=${projCardCount}`);
+  check('YEPC 项目卡片带公众号报道链接', projHtml.includes('mp.weixin.qq.com/s/SznU-U2KK_ZyqPZ0paCcyg') && projHtml.includes('公众号报道'));
   const tlItemCount = (tlHtml.match(/class="timeline-item"/g) || []).length;
   check('时间轴渲染经历条目（12 条）', tlItemCount === 12, `count=${tlItemCount}`);
   check('时间轴含日期与标题键值', tlHtml.includes('timeline-date') && tlHtml.includes('华南理工大学'), tlHtml.trim().slice(0, 80));
