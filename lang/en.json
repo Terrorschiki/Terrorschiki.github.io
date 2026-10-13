@@ -31,7 +31,7 @@
       "imuDriver": "IMU Driver",
       "exoRepo": "Exoskeleton Repo",
       "installScript": "Install Script",
-      "wechatReport": "WeChat Feature"
+      "wechatReport": "WeChat Article"
     },
     "item0": {
       "title": "Quadruped Robot RL Gait Training & Navigation",
@@ -46,7 +46,7 @@
       "desc": "Local agent deployment and communication framework on the SpacemiT K3 dev board; an improved EpsonG354 driver with multi-IMU hardware binding and hot-swappable topics, fusing ESKF + Mahony for IMU attitude — providing fine-grained pose data for RL motion control; a one-click motor homing program for Lingzu RS02 motors. Won the ALLOPO Track Championship at the Physical AI Hackathon."
     },
     "item3": {
-      "title": "GLIM-based Robot Localization System",
+      "title": "GLIM Odometry-based Robot Localization System",
       "desc": "GLIM odometry with real-time mapping output and GPU acceleration; offline point-cloud optimization and segmentation feed the relocalization module; the Small-GICP relocalization module delivers high-precision point-cloud relocalization on a modest compute budget, correcting the robot's pose in real time. Accuracy surpasses the closed-source Odin1 algorithm, achieving 1cm accuracy in RC arenas. Nominated for the DJI ROBOCON AWARD (Technical Track)."
     },
     "item4": {
@@ -65,7 +65,7 @@
   "documents": {
     "title": "Articles",
     "empty": "Articles are being organized. Stay tuned.",
-    "read": "Read",
+    "read": "Read more",
     "item0": {
       "title": "DJI RC AWARD 2026 (Technical): GLIM + Small-GICP Arena Localization",
       "desc": "Historical archive of the 2026 RC AWARD (Technical / Algorithm) application: root-cause analysis of the 2025 Orin Nano odometry drift, and the complete GLIM factor-graph SLAM three-layer async pipeline plus Small-GICP dual-channel relocalization architecture, with host-computer selection benchmarks and screenshots."
@@ -87,7 +87,7 @@
     },
     "platformName": {
       "bilibili": "Bilibili",
-      "xiaohongshu": "Xiaohongshu"
+      "xiaohongshu": "rednote"
     },
     "item0": {
       "title": "We Built a Four-DOF RL Exoskeleton at the Physical AI Hackathon — Track Champion!",
@@ -98,7 +98,7 @@
       "desc": "A second-hand Velodyne VLP-16 16-channel 3D LiDAR, originally priced in the thousands of dollars, tested end to end: teardown and build quality, point-cloud quality, and power/interface checks — with a verdict on whether students should buy one."
     },
     "item2": {
-      "title": "Two $4 Depth Cameras Compared: Which One Is Better for Students?",
+      "title": "Two 30 RMB Depth Cameras Compared: Which One Is Better for Students?",
       "desc": "A head-to-head look at two budget depth cameras around the 30 RMB mark — imaging quality, depth accuracy, and SDK usability — plus advice for students getting started. The matching drivers and workspace are open-sourced and ready to clone."
     },
     "item3": {
@@ -174,7 +174,7 @@
     "title": "Tech Stack",
     "robotics": "Robotics",
     "simulation": "Simulation & Training",
-    "embedded": "Host Computer & Compute Platforms",
+    "embedded": "Host Computer Development",
     "software": "Toolchain",
     "hardware": "Mechanical & Hardware Design"
   },
@@ -200,7 +200,7 @@
     "email": "Email",
     "bilibili": "Bilibili",
     "github": "GitHub",
-    "xiaohongshu": "Xiaohongshu",
+    "xiaohongshu": "rednote",
     "zhihu": "Zhihu",
     "twitter": "Twitter"
   },
