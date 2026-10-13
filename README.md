@@ -157,7 +157,7 @@ GitHub Pages rebuilds `main` automatically, usually live within a minute or two;
 
 - `videos.item1` and `videos.item2` still carry `href: ''`; the Bilibili links are marked `TODO` in [`assets/js/main.js`](assets/js/main.js).
 - `projects.item1` (the SkylandX C01 driver) is not public yet — planned for release after October stability testing.
-- `assets/images/avatar.svg` is still the neutral placeholder; replacing it also means updating the `<link rel="icon">` line in [`index.html`](index.html).
+- The avatar is now the real photo, [`assets/images/avatar.jpg`](assets/images/avatar.jpg) — it also serves as the favicon. The old `assets/images/avatar.svg` placeholder is kept but no longer referenced.
 
 ## Credits
 
