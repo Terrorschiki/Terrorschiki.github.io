@@ -138,7 +138,8 @@ function check(name, cond, extra = '') {
   check('未填链接的视频不渲染观看按钮', watchBtnCount === 2, `buttons=${watchBtnCount}`);
   check('小红书演示视频带跳转链接', videoHtml.includes('xiaohongshu.com/discovery/item/6a1d2262000000000803ec94'));
   const projCardCount = (projHtml.match(/class="card project-card/g) || []).length;
-  check('项目板块渲染作品集项目（6 个）', projCardCount === 6, `count=${projCardCount}`);
+  check('项目板块渲染作品集项目（7 个）', projCardCount === 7, `count=${projCardCount}`);
+  check('YEPC 项目卡片带公众号报道链接', projHtml.includes('mp.weixin.qq.com/s/SznU-U2KK_ZyqPZ0paCcyg') && projHtml.includes('公众号报道'));
   const tlItemCount = (tlHtml.match(/class="timeline-item"/g) || []).length;
   check('时间轴渲染经历条目（12 条）', tlItemCount === 12, `count=${tlItemCount}`);
   check('时间轴含日期与标题键值', tlHtml.includes('timeline-date') && tlHtml.includes('华南理工大学'), tlHtml.trim().slice(0, 80));

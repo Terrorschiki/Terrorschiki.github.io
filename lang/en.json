@@ -30,7 +30,8 @@
       "followup": "Follow-up video",
       "imuDriver": "IMU Driver",
       "exoRepo": "Exoskeleton Repo",
-      "installScript": "Install Script"
+      "installScript": "Install Script",
+      "wechatReport": "WeChat Feature"
     },
     "item0": {
       "title": "Quadruped Robot RL Gait Training & Navigation",
@@ -55,6 +56,10 @@
     "item5": {
       "title": "RK3588-based Intelligent Omni Steer-Wheel AGV",
       "desc": "Cartographer-based 2D LiDAR SLAM and localization with indoor relocalization error under 5cm; autonomous navigation via ROS2 Navigation for the steer-wheel platform; YOLO flame and parcel detection on the RK3588 NPU, with pipeline optimizations doubling inference speed (200% of baseline). Won the National Second Prize in the Embedded Chip & System Design Competition."
+    },
+    "item6": {
+      "title": "\"Travel Guard\": AI-Enhanced Travel Belt for the Blind",
+      "desc": "Inspired by Google's Project Guideline and built by four students from the School of Future Technology, aiming to give visually impaired users an independent, practical and reliable way to get around. A voice-interactive travel assistance system on STM32MP135 with five modules: sidewalk detection, obstacle and traffic-signal recognition, smart voice interaction, GPS positioning, and fall detection. An on-board camera with OpenCV handles image processing — HSV colour conversion identifies lane edges and an eight-neighbourhood line-following method detects deviation — while colour thresholding plus radar ranging spots pedestrians and traffic lights. Baidu's API covers speech recognition and playback, with streamed ChatGPT for natural language; Amap's API provides GPS positioning and route logging; fall detection uses MPU6050 with SVM analysis. Validated through simulated, real-world and user-experience testing. Won the undergraduate Runner-Up Prize and was featured on SCUT's WeChat official account."
     }
   },
   "documents": {

@@ -89,6 +89,18 @@
         en: ['RK3588', 'YOLO', 'Navigation'],
       },
     },
+    {
+      img: 'assets/images/project-yepc.jpg',
+      titleKey: 'projects.item6.title',
+      descKey: 'projects.item6.desc',
+      tags: {
+        zh: ['STM32MP135', '语音交互', 'OpenCV', 'SVM 摔倒检测'],
+        en: ['STM32MP135', 'Voice Interaction', 'OpenCV', 'SVM Fall Detection'],
+      },
+      links: [
+        { href: 'https://mp.weixin.qq.com/s/SznU-U2KK_ZyqPZ0paCcyg', labelKey: 'projects.links.wechatReport', icon: 'fab fa-weixin' },
+      ],
+    },
   ];
 
   // ---------- 2. 文章 / 文档卡片 ----------
