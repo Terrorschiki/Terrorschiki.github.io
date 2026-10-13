@@ -157,7 +157,7 @@ GitHub Pages 会自动重建 `main`，通常一两分钟内生效，进度见仓
 
 - `videos.item1`、`videos.item2` 的 `href` 仍为空，B 站链接在 [`assets/js/main.js`](assets/js/main.js) 里标了 `TODO`。
 - `projects.item1`（SkylandX C01 驱动）尚未公开，计划 10 月稳定性测试通过后开源。
-- `assets/images/avatar.svg` 仍是中性占位头像，替换时记得同时改 [`index.html`](index.html) 里的 `<link rel="icon">`。
+- 头像已替换为真实照片（[`assets/images/avatar.jpg`](assets/images/avatar.jpg)），同时用作浏览器标签图标；旧的 `assets/images/avatar.svg` 占位图保留但已不再被引用。
 
 ## 鸣谢
 
